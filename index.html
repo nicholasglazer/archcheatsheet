@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-10-09 Sun 19:00 -->
+<!-- 2016-10-09 Sun 19:48 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title></title>
@@ -281,7 +281,7 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div class="right">
-  <a href="https://github.com/nicholasglazer" class="fa fa-github"> Edit on GitHub</a>
+  <a href="https://github.com/NicholasGlazer/arch-cheat-sheet" class="fa fa-github"> Edit on GitHub</a>
 </div>
 
 <hr  />
@@ -357,7 +357,7 @@ Now lets check the connection:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">ping -c <span style="color: #4e3163;">3</span> google.com
+<pre class="src src-sh">ping -c <span style="color: #AE81FF;">3</span> google.com
 </pre>
 </div>
 </div>
@@ -416,7 +416,7 @@ First you need to wipe your disks:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">gdisk /dev/sdX <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">where X is your partition name</span>
+<pre class="src src-sh">gdisk /dev/sdX <span style="color: #75715E;"># </span><span style="color: #75715E;">where X is your partition name</span>
 </pre>
 </div>
 <p>
@@ -441,7 +441,7 @@ And now create a new one:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">cgdisk /dev/sdX <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">where X is your partition name</span>
+<pre class="src src-sh">cgdisk /dev/sdX <span style="color: #75715E;"># </span><span style="color: #75715E;">where X is your partition name</span>
 </pre>
 </div>
 </div>
@@ -695,7 +695,7 @@ Uncommenting
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">sed -i <span style="color: #2d9574;">'s/^#Server/Server/'</span> /etc/pacman.d/mirrorlist.backup
+<pre class="src src-sh">sed -i <span style="color: #E6DB74;">'s/^#Server/Server/'</span> /etc/pacman.d/mirrorlist.backup
 </pre>
 </div></li>
 <li><p>
@@ -703,7 +703,7 @@ Ranking
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">rankmirrors -n <span style="color: #4e3163;">6</span> /etc/pacman.d/mirrorlist.backup &gt; /etc/pacman.d/mirrorlist
+<pre class="src src-sh">rankmirrors -n <span style="color: #AE81FF;">6</span> /etc/pacman.d/mirrorlist.backup &gt; /etc/pacman.d/mirrorlist
 </pre>
 </div>
 <div class="note">
@@ -870,8 +870,8 @@ And execute this commands one by one:
 <div class="org-src-container">
 
 <pre class="src src-sh">locale-gen
-<span style="color: #3a81c3;">echo</span> <span style="color: #715ab1;">LANG</span>=en_US.UTF-8 &gt; /etc/locale.conf
-<span style="color: #3a81c3;">export</span> <span style="color: #715ab1;">LANG</span>=en_US.UTF-8
+<span style="color: #F92672;">echo</span> <span style="color: #FD971F;">LANG</span>=en_US.UTF-8 &gt; /etc/locale.conf
+<span style="color: #F92672;">export</span> <span style="color: #FD971F;">LANG</span>=en_US.UTF-8
 </pre>
 </div>
 </div>
@@ -909,7 +909,7 @@ Replace <code>uniquename</code> with anything you want:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh"><span style="color: #3a81c3;">echo</span> uniquename &gt; /etc/hostname
+<pre class="src src-sh"><span style="color: #F92672;">echo</span> uniquename &gt; /etc/hostname
 </pre>
 </div>
 <div class="hint">
@@ -952,8 +952,8 @@ Uncomment this:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh"><span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">[multilib]</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">Include = /etc/pacman.d/mirrorlist</span>
+<pre class="src src-sh"><span style="color: #75715E;">#</span><span style="color: #75715E;">[multilib]</span>
+<span style="color: #75715E;">#</span><span style="color: #75715E;">Include = /etc/pacman.d/mirrorlist</span>
 </pre>
 </div>
 <div class="tip">
@@ -963,9 +963,9 @@ Add these lines at the bottom of the file:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh"><span style="color: #3a81c3;">[</span>archlinuxfr<span style="color: #3a81c3;">]</span>
-<span style="color: #715ab1;">Server</span> = http://repo.archlinux.fr/$<span style="color: #715ab1;">arch</span>
-<span style="color: #715ab1;">SigLevel</span> = Never
+<pre class="src src-sh"><span style="color: #AE81FF;">[</span>archlinuxfr<span style="color: #AE81FF;">]</span>
+<span style="color: #FD971F;">Server</span> = http://repo.archlinux.fr/$<span style="color: #FD971F;">arch</span>
+<span style="color: #FD971F;">SigLevel</span> = Never
 </pre>
 </div>
 <p>
@@ -973,17 +973,17 @@ Also you may want to add <a href="https://wiki.archlinux.org/index.php/Infinalit
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh"><span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">[infinality-bundle] # Add this if you have i686 architecture.</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">Server = http://bohoomil.com/repo/$arch</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">SigLevel = Never</span>
+<pre class="src src-sh"><span style="color: #75715E;">#</span><span style="color: #75715E;">[infinality-bundle] # Add this if you have i686 architecture.</span>
+<span style="color: #75715E;">#</span><span style="color: #75715E;">Server = http://bohoomil.com/repo/$arch</span>
+<span style="color: #75715E;">#</span><span style="color: #75715E;">SigLevel = Never</span>
 
-<span style="color: #3a81c3;">[</span>infinality-bundle-multilib<span style="color: #3a81c3;">]</span>
-<span style="color: #715ab1;">Server</span> = http://bohoomil.com/repo/multilib/$<span style="color: #715ab1;">arch</span>
-<span style="color: #715ab1;">SigLevel</span> = Never
+<span style="color: #AE81FF;">[</span>infinality-bundle-multilib<span style="color: #AE81FF;">]</span>
+<span style="color: #FD971F;">Server</span> = http://bohoomil.com/repo/multilib/$<span style="color: #FD971F;">arch</span>
+<span style="color: #FD971F;">SigLevel</span> = Never
 
-<span style="color: #3a81c3;">[</span>infinality-bundle-fonts<span style="color: #3a81c3;">]</span>
-<span style="color: #715ab1;">Server</span> = http://bohoomil.com/repo/fonts
-<span style="color: #715ab1;">SigLevel</span> = Never
+<span style="color: #AE81FF;">[</span>infinality-bundle-fonts<span style="color: #AE81FF;">]</span>
+<span style="color: #FD971F;">Server</span> = http://bohoomil.com/repo/fonts
+<span style="color: #FD971F;">SigLevel</span> = Never
 </pre>
 </div>
 
@@ -1040,7 +1040,7 @@ It is imperative that sudoers be free of syntax errors! Any error makes sudo unu
 </div>
 <div class="org-src-container">
 
-<pre class="src src-sh"><span style="color: #715ab1;">EDITOR</span>=vim visudo
+<pre class="src src-sh"><span style="color: #FD971F;">EDITOR</span>=vim visudo
 </pre>
 </div>
 <p>
@@ -1107,7 +1107,7 @@ If you didn't wrote it, type this:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">blkid -s PARTUUID -o value /dev/sdxY <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Where 'x' is the device letter and 'Y' is the partition number.</span>
+<pre class="src src-sh">blkid -s PARTUUID -o value /dev/sdxY <span style="color: #75715E;"># </span><span style="color: #75715E;">Where 'x' is the device letter and 'Y' is the partition number.</span>
 </pre>
 </div>
 <p>
@@ -1167,7 +1167,7 @@ Connman itself a command-line network manager. If you still cannot choose, there
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">pacman -S connman wpa_supplicant <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">later you may want to install connman_dmenu for ez wifi setup: yaourt -S connman_dmenu</span>
+<pre class="src src-sh">pacman -S connman wpa_supplicant <span style="color: #75715E;"># </span><span style="color: #75715E;">later you may want to install connman_dmenu for ez wifi setup: yaourt -S connman_dmenu</span>
 </pre>
 </div>
 <p>
@@ -1175,11 +1175,11 @@ Wired connection support is out of the box. For wifi setup you will need to do f
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">connmanctl                       <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Should enter connmanctl&gt; shell</span>
-connmanctl&gt; enable wifi          <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Lets make sure that wifi is enabled.</span>
-connmanctl&gt; scan wifi            <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Scan for any Wi-Fi technologies.</span>
-connmanctl&gt; services             <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">List of services.</span>
-connmanctl&gt; agent on             <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Register the agent to handle user requests.</span>
+<pre class="src src-sh">connmanctl                       <span style="color: #75715E;"># </span><span style="color: #75715E;">Should enter connmanctl&gt; shell</span>
+connmanctl&gt; enable wifi          <span style="color: #75715E;"># </span><span style="color: #75715E;">Lets make sure that wifi is enabled.</span>
+connmanctl&gt; scan wifi            <span style="color: #75715E;"># </span><span style="color: #75715E;">Scan for any Wi-Fi technologies.</span>
+connmanctl&gt; services             <span style="color: #75715E;"># </span><span style="color: #75715E;">List of services.</span>
+connmanctl&gt; agent on             <span style="color: #75715E;"># </span><span style="color: #75715E;">Register the agent to handle user requests.</span>
 </pre>
 </div>
 <p>
@@ -1187,8 +1187,8 @@ You now need to connect to one of the protected services. To do this easily, jus
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">connmanctl&gt; connect wifi_*****   <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">The agent will then ask you to provide any information the daemon needs to complete the connection.</span>
-connmanctl&gt; quit                 <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Exiting</span>
+<pre class="src src-sh">connmanctl&gt; connect wifi_*****   <span style="color: #75715E;"># </span><span style="color: #75715E;">The agent will then ask you to provide any information the daemon needs to complete the connection.</span>
+connmanctl&gt; quit                 <span style="color: #75715E;"># </span><span style="color: #75715E;">Exiting</span>
 </pre>
 </div>
 <p>
@@ -1200,13 +1200,12 @@ If the information you provided is correct you should now be connected to the wi
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">systemctl --type=service         <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">to check what services are running</span>
-systemctl disable netctl.service <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">NetworkManager.service / dhcpcd.service</span>
+<pre class="src src-sh">systemctl --type=service         <span style="color: #75715E;"># </span><span style="color: #75715E;">to check what services are running</span>
+systemctl disable netctl.service <span style="color: #75715E;"># </span><span style="color: #75715E;">NetworkManager.service / dhcpcd.service</span>
 </pre>
 </div>
 </div>
 </div>
-
 <div id="outline-container-orgheadline33" class="outline-4">
 <h4 id="orgheadline33"><span class="section-number-4">2.15.2</span> Netctl</h4>
 <div class="outline-text-4" id="text-2-15-2">
@@ -1273,7 +1272,7 @@ So now we can reboot:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh"><span style="color: #3a81c3; font-weight: bold;">exit</span>
+<pre class="src src-sh"><span style="color: #F92672;">exit</span>
 umount -R /mnt
 reboot
 </pre>
@@ -1404,7 +1403,7 @@ We can test it
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">speaker-test -c <span style="color: #4e3163;">2</span>
+<pre class="src src-sh">speaker-test -c <span style="color: #AE81FF;">2</span>
 </pre>
 </div></li>
 </ul>
@@ -1480,7 +1479,7 @@ If not you should create or copy it:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">sudo touch ~/. Xinitrc <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Or you can just copy it from my dotfiles</span>
+<pre class="src src-sh">sudo touch ~/. Xinitrc <span style="color: #75715E;"># </span><span style="color: #75715E;">Or you can just copy it from my dotfiles</span>
 </pre>
 </div></li>
 <li><p>
@@ -1510,7 +1509,7 @@ See <code>Intro</code>.
 <div class="org-src-container">
 
 <pre class="src src-sh">sudo pacman -S gnome gnome-extra gnome-software
-sudo systemctl enable gdm.service <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">enable login manager</span>
+sudo systemctl enable gdm.service <span style="color: #75715E;"># </span><span style="color: #75715E;">enable login manager</span>
 reboot
 </pre>
 </div>
@@ -1547,7 +1546,7 @@ This one in my current usage for awesomewm, basically its a bundle of themes, so
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh"><span style="color: #3a81c3;">cd</span> ~/.config/awesome
+<pre class="src src-sh"><span style="color: #F92672;">cd</span> ~/.config/awesome
 git clone --recursive https://github.com/copycat-killer/awesome-copycats.git
 </pre>
 </div></li>
@@ -1664,7 +1663,7 @@ Clone prezto repo
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">git clone --recursive https://github.com/sorin-ionescu/prezto.git <span style="color: #2d9574;">"${ZDOTDIR:-$HOME}/.zprezto"</span>
+<pre class="src src-sh">git clone --recursive https://github.com/sorin-ionescu/prezto.git <span style="color: #E6DB74;">"${ZDOTDIR:-$HOME}/.zprezto"</span>
 </pre>
 </div></li>
 <li><p>
@@ -1672,10 +1671,10 @@ Create a new Zsh configuration by copying the zsh configuration files provided:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh"><span style="color: #3a81c3;">setopt</span> EXTENDED_GLOB
-  <span style="color: #3a81c3; font-weight: bold;">for</span> rcfile<span style="color: #3a81c3; font-weight: bold;"> in</span> <span style="color: #2d9574;">"${ZDOTDIR:-$HOME}"</span>/.zprezto/runcoms/^README.md<span style="color: #3a81c3;">(</span>.N<span style="color: #3a81c3;">)</span>; <span style="color: #3a81c3; font-weight: bold;">do</span>
-  ln -s <span style="color: #2d9574;">"$rcfile"</span> <span style="color: #2d9574;">"${ZDOTDIR:-$HOME}/.${rcfile:t}"</span>
-<span style="color: #3a81c3; font-weight: bold;">done</span>
+<pre class="src src-sh"><span style="color: #F92672;">setopt</span> EXTENDED_GLOB
+  <span style="color: #F92672;">for</span> rcfile<span style="color: #F92672;"> in</span> <span style="color: #E6DB74;">"${ZDOTDIR:-$HOME}"</span>/.zprezto/runcoms/^README.md<span style="color: #AE81FF;">(</span>.N<span style="color: #AE81FF;">)</span>; <span style="color: #F92672;">do</span>
+  ln -s <span style="color: #E6DB74;">"$rcfile"</span> <span style="color: #E6DB74;">"${ZDOTDIR:-$HOME}/.${rcfile:t}"</span>
+<span style="color: #F92672;">done</span>
 </pre>
 </div></li>
 <li><p>
@@ -1683,7 +1682,7 @@ Set Zsh as your default shell and open new window with zsh:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">chsh -s /bin/zsh &amp;&amp; <span style="color: #3a81c3; font-weight: bold;">exit</span>
+<pre class="src src-sh">chsh -s /bin/zsh &amp;&amp; <span style="color: #F92672;">exit</span>
 </pre>
 </div></li>
 <li><p>
@@ -1692,7 +1691,7 @@ Prezto provides several themes you can choose:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">prompt -l <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Check themes list</span>
+<pre class="src src-sh">prompt -l <span style="color: #75715E;"># </span><span style="color: #75715E;">Check themes list</span>
 </pre>
 </div>
 <p>
@@ -1700,7 +1699,7 @@ Lest set the preferred one:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">prompt -s nicoulaj <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">To preview a theme</span>
+<pre class="src src-sh">prompt -s nicoulaj <span style="color: #75715E;"># </span><span style="color: #75715E;">To preview a theme</span>
 </pre>
 </div>
 <p>
@@ -1755,14 +1754,14 @@ If you missed <code>Add repositories</code> step, it is necessary to add this li
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh"><span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">[infinality-bundle] # Add this if you have i686 architecture.</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">Server = http://bohoomil.com/repo/$arch</span>
+<pre class="src src-sh"><span style="color: #75715E;">#</span><span style="color: #75715E;">[infinality-bundle] # Add this if you have i686 architecture.</span>
+<span style="color: #75715E;">#</span><span style="color: #75715E;">Server = http://bohoomil.com/repo/$arch</span>
 
-<span style="color: #3a81c3;">[</span>infinality-bundle-multilib<span style="color: #3a81c3;">]</span>
-<span style="color: #715ab1;">Server</span> = http://bohoomil.com/repo/multilib/$<span style="color: #715ab1;">arch</span>
+<span style="color: #AE81FF;">[</span>infinality-bundle-multilib<span style="color: #AE81FF;">]</span>
+<span style="color: #FD971F;">Server</span> = http://bohoomil.com/repo/multilib/$<span style="color: #FD971F;">arch</span>
 
-<span style="color: #3a81c3;">[</span>infinality-bundle-fonts<span style="color: #3a81c3;">]</span>
-<span style="color: #715ab1;">Server</span> = http://bohoomil.com/repo/fonts
+<span style="color: #AE81FF;">[</span>infinality-bundle-fonts<span style="color: #AE81FF;">]</span>
+<span style="color: #FD971F;">Server</span> = http://bohoomil.com/repo/fonts
 </pre>
 </div>
 <p>
@@ -1770,8 +1769,8 @@ Next, import and sign the key:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">pacman-key -r <span style="color: #4e3163;">962DDE58</span>
-pacman-key --lsign-key <span style="color: #4e3163;">962DDE58</span>
+<pre class="src src-sh">pacman-key -r <span style="color: #AE81FF;">962DDE58</span>
+pacman-key --lsign-key <span style="color: #AE81FF;">962DDE58</span>
 </pre>
 </div>
 <p>
@@ -1797,10 +1796,10 @@ And don't forget to update pacman:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">xset q                  <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">You can check your font path with</span>
-fc-list : file          <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Show all installed fonts</span>
-fc-cache -vf            <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">For cache updating</span>
-fc-match --verbose sans <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">To query current setting, also shows you a lot of info about particular font type.</span>
+<pre class="src src-sh">xset q                  <span style="color: #75715E;"># </span><span style="color: #75715E;">You can check your font path with</span>
+fc-list : file          <span style="color: #75715E;"># </span><span style="color: #75715E;">Show all installed fonts</span>
+fc-cache -vf            <span style="color: #75715E;"># </span><span style="color: #75715E;">For cache updating</span>
+fc-match --verbose sans <span style="color: #75715E;"># </span><span style="color: #75715E;">To query current setting, also shows you a lot of info about particular font type.</span>
 </pre>
 </div>
 <ul class="org-ul">
@@ -1820,9 +1819,9 @@ Now lets configure fonts:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">sudo fc-presets set <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Pick 1) combi preset</span>
-<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Only if something goes wrong or you have problem with Chrome/Firefox fonts rendering, you can pick 4th option to reset</span>
-sudo fc-presets set <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Pick 4) to reset and then pick 1)</span>
+<pre class="src src-sh">sudo fc-presets set <span style="color: #75715E;"># </span><span style="color: #75715E;">Pick 1) combi preset</span>
+<span style="color: #75715E;"># </span><span style="color: #75715E;">Only if something goes wrong or you have problem with Chrome/Firefox fonts rendering, you can pick 4th option to reset</span>
+sudo fc-presets set <span style="color: #75715E;"># </span><span style="color: #75715E;">Pick 4) to reset and then pick 1)</span>
 </pre>
 </div></li>
 
@@ -2027,7 +2026,7 @@ To solve <a href="https://docs.npmjs.com/getting-started/fixing-npm-permissions"
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-sh">npm config set prefix <span style="color: #2d9574;">'~/.npm-global'</span>
+<pre class="src src-sh">npm config set prefix <span style="color: #E6DB74;">'~/.npm-global'</span>
 </pre>
 </div>
 <ol class="org-ol">
@@ -2035,7 +2034,7 @@ To solve <a href="https://docs.npmjs.com/getting-started/fixing-npm-permissions"
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-sh"><span style="color: #3a81c3;">export</span> <span style="color: #715ab1;">PATH</span>=~/.npm-global/bin:$<span style="color: #715ab1;">PATH</span>
+<pre class="src src-sh"><span style="color: #F92672;">export</span> <span style="color: #FD971F;">PATH</span>=~/.npm-global/bin:$<span style="color: #FD971F;">PATH</span>
 </pre>
 </div>
 <ol class="org-ol">
@@ -2043,7 +2042,7 @@ To solve <a href="https://docs.npmjs.com/getting-started/fixing-npm-permissions"
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-sh"><span style="color: #3a81c3;">source</span> ~/.zprofile
+<pre class="src src-sh"><span style="color: #F92672;">source</span> ~/.zprofile
 </pre>
 </div>
 <p>
@@ -2066,7 +2065,7 @@ Now you can use <code>npm -g</code> without sudo, test it with any package:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">sudo pacman -S jre8-openjdk-headless <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">install only java environment without GUI</span>
+<pre class="src src-sh">sudo pacman -S jre8-openjdk-headless <span style="color: #75715E;"># </span><span style="color: #75715E;">install only java environment without GUI</span>
 </pre>
 </div>
 <p>
@@ -2074,7 +2073,7 @@ Now you need to source from the command line or by logging out/in.
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh"><span style="color: #3a81c3;">source</span> /etc/profile
+<pre class="src src-sh"><span style="color: #F92672;">source</span> /etc/profile
 </pre>
 </div>
 </div>
@@ -2120,7 +2119,7 @@ Change folder's group:
 </div>
 <div class="org-src-container">
 
-<pre class="src src-sh">chmod -R g+w /opt/android-sdk/ <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Change permissions of the folder so the user that was just added to the group will be able to write in it:</span>
+<pre class="src src-sh">chmod -R g+w /opt/android-sdk/ <span style="color: #75715E;"># </span><span style="color: #75715E;">Change permissions of the folder so the user that was just added to the group will be able to write in it:</span>
 </pre>
 </div></li>
 
@@ -2138,7 +2137,7 @@ Install NDK
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">gpg --keyserver pgp.mit.edu --recv-keys F7E48EDB <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">add keyring first for ncurses5-compat-libs</span>
+<pre class="src src-sh">gpg --keyserver pgp.mit.edu --recv-keys F7E48EDB <span style="color: #75715E;"># </span><span style="color: #75715E;">add keyring first for ncurses5-compat-libs</span>
 yaourt -S android-ndk
 </pre>
 </div></li>

@@ -435,7 +435,6 @@
      systemctl --type=service         # to check what services are running
      systemctl disable netctl.service # NetworkManager.service / dhcpcd.service
      #+END_SRC
-
 **** Netctl
      I felt some pain with ntectl bugs, trying to configure everything to work properly. And it takes too much time. But just in case you still need/want this one.
      - Checking drivers
