@@ -1,0 +1,2161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2016-10-09 Sun 19:00 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title></title>
+<meta  name="generator" content="Org-mode" />
+<meta  name="description" content="This document catalogs a set of tips and tricks for composing documents in Org mode."
+ />
+<meta  name="keywords" content="arch, archlinux, quick reference, cheat sheet, recommended practices, arch intall guide, arch linux manual, no desktop environment" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/readtheorg/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/lib/js/jquery.stickytableheaders.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline12">1. Preparations</a>
+<ul>
+<li><a href="#orgheadline1">1.1. Live usb</a></li>
+<li><a href="#orgheadline2">1.2. BIOS config</a></li>
+<li><a href="#orgheadline3">1.3. Kernel boot options</a></li>
+<li><a href="#orgheadline4">1.4. Changing layout</a></li>
+<li><a href="#orgheadline5">1.5. Network connection</a></li>
+<li><a href="#orgheadline6">1.6. UEFI</a></li>
+<li><a href="#orgheadline10">1.7. Partition scheme</a>
+<ul>
+<li><a href="#orgheadline9">1.7.1. Partitioning</a>
+<ul>
+<li><a href="#orgheadline7">1.7.1.1. SSD</a></li>
+<li><a href="#orgheadline8">1.7.1.2. HHD</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgheadline11">1.8. Assigning file system to drives</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline36">2. Installing Arch</a>
+<ul>
+<li><a href="#orgheadline13">2.1. Mounting partitions</a></li>
+<li><a href="#orgheadline14">2.2. Mirrorlist</a></li>
+<li><a href="#orgheadline15">2.3. Arch base files</a></li>
+<li><a href="#orgheadline18">2.4. Generate and edit fstab file</a>
+<ul>
+<li><a href="#orgheadline17">2.4.1. Enable TRIM (for SSD)</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline19">2.5. Chroot into the system</a></li>
+<li><a href="#orgheadline20">2.6. Vim</a></li>
+<li><a href="#orgheadline21">2.7. Locale</a></li>
+<li><a href="#orgheadline22">2.8. Localtime</a></li>
+<li><a href="#orgheadline23">2.9. Hardware clock</a></li>
+<li><a href="#orgheadline24">2.10. Hostname</a></li>
+<li><a href="#orgheadline25">2.11. Add repositories</a></li>
+<li><a href="#orgheadline26">2.12. Passwords</a></li>
+<li><a href="#orgheadline27">2.13. Sudoers</a></li>
+<li><a href="#orgheadline16">2.14. Bootloader</a>
+<ul>
+<li><a href="#orgheadline28">2.14.1. Checking EFI</a></li>
+<li><a href="#orgheadline29">2.14.2. Boot manager</a></li>
+<li><a href="#orgheadline30">2.14.3. Root UUID</a></li>
+<li><a href="#orgheadline31">2.14.4. Kernel <code>arch.conf</code> file</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline34">2.15. Network</a>
+<ul>
+<li><a href="#orgheadline32">2.15.1. Connman</a></li>
+<li><a href="#orgheadline33">2.15.2. Netctl</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline35">2.16. Reboot</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline74">3. Desktop</a>
+<ul>
+<li><a href="#orgheadline37">3.1. Intro</a></li>
+<li><a href="#orgheadline38">3.2. Dependencies</a></li>
+<li><a href="#orgheadline43">3.3. Drivers</a>
+<ul>
+<li><a href="#orgheadline39">3.3.1. Video</a></li>
+<li><a href="#orgheadline40">3.3.2. Touchpad</a></li>
+<li><a href="#orgheadline41">3.3.3. Audio</a></li>
+<li><a href="#orgheadline42">3.3.4. Keboard backlight</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline45">3.4. X server and friends</a>
+<ul>
+<li><a href="#orgheadline44">3.4.1. xinit</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline49">3.5. Window Manager/Desktop Environment</a>
+<ul>
+<li><a href="#orgheadline46">3.5.1. Gnome</a></li>
+<li><a href="#orgheadline47">3.5.2. Awesome</a></li>
+<li><a href="#orgheadline48">3.5.3. Xmonad</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline50">3.6. Display Manager</a></li>
+<li><a href="#orgheadline51">3.7. Wallpaper</a></li>
+<li><a href="#orgheadline53">3.8. Terminal</a>
+<ul>
+<li><a href="#orgheadline52">3.8.1. zsh</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline54">3.9. Power management</a></li>
+<li><a href="#orgheadline56">3.10. Fonts</a>
+<ul>
+<li><a href="#orgheadline55">3.10.1. Infinality</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline57">3.11. IDE</a></li>
+<li><a href="#orgheadline68">3.12. Media</a>
+<ul>
+<li><a href="#orgheadline58">3.12.1. Browser</a></li>
+<li><a href="#orgheadline59">3.12.2. Notifications</a></li>
+<li><a href="#orgheadline60">3.12.3. Documents</a></li>
+<li><a href="#orgheadline61">3.12.4. IRC</a></li>
+<li><a href="#orgheadline62">3.12.5. Video</a></li>
+<li><a href="#orgheadline63">3.12.6. Screenshots</a></li>
+<li><a href="#orgheadline64">3.12.7. Audio</a></li>
+<li><a href="#orgheadline65">3.12.8. Torrent tracker</a></li>
+<li><a href="#orgheadline66">3.12.9. Media transfer protocol</a></li>
+<li><a href="#orgheadline67">3.12.10. Virtualbox</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline73">3.13. Programming Environment</a>
+<ul>
+<li><a href="#orgheadline70">3.13.1. Nodejs</a>
+<ul>
+<li><a href="#orgheadline69">3.13.1.1. npm</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline71">3.13.2. Java</a></li>
+<li><a href="#orgheadline72">3.13.3. Android development</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="right">
+  <a href="https://github.com/nicholasglazer" class="fa fa-github"> Edit on GitHub</a>
+</div>
+
+<hr  />
+
+
+<div id="orgparagraph1" class="figure">
+<p><img src="./arch-logo.png" alt="arch-logo.png" align="center" /> 
+</p>
+</div>
+
+<div id="outline-container-orgheadline12" class="outline-2">
+<h2 id="orgheadline12"><span class="section-number-2">1</span> Preparations</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-orgheadline1" class="outline-3">
+<h3 id="orgheadline1"><span class="section-number-3">1.1</span> Live usb</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+I assumed that you already have a bootable flash drive.
+If not, check <a href="https://wiki.archlinux.org/index.php/disk_cloning">dd</a> and the official website for arch <a href="https://www.archlinux.org/download/">downloading</a>.
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2"><span class="section-number-3">1.2</span> BIOS config</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+So the very first step will be to load the flash drive.
+You will need to change the boot priority in BIOS. And just after reboot, press <code>F2</code> or <code>del</code> to see the BIOS menu.
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3"><span class="section-number-3">1.3</span> Kernel boot options</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+To avoid problems with tiny fonts or fan speed, better to run the new install with the kernel option which will disable console frame buffer.
+To do this, when selection menu appears, press <code>E</code>, type <code>nomodeset</code> in the very beginning of the line and press <code>Enter</code>.
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4"><span class="section-number-3">1.4</span> Changing layout</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+As a <a href="https://wiki.archlinux.org/index.php/Dvorak">dvorak</a> keyboard layout user, my first step will be changing keyboard layout:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">loadkeys dvorak
+</pre>
+</div>
+<div class="attention">
+<p>
+If you use <code>querty</code>, skip this step. 
+</p>
+
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5"><span class="section-number-3">1.5</span> Network connection</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+After archiso has booted you want to make internet connection: 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">wifi-menu
+</pre>
+</div>
+<p>
+Now lets check the connection:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">ping -c <span style="color: #4e3163;">3</span> google.com
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6"><span class="section-number-3">1.6</span> UEFI</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+Lets make sure we're using <a href="https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface">UEFI</a> mode:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">efivar -l
+</pre>
+</div>
+<p>
+If output has some variables, everything is fine.
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline10" class="outline-3">
+<h3 id="orgheadline10"><span class="section-number-3">1.7</span> Partition scheme</h3>
+<div class="outline-text-3" id="text-1-7">
+<p>
+Good. Now lets check <a href="https://wiki.archlinux.org/index.php/Partitioning">partition</a> scheme.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">lsblk
+</pre>
+</div>
+<p>
+In most cases you will see at least 2 drives. I have 3 drives:
+</p>
+<pre class="example">
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+sda      8:0    0 119.2G  0 disk                   *SSD*
+├─sda1   8:1    0     1G  0 part /boot
+├─sda2   8:2    0    60G  0 part /
+├─sda3   8:3    0    30G  0 part 
+└─sda4   8:4    0  28.2G  0 part 
+sdb      8:16   0 931.5G  0 disk                   *HDD*
+├─sdb1   8:17   0   400G  0 part /home
+├─sdb2   8:18   0    24G  0 part [SWAP]
+├─sdb3   8:19   0   300G  0 part 
+└─sdb4   8:20   0 207.5G  0 part 
+sdc      8:32   1   7.5G  0 disk                   *Flash Drive*
+└─sdc1   8:33   1   7.5G  0 part
+</pre>
+</div>
+<div id="outline-container-orgheadline9" class="outline-4">
+<h4 id="orgheadline9"><span class="section-number-4">1.7.1</span> Partitioning</h4>
+<div class="outline-text-4" id="text-1-7-1">
+<p>
+First you need to wipe your disks:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">gdisk /dev/sdX <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">where X is your partition name</span>
+</pre>
+</div>
+<p>
+Press <code>enter</code> first, then <code>x</code> for advanced config and <code>z</code> for zap.
+</p>
+<div class="warning">
+<p>
+This may destroy data on your disk.
+</p>
+
+</div>
+
+<div class="tip">
+<p>
+Sometimes you mess up with your <code>root</code> and want to reinstall the system, but you want to keep your <code>/home</code> directory untouched. You can do it easily. Wipe only <b>sda</b> and do nothing with <b>sdb</b>.
+</p>
+
+</div>
+
+<p>
+And now create a new one:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">cgdisk /dev/sdX <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">where X is your partition name</span>
+</pre>
+</div>
+</div>
+<div id="outline-container-orgheadline7" class="outline-5">
+<h5 id="orgheadline7"><span class="section-number-5">1.7.1.1</span> SSD</h5>
+<div class="outline-text-5" id="text-1-7-1-1">
+<p>
+I will use <b>sda</b> (SSD) as a place for system files, for which speed is critical: bootstraping system, sysetem programs, etc&#x2026;
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">#</th>
+<th scope="col" class="org-left">size</th>
+<th scope="col" class="org-right">Fs type</th>
+<th scope="col" class="org-left">name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">sda1</td>
+<td class="org-left">1g</td>
+<td class="org-right">EF00</td>
+<td class="org-left">boot</td>
+</tr>
+
+<tr>
+<td class="org-left">sda2</td>
+<td class="org-left">60g</td>
+<td class="org-right">8300</td>
+<td class="org-left">root</td>
+</tr>
+
+<tr>
+<td class="org-left">sda3</td>
+<td class="org-left">30g</td>
+<td class="org-right">8300</td>
+<td class="org-left">-</td>
+</tr>
+
+<tr>
+<td class="org-left">sda4</td>
+<td class="org-left">else 28.2</td>
+<td class="org-right">0700</td>
+<td class="org-left">-</td>
+</tr>
+</tbody>
+</table>
+<ul class="org-ul">
+<li><b>sda1</b> Should be exactly <code>EF00</code>. Will boot the system.</li>
+<li><b>sda2</b> For my <code>root</code> I'd set 60G, you will be fine with even less. So if you may want to divide space for other distros (e.g. gentoo, ubuntu, fedora, etc..), 30G should be enough.</li>
+<li><b>sda3</b> This one is for another distro.</li>
+<li>I'd left <b>sda4</b> for Windows. I will make double boot later(not included to this guide).</li>
+</ul>
+<div class="attention">
+<p>
+I decided to make dual boot with Windows 10 for playing games and other weird things like photoshop. And I don't really want to use <a href="https://wiki.archlinux.org/index.php/Wine">wine</a>. <br  />
+So in case you want just Arch Linux on your machine, ignore Windows partition steps.
+</p>
+
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline8" class="outline-5">
+<h5 id="orgheadline8"><span class="section-number-5">1.7.1.2</span> HHD</h5>
+<div class="outline-text-5" id="text-1-7-1-2">
+<p>
+I will use <b>sdb</b> (HDD) as a place for user files: configuration, music, projects, ect&#x2026;
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">#</th>
+<th scope="col" class="org-left">size</th>
+<th scope="col" class="org-right">FS type</th>
+<th scope="col" class="org-left">name</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">sdb1</td>
+<td class="org-left">400g</td>
+<td class="org-right">8300</td>
+<td class="org-left">home</td>
+<td class="org-left">linux filesystem</td>
+</tr>
+
+<tr>
+<td class="org-left">sdb2</td>
+<td class="org-left">24g</td>
+<td class="org-right">8200</td>
+<td class="org-left">swap</td>
+<td class="org-left">1.5 of my RAM memory[16G]</td>
+</tr>
+
+<tr>
+<td class="org-left">sdb3</td>
+<td class="org-left">300g</td>
+<td class="org-right">0700</td>
+<td class="org-left">whome</td>
+<td class="org-left">microsoft basic data</td>
+</tr>
+
+<tr>
+<td class="org-left">sbd4</td>
+<td class="org-left">else 207.5g</td>
+<td class="org-right">8300</td>
+<td class="org-left">-</td>
+<td class="org-left">Just in case I will mount /var or install another linux there</td>
+</tr>
+</tbody>
+</table>
+<ul class="org-ul">
+<li><b>sdb1</b> <code>/home</code> place for your user files.</li>
+<li><b>sdb2</b> <code>SWAP</code> depends on your RAM quantity. Usually you should take 1.5 of your RAM.</li>
+<li>Notice that I set <b>sdb3</b> as 0700 and it will contain Windows files.</li>
+<li><b>sdb4</b> You may use this space however you want. You can mount it to the <code>/usr</code> or to the other distro.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline11" class="outline-3">
+<h3 id="orgheadline11"><span class="section-number-3">1.8</span> Assigning file system to drives</h3>
+<div class="outline-text-3" id="text-1-8">
+<dl class="org-dl">
+<dt>/boot</dt><dd><p>
+         Boot need to be Fat32 as UEFI requirement.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">mkfs.fat -F32 /dev/sda1
+</pre>
+</div></dd>
+<dt>SWAP</dt><dd><div class="org-src-container">
+
+<pre class="src src-sh">mkswap /dev/sdb2
+</pre>
+</div></dd>
+<dt>Linux</dt><dd><div class="org-src-container">
+
+<pre class="src src-sh">mkfs.ext4 /dev/sda2
+mkfs.ext4 /dev/sdb1
+mkfs.ext4 /dev/sdb4
+</pre>
+</div>
+<div class="tip">
+<p>
+Press <code>y</code> if you have warnings like this: 
+</p>
+<ul class="org-ul">
+<li>/dev/sdxY contains a ext4 file system</li>
+</ul>
+
+</div></dd>
+<dt>And reboot</dt><dd><div class="org-src-container">
+
+<pre class="src src-sh">reboot
+</pre>
+</div></dd>
+</dl>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline36" class="outline-2">
+<h2 id="orgheadline36"><span class="section-number-2">2</span> Installing Arch</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-orgheadline13" class="outline-3">
+<h3 id="orgheadline13"><span class="section-number-3">2.1</span> Mounting partitions</h3>
+<div class="outline-text-3" id="text-2-1">
+<ul class="org-ul">
+<li><p>
+So the first thing we want to do is to assign <code>/mnt</code> to the <code>root</code> partition:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">mount /dev/sda2 /mnt
+</pre>
+</div></li>
+<li><p>
+Next we need to create some new folders in our <code>/mnt</code>:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">mkdir /mnt/boot
+mkdir /mnt/home
+</pre>
+</div></li>
+<li><p>
+And lets mount this folders:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">mount /dev/sda1 /mnt/boot
+mount /dev/sdb1 /mnt/home
+</pre>
+</div></li>
+<li><p>
+And enable <code>SWAP</code>:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">swapon /dev/sdb2
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline14" class="outline-3">
+<h3 id="orgheadline14"><span class="section-number-3">2.2</span> Mirrorlist</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+I prefer to download data fast, thats why I want to use fastest <a href="https://wiki.archlinux.org/index.php/mirrors#List_by_speed">mirrors</a>.
+</p>
+<ul class="org-ul">
+<li><p>
+Backup first
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+</pre>
+</div></li>
+<li><p>
+Uncommenting
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sed -i <span style="color: #2d9574;">'s/^#Server/Server/'</span> /etc/pacman.d/mirrorlist.backup
+</pre>
+</div></li>
+<li><p>
+Ranking
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">rankmirrors -n <span style="color: #4e3163;">6</span> /etc/pacman.d/mirrorlist.backup &gt; /etc/pacman.d/mirrorlist
+</pre>
+</div>
+<div class="note">
+<p>
+If ranking process took less then (&lt;1min), you should check your internet connection if it's available. This process may take up to 10 min.
+</p>
+
+</div></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline15" class="outline-3">
+<h3 id="orgheadline15"><span class="section-number-3">2.3</span> Arch base files</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+Ok, now lets install base packages to our <code>root</code>.
+In this step you may also want to install some packages, which may be useful while system installing, like <a href="https://git-scm.com/doc">git</a> or <a href="https://www.gnu.org/software/wget/">wget</a>.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">pacstrap -i /mnt base base-devel git
+</pre>
+</div>
+<p>
+Press <code>RET</code> and agree with everything.
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline18" class="outline-3">
+<h3 id="orgheadline18"><span class="section-number-3">2.4</span> Generate and edit fstab file</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+Before we will generate fstab, lets delete the old one:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">rm /mnt/etc/fstab
+</pre>
+</div>
+<p>
+Now generate the new one:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">genfstab -U -p /mnt &gt;&gt; /mnt/etc/fstab
+</pre>
+</div>
+<p>
+And check if everything is correct:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">nano /mnt/etc/fstab
+</pre>
+</div>
+<div class="hint">
+<p>
+While this is first editing with <a href="https://wiki.archlinux.org/index.php/nano">nano</a>. You should know at least how to save and exit it:
+</p>
+<ul class="org-ul">
+<li>ctrl+o (save)</li>
+<li>ctrl+x (exit)</li>
+</ul>
+
+</div>
+<div class="tip">
+<p>
+You also may want to write down your <code>root</code> - <code>/</code> UUID. It will be useful later in <a href="#orgheadline16">bootloader</a> step.
+</p>
+
+</div>
+</div>
+<div id="outline-container-orgheadline17" class="outline-4">
+<h4 id="orgheadline17"><span class="section-number-4">2.4.1</span> Enable <a href="https://ru.wikipedia.org/wiki/TRIM">TRIM</a> (for SSD)</h4>
+<div class="outline-text-4" id="text-2-4-1">
+<div class="attention">
+<p>
+You may want to do this if your <code>SWAP</code> is on <b>SSD</b>.
+</p>
+
+</div>
+<div class="org-src-container">
+
+<pre class="src src-sh">nano /mnt/etc/fstab
+</pre>
+</div>
+<p>
+Add this line to a file, where <code>X</code> is your <code>SWAP</code> partition:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-org">/dev/sdX none swap defaults,discard 0 0
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline19" class="outline-3">
+<h3 id="orgheadline19"><span class="section-number-3">2.5</span> Chroot into the system</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+Lets enter the system:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">arch-chroot /mnt
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline20" class="outline-3">
+<h3 id="orgheadline20"><span class="section-number-3">2.6</span> Vim</h3>
+<div class="outline-text-3" id="text-2-6">
+<p>
+Next important step will be installing <a href="https://wiki.archlinux.org/index.php/vim">vim</a> text editor:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">pacman -S vim
+</pre>
+</div>
+<div class="note">
+<p>
+If you're not familiar with vim and you don't have time to learn this <b>great</b> console editor, just skip this step and continue using <b>nano</b>.
+</p>
+
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline21" class="outline-3">
+<h3 id="orgheadline21"><span class="section-number-3">2.7</span> Locale</h3>
+<div class="outline-text-3" id="text-2-7">
+<div class="org-src-container">
+
+<pre class="src src-sh">vim /etc/locale.gen
+</pre>
+</div>
+<div class="hint">
+<ul class="org-ul">
+<li>press <code>esc</code> to make sure you are in <b>command mode</b>.</li>
+<li><p>
+for search press <code>/</code> and type:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">en_US.UTF-8
+</pre>
+</div></li>
+<li>hit <code>RET</code></li>
+<li><code>n</code> for next match till you reach commented one</li>
+<li>by pressing <code>i</code> you can enter insert mode (you can type now)</li>
+<li><code>h</code> <code>j</code> <code>k</code> <code>l</code> for navigating</li>
+<li>remove comments <code>#</code> with any method you prefer ;)</li>
+<li>Save and exit:
+<ul class="org-ul">
+<li><code>esc</code> and type <code>:wq</code> (you will see this letters in a very bottom)</li>
+</ul></li>
+</ul>
+
+</div>
+<p>
+And execute this commands one by one:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">locale-gen
+<span style="color: #3a81c3;">echo</span> <span style="color: #715ab1;">LANG</span>=en_US.UTF-8 &gt; /etc/locale.conf
+<span style="color: #3a81c3;">export</span> <span style="color: #715ab1;">LANG</span>=en_US.UTF-8
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline22" class="outline-3">
+<h3 id="orgheadline22"><span class="section-number-3">2.8</span> Localtime</h3>
+<div class="outline-text-3" id="text-2-8">
+<p>
+Replace <code>Israel</code> with any country you prefer more. You may also want to do <code>ls /usr/share/zoneinfo/</code> first, to explore zoneinfo folder.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">ln -s /usr/share/zoneinfo/Israel &gt; /etc/localtime
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline23" class="outline-3">
+<h3 id="orgheadline23"><span class="section-number-3">2.9</span> Hardware clock</h3>
+<div class="outline-text-3" id="text-2-9">
+<div class="org-src-container">
+
+<pre class="src src-sh">hwclock --systohc -&#8211;utc
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline24" class="outline-3">
+<h3 id="orgheadline24"><span class="section-number-3">2.10</span> Hostname</h3>
+<div class="outline-text-3" id="text-2-10">
+<p>
+<a href="https://en.wikipedia.org/wiki/Hostname">Hostname</a> is a unique name created to identify a machine on a network. <br  />
+Basic method that <b>working in arch-chroot</b>. <br  />
+Replace <code>uniquename</code> with anything you want:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span style="color: #3a81c3;">echo</span> uniquename &gt; /etc/hostname
+</pre>
+</div>
+<div class="hint">
+<p>
+Later you will see something like <code>user@uniquename</code>
+</p>
+
+</div>
+<div class="attention">
+<p>
+You able to generate hostname with <code>hostnamectl</code> later. But beware this method is <b>not working in arch-chroot!</b>.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">hostnamectl set-hostname myhostname
+</pre>
+</div>
+
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline25" class="outline-3">
+<h3 id="orgheadline25"><span class="section-number-3">2.11</span> Add repositories</h3>
+<div class="outline-text-3" id="text-2-11">
+<p>
+Enabling multilib and Arch community repositories. <br  />
+If you are running a 64bit system then you need to enable the multilib repository.
+</p>
+<ul class="org-ul">
+<li><p>
+To do this open the pacman.conf file:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">vim /etc/pacman.conf
+</pre>
+</div></li>
+<li><p>
+Uncomment this:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">[multilib]</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">Include = /etc/pacman.d/mirrorlist</span>
+</pre>
+</div>
+<div class="tip">
+<p>
+While we are still inside <code>pacman.conf</code> file, let’s also add the <a href="https://wiki.archlinux.org/index.php/Arch_User_Repository">Arch User Repository (AUR)</a>, so we can easily install packages from AUR.
+Add these lines at the bottom of the file:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span style="color: #3a81c3;">[</span>archlinuxfr<span style="color: #3a81c3;">]</span>
+<span style="color: #715ab1;">Server</span> = http://repo.archlinux.fr/$<span style="color: #715ab1;">arch</span>
+<span style="color: #715ab1;">SigLevel</span> = Never
+</pre>
+</div>
+<p>
+Also you may want to add <a href="https://wiki.archlinux.org/index.php/Infinality">infinality</a> font libraries:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">[infinality-bundle] # Add this if you have i686 architecture.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">Server = http://bohoomil.com/repo/$arch</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">SigLevel = Never</span>
+
+<span style="color: #3a81c3;">[</span>infinality-bundle-multilib<span style="color: #3a81c3;">]</span>
+<span style="color: #715ab1;">Server</span> = http://bohoomil.com/repo/multilib/$<span style="color: #715ab1;">arch</span>
+<span style="color: #715ab1;">SigLevel</span> = Never
+
+<span style="color: #3a81c3;">[</span>infinality-bundle-fonts<span style="color: #3a81c3;">]</span>
+<span style="color: #715ab1;">Server</span> = http://bohoomil.com/repo/fonts
+<span style="color: #715ab1;">SigLevel</span> = Never
+</pre>
+</div>
+
+</div></li>
+<li><p>
+And update the system. We should <a href="https://wiki.archlinux.org/index.php/mirrors#Force_pacman_to_refresh_the_package_lists">let to know the system about changes</a>.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">pacman -Syyu
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline26" class="outline-3">
+<h3 id="orgheadline26"><span class="section-number-3">2.12</span> Passwords</h3>
+<div class="outline-text-3" id="text-2-12">
+<dl class="org-dl">
+<dt>Root password</dt><dd><div class="org-src-container">
+
+<pre class="src src-sh">passwd
+</pre>
+</div></dd>
+<dt>User password</dt><dd><p>
+         We need to add at least one user. <br  />
+Replace <code>username</code> with one preffered by you:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">useradd -m -g users -G wheel,storage,power -s /bin/zsh username
+</pre>
+</div>
+<p>
+And set password for a new user:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">passwd username
+</pre>
+</div></dd>
+</dl>
+</div>
+</div>
+<div id="outline-container-orgheadline27" class="outline-3">
+<h3 id="orgheadline27"><span class="section-number-3">2.13</span> Sudoers</h3>
+<div class="outline-text-3" id="text-2-13">
+<div class="warning">
+<p>
+<a href="https://wiki.archlinux.org/index.php/Sudo#Using_visudo">Impontant to know!</a>
+It is imperative that sudoers be free of syntax errors! Any error makes sudo unusable. Always edit it with visudo to prevent errors.
+</p>
+
+</div>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span style="color: #715ab1;">EDITOR</span>=vim visudo
+</pre>
+</div>
+<p>
+And we should uncomment this line:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-org">%wheel ALL=(ALL) ALL
+</pre>
+</div>
+<div class="note">
+<p>
+This system will be only for my own usage. <br  />
+If you are using server or someone else have access to the wheel group. You may want to require sudoers to type root password, instead of their own. <br  />
+In this case add this line:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-org">Defaults rootpw
+</pre>
+</div>
+
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline16" class="outline-3">
+<h3 id="orgheadline16"><span class="section-number-3">2.14</span> Bootloader</h3>
+<div class="outline-text-3" id="text-2-14">
+</div><div id="outline-container-orgheadline28" class="outline-4">
+<h4 id="orgheadline28"><span class="section-number-4">2.14.1</span> Checking EFI</h4>
+<div class="outline-text-4" id="text-2-14-1">
+<p class="verse">
+@gloriouseggroll recommended to double check if our EFI variables had been mounted.<br  />
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">mount -t efivarfs efivarfs /sys/firmware/efi/efivars
+</pre>
+</div>
+<p>
+You will see something like <code>efivarfs is already mounted</code>, this means everything is fine.
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline29" class="outline-4">
+<h4 id="orgheadline29"><span class="section-number-4">2.14.2</span> Boot manager</h4>
+<div class="outline-text-4" id="text-2-14-2">
+<p>
+So the <a href="https://wiki.archlinux.org/index.php/systemd-boot#Standard_root_installations">systemd-boot</a> is a replacement for <a href="https://wiki.archlinux.org/index.php/GRUB">grub</a>.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">bootctl install
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline30" class="outline-4">
+<h4 id="orgheadline30"><span class="section-number-4">2.14.3</span> Root UUID</h4>
+<div class="outline-text-4" id="text-2-14-3">
+<p>
+Do you remember I told you to write down your UUID of a root partition? <br  />
+If you didn't wrote it, type this:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">blkid -s PARTUUID -o value /dev/sdxY <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Where 'x' is the device letter and 'Y' is the partition number.</span>
+</pre>
+</div>
+<p>
+Your goal is <code>root</code> partition. In my case I have root assigned to sda2.
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline31" class="outline-4">
+<h4 id="orgheadline31"><span class="section-number-4">2.14.4</span> <a href="https://wiki.archlinux.org/index.php/systemd-boot#Standard_root_installations">Kernel</a> <code>arch.conf</code> file</h4>
+<div class="outline-text-4" id="text-2-14-4">
+<p>
+Update <a href="https://wiki.archlinux.org/index.php/microcode#systemd-boot">microcode</a> to avoid freezes:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">pacman -S intel-ucode
+</pre>
+</div>
+<p>
+Lets create a conf file:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">vim /boot/loader/entries/arch.conf
+</pre>
+</div>
+<p>
+And write down:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-org">title Arch Linux
+linux /vmlinuz-linux
+initrd /intel-ucode.img
+initrd /initramfs-linux.img
+options root=PARTUUID=write_down_root_UUID_here rw i915.preliminary_hw_support=1 intel_idle.max_cstate=1 i915.enable_execlists=0 acpi_osi= acpi_backlight=native quiet
+</pre>
+</div>
+<div class="warning">
+<p>
+The root options is very delicate part, you should double check them for your laptop model. For <a href="https://wiki.archlinux.org/index.php/ASUS_Zenbook_Pro_UX501">Zenbook Pro UX501VM</a> I have this options working properly.
+</p>
+
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline34" class="outline-3">
+<h3 id="orgheadline34"><span class="section-number-3">2.15</span> Network</h3>
+<div class="outline-text-3" id="text-2-15">
+</div><div id="outline-container-orgheadline32" class="outline-4">
+<h4 id="orgheadline32"><span class="section-number-4">2.15.1</span> Connman</h4>
+<div class="outline-text-4" id="text-2-15-1">
+<p>
+I'm personally prefer <a href="https://wiki.archlinux.org/index.php/Connman">connman</a>, there are few other options <a href="https://wiki.archlinux.org/index.php/netctl#Installation">netctl</a>, <a href="https://wiki.archlinux.org/index.php/NetworkManager">NetworkManager</a>, <a href="https://wiki.archlinux.org/index.php/Wicd">Wicd</a> even standalone <a href="https://wiki.archlinux.org/index.php/systemd-networkd">systemd-networkd</a>.
+Connman itself a command-line network manager. If you still cannot choose, there are few things <a href="https://github.com/wavexx/connman-notify#why-connman">why you should use it</a>.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">pacman -S connman wpa_supplicant <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">later you may want to install connman_dmenu for ez wifi setup: yaourt -S connman_dmenu</span>
+</pre>
+</div>
+<p>
+Wired connection support is out of the box. For wifi setup you will need to do few more steps. 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">connmanctl                       <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Should enter connmanctl&gt; shell</span>
+connmanctl&gt; enable wifi          <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Lets make sure that wifi is enabled.</span>
+connmanctl&gt; scan wifi            <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Scan for any Wi-Fi technologies.</span>
+connmanctl&gt; services             <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">List of services.</span>
+connmanctl&gt; agent on             <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Register the agent to handle user requests.</span>
+</pre>
+</div>
+<p>
+You now need to connect to one of the protected services. To do this easily, just use tab completion for the wifi_ service.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">connmanctl&gt; connect wifi_*****   <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">The agent will then ask you to provide any information the daemon needs to complete the connection.</span>
+connmanctl&gt; quit                 <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Exiting</span>
+</pre>
+</div>
+<p>
+If the information you provided is correct you should now be connected to the wifi.
+</p>
+
+<p>
+<b>Note!</b> Make sure you disable everything that can be in conflict:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">systemctl --type=service         <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">to check what services are running</span>
+systemctl disable netctl.service <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">NetworkManager.service / dhcpcd.service</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline33" class="outline-4">
+<h4 id="orgheadline33"><span class="section-number-4">2.15.2</span> Netctl</h4>
+<div class="outline-text-4" id="text-2-15-2">
+<p>
+I felt some pain with ntectl bugs, trying to configure everything to work properly. And it takes too much time. But just in case you still need/want this one.
+</p>
+<ul class="org-ul">
+<li><p>
+Checking drivers
+Lets see our drivers, what we are looking for is <b>Network controller</b>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">lspci -k
+ip link
+</pre>
+</div>
+<p>
+<b>Tip</b> You can check <a href="https://wiki.archlinux.org/index.php/Wireless_network_configuration#Check_the_driver_status">more</a> commands if you have any problems.
+</p></li>
+<li><p>
+And lets bring the interface up:
+It usually starts with <code>w</code>, in my case I have <code>wlp3s0</code>:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">ip link set wlp3s0 up
+</pre>
+</div></li>
+<li><p>
+Installing 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo pacman -S wpa_actiond wpa_supplicant dhclient dialog
+</pre>
+</div></li>
+<li><p>
+Default DHCP client
+I've had issues with connections, and 'dhclient' solved them.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo vim /etc/netctl/dhcp
+</pre>
+</div>
+<div class="org-src-container">
+
+<pre class="src src-org">#!/bin/sh
+DHCPClient='dhclient'
+</pre>
+</div></li>
+<li>Issues
+I had iwlwifi <a href="https://bbs.archlinux.org/viewtopic.php?id=213363">bug</a> and <a href="https://wiki.archlinux.org/index.php/Wireless_network_configuration#iwlwifi">iwlwifi.conf</a> just in case.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline35" class="outline-3">
+<h3 id="orgheadline35"><span class="section-number-3">2.16</span> Reboot</h3>
+<div class="outline-text-3" id="text-2-16">
+<p>
+So now we can reboot:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span style="color: #3a81c3; font-weight: bold;">exit</span>
+umount -R /mnt
+reboot
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline74" class="outline-2">
+<h2 id="orgheadline74"><span class="section-number-2">3</span> Desktop</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-orgheadline37" class="outline-3">
+<h3 id="orgheadline37"><span class="section-number-3">3.1</span> Intro</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+So in this part you have a lot of different choices, depends on your needs. If you are not stong Linux user,
+better decision will be to use <a href="https://wiki.archlinux.org/index.php/Desktop_environment">DE</a> like <a href="https://wiki.archlinux.org/index.php/GNOME">GNOME</a> instead of just <a href="https://wiki.archlinux.org/index.php/Desktop_environment">WM</a>. However you still can <a href="https://wiki.archlinux.org/index.php/Awesome#With_GNOME">use tiling WM like awesome with GNOME</a>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">setxkbmap dvorak
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline38" class="outline-3">
+<h3 id="orgheadline38"><span class="section-number-3">3.2</span> Dependencies</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+Lets install some important dependencies:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo pacman -S yaourt zsh openssh termite rfkill unzip tree aspell-en
+</pre>
+</div>
+<div class="org-src-container">
+
+<pre class="src src-sh">yaourt -S --noconfirm feh emacs htop lm_sensors thefuck connman_dmenu-git xclip
+</pre>
+</div>
+<p>
+<b>Note!</b> I'm using <code>--noconfirm</code> flag here. I trust this packages, but you may want to check buld scripts by yourself.
+<b>Note!</b> This step is not completed yet, more packages will be added.
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline43" class="outline-3">
+<h3 id="orgheadline43"><span class="section-number-3">3.3</span> Drivers</h3>
+<div class="outline-text-3" id="text-3-3">
+</div><div id="outline-container-orgheadline39" class="outline-4">
+<h4 id="orgheadline39"><span class="section-number-4">3.3.1</span> Video</h4>
+<div class="outline-text-4" id="text-3-3-1">
+<p>
+<b>Note!</b> Be careful, this part may cause problems if you don't know what you are doing. <b>Read <a href="https://wiki.archlinux.org/index.php/bumblebee#Installing_Bumblebee_with_Intel.2FNVIDIA">bumblebee</a> article first!</b>
+</p>
+<ul class="org-ul">
+<li><p>
+Install deps
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo pacman -S bumblebee mesa xf86-video-intel nvidia lib32-virtualgl lib32-nvidia-utils lib32-mesa-libgl
+</pre>
+</div>
+<p>
+<b>Tip</b> Pick <code>mesa-libgl</code> if conflict.
+<b>Tip</b> Pick <code>xf86-input-libinput</code> if conflict, for the <a href="https://wiki.archlinux.org/index.php/ASUS_Zenbook_Pro_UX501#Touch_Pad">touchpad</a>.
+</p></li>
+<li><p>
+Add username to bumblebee group
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">gpasswd -a USER bumblebee
+</pre>
+</div></li>
+<li><p>
+Enable bumblebee
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo systemctl enable bumblebeed.service
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline40" class="outline-4">
+<h4 id="orgheadline40"><span class="section-number-4">3.3.2</span> Touchpad</h4>
+<div class="outline-text-4" id="text-3-3-2">
+<p>
+For touchpad <b>tap-to-click</b> use <a href="https://wiki.archlinux.org/index.php/Libinput#Touchpad_tapping">t</a>his <code>X11/xorg.conf.d/30-touchpad.conf</code> you can also copy it from my dotfiles.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo pacman -S xf86-input-libinput
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline41" class="outline-4">
+<h4 id="orgheadline41"><span class="section-number-4">3.3.3</span> Audio</h4>
+<div class="outline-text-4" id="text-3-3-3">
+<p>
+<a href="https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture#Installation">ALSA</a> is a set of buit-in kernel modules, but after install it may be muted.
+</p>
+<ul class="org-ul">
+<li><p>
+So lets install <a href="https://wiki.archlinux.org/index.php/PulseAudio#Installation">pulseaudio</a> and utils, and manage it:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo pacman -S alsa-lib alsa-utils pulseaudio
+</pre>
+</div></li>
+<li><p>
+And now lets <a href="https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture#Unmute_with_alsamixer">unmute with alsamixer</a>.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">alsamixer
+</pre>
+</div></li>
+<li><p>
+We can test it
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">speaker-test -c <span style="color: #4e3163;">2</span>
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline42" class="outline-4">
+<h4 id="orgheadline42"><span class="section-number-4">3.3.4</span> Keboard backlight</h4>
+<div class="outline-text-4" id="text-3-3-4">
+<p>
+<a href="https://wiki.archlinux.org/index.php/ASUS_Zenbook_Prime_UX31A#Using_asus-kbd-backlight_from_AUR">Asus-kbd-backlight</a> one of the solutions that solved my issue with keyboard backlight.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">yaourt -S asus-kbd-backlight
+</pre>
+</div>
+<p>
+To allow users to change the brightness, write:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo asus-kbd-backlight allowusers
+</pre>
+</div>
+<p>
+And enable services:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo systemctl daemon-reload
+sudo systemctl start asus-kbd-backlight.service
+sudo systemctl enable asus-kbd-backlight.service
+</pre>
+</div>
+
+<p>
+Next option indicates that the current keymap table should be printed on the standard output in the form of expressions that can be fed back to xmodmap.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">xmodmap -pke
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline45" class="outline-3">
+<h3 id="orgheadline45"><span class="section-number-3">3.4</span> X server and friends</h3>
+<div class="outline-text-3" id="text-3-4">
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo pacman -S xorg-server xorg-server-utils xorg-xbacklight xbindkeys xorg-xinit xorg-xinput xorg-twm xorg-xclock xterm xdotool
+</pre>
+</div>
+</div>
+<div id="outline-container-orgheadline44" class="outline-4">
+<h4 id="orgheadline44"><span class="section-number-4">3.4.1</span> xinit</h4>
+<div class="outline-text-4" id="text-3-4-1">
+<p>
+If you want to creato your own .xinitrc and not using one from dotfiles, do next:
+</p>
+<ul class="org-ul">
+<li><p>
+Check if you have <a href="https://wiki.archlinux.org/index.php/Xinit#xinitrc">xinitrc</a> file in your user directory.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">cat ~/.xinitrc
+</pre>
+</div></li>
+<li><p>
+If not you should create or copy it:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo touch ~/. Xinitrc <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Or you can just copy it from my dotfiles</span>
+</pre>
+</div></li>
+<li><p>
+Don't forget to make it executable
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo chmod +x ~/.xinitrc
+</pre>
+</div>
+<p>
+To check if everything working properly we can execute command <code>startx</code>.
+</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline49" class="outline-3">
+<h3 id="orgheadline49"><span class="section-number-3">3.5</span> Window Manager/Desktop Environment</h3>
+<div class="outline-text-3" id="text-3-5">
+</div><div id="outline-container-orgheadline46" class="outline-4">
+<h4 id="orgheadline46"><span class="section-number-4">3.5.1</span> Gnome</h4>
+<div class="outline-text-4" id="text-3-5-1">
+<p>
+See <code>Intro</code>.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo pacman -S gnome gnome-extra gnome-software
+sudo systemctl enable gdm.service <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">enable login manager</span>
+reboot
+</pre>
+</div>
+<p>
+<b>Note!</b> This configurations was not tested by me properly. So if you have any suggestions, you can share your experience, feel free to contribute.
+<b>Note!</b> Gnome using <a href="https://wiki.archlinux.org/index.php/NetworkManager">NetworkManager</a> which is not compatable with connman, so you should ignore connman step, or disable NetworkManager.
+<b>You've been warned!</b>
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline47" class="outline-4">
+<h4 id="orgheadline47"><span class="section-number-4">3.5.2</span> Awesome</h4>
+<div class="outline-text-4" id="text-3-5-2">
+<p>
+If you had never used tiling wm's before, read this <a href="https://awesomewm.org/wiki/My_first_awesome#Change_the_theme">beginners guide</a> for <a href="https://wiki.archlinux.org/index.php/awesome%0Ahttps://wiki.archlinux.org/index.php/awesome">awesome</a>.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-org">yaourt -S --noconfirm awesome vicious shifty
+</pre>
+</div>
+<ul class="org-ul">
+<li><p>
+Themes
+This one is pretty good, but seems too dark for me, maybe later I will use it.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">git clone --recursive https://github.com/barwinco/pro /.config/awesome
+</pre>
+</div>
+<p>
+This one in my current usage for awesomewm, basically its a bundle of themes, so you can switch between them:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span style="color: #3a81c3;">cd</span> ~/.config/awesome
+git clone --recursive https://github.com/copycat-killer/awesome-copycats.git
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline48" class="outline-4">
+<h4 id="orgheadline48"><span class="section-number-4">3.5.3</span> Xmonad</h4>
+<div class="outline-text-4" id="text-3-5-3">
+<p>
+This is my current WM I'm spending most of time with. You can use my <code>.xmonad</code> configs. Config basically the <code>Haskell</code> file. So you should know Haskell a bit to configure it without problems.
+For better understanding you may want to read <a href="http://beginners-guide-to-xmonad.readthedocs.io/index.html">this beginners tutorial</a>.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">yaourt -S --noconfirm xmonad xmonad-contrib xmobar dmenu2 dzen2 stalonetray conky compton
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline50" class="outline-3">
+<h3 id="orgheadline50"><span class="section-number-3">3.6</span> Display Manager</h3>
+<div class="outline-text-3" id="text-3-6">
+<ul class="org-ul">
+<li><p>
+Slim (abandoned)
+<b>WARNING!</b> The SliM project has been abandoned, so it may be dangerous using it without any support.
+<a href="https://wiki.archlinux.org/index.php/SLiM#Configuration">slim</a> is good option if you decided not to use DE and want to keep everything minimal.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo pacman -S slim
+sudo systemctl enable slim.service
+sudo git clone https://github.com/naglis/slim-minimal.git /usr/share/slim/themes/slim-minimal
+</pre>
+</div>
+<p>
+Feel free to use my slim.conf file, and modify it.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo vim /etc/slim.conf
+</pre>
+</div>
+
+<p>
+<b>Tip!</b> You may want to change this fieds:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-org">default_user        defaultUserItsMeLol
+current_theme       slim-minimal
+</pre>
+</div>
+
+<p>
+<b>Tip!</b> If you have a trouble with system loggin in, you have possibility to enter console from slim, to do this type <code>console</code> instead of username.
+</p></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline51" class="outline-3">
+<h3 id="orgheadline51"><span class="section-number-3">3.7</span> Wallpaper</h3>
+<div class="outline-text-3" id="text-3-7">
+<p>
+We already installed <a href="https://wiki.archlinux.org/index.php/Feh">feh</a>.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">feh --bg-scale /path/to/image.file
+</pre>
+</div>
+<p>
+After this .fehbg will be created. So you can modify it how you want. As an example to make random bgs:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">feh --randomize --bg-fill ~/.wallpaper/*
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline53" class="outline-3">
+<h3 id="orgheadline53"><span class="section-number-3">3.8</span> Terminal</h3>
+<div class="outline-text-3" id="text-3-8">
+<p>
+So the <a href="https://wiki.archlinux.org/index.php/Termite">termite</a> is kind of <code>vim</code> based terminal, which you can control with a lot of useful vim keybindings.
+Also we will need tmux for terminal multiplexing. And w3m for images in console.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo pacman -S termite w3m tmux
+</pre>
+</div>
+</div>
+<div id="outline-container-orgheadline52" class="outline-4">
+<h4 id="orgheadline52"><span class="section-number-4">3.8.1</span> zsh</h4>
+<div class="outline-text-4" id="text-3-8-1">
+<p>
+<a href="https://github.com/sorin-ionescu/prezto">prezto</a> looks for me as much lightweight and faster solution than <code>oh-my-zsh</code>.
+</p>
+<ul class="org-ul">
+<li><p>
+Lets run zsh first
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">zsh
+</pre>
+</div></li>
+<li><p>
+Clone prezto repo
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">git clone --recursive https://github.com/sorin-ionescu/prezto.git <span style="color: #2d9574;">"${ZDOTDIR:-$HOME}/.zprezto"</span>
+</pre>
+</div></li>
+<li><p>
+Create a new Zsh configuration by copying the zsh configuration files provided:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span style="color: #3a81c3;">setopt</span> EXTENDED_GLOB
+  <span style="color: #3a81c3; font-weight: bold;">for</span> rcfile<span style="color: #3a81c3; font-weight: bold;"> in</span> <span style="color: #2d9574;">"${ZDOTDIR:-$HOME}"</span>/.zprezto/runcoms/^README.md<span style="color: #3a81c3;">(</span>.N<span style="color: #3a81c3;">)</span>; <span style="color: #3a81c3; font-weight: bold;">do</span>
+  ln -s <span style="color: #2d9574;">"$rcfile"</span> <span style="color: #2d9574;">"${ZDOTDIR:-$HOME}/.${rcfile:t}"</span>
+<span style="color: #3a81c3; font-weight: bold;">done</span>
+</pre>
+</div></li>
+<li><p>
+Set Zsh as your default shell and open new window with zsh:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">chsh -s /bin/zsh &amp;&amp; <span style="color: #3a81c3; font-weight: bold;">exit</span>
+</pre>
+</div></li>
+<li><p>
+Themes
+Prezto provides several themes you can choose:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">prompt -l <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Check themes list</span>
+</pre>
+</div>
+<p>
+Lest set the preferred one:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">prompt -s nicoulaj <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">To preview a theme</span>
+</pre>
+</div>
+<p>
+Load the theme you like in <code>~/.zpreztorc</code>
+</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline54" class="outline-3">
+<h3 id="orgheadline54"><span class="section-number-3">3.9</span> Power management</h3>
+<div class="outline-text-3" id="text-3-9">
+<p>
+I will use <a href="https://wiki.archlinux.org/index.php/TLP">tlp</a> tool for power management, also I will install Intel's <a href="https://wiki.archlinux.org/index.php/Powertop">powertop</a>.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo pacman -S tlp powertop
+</pre>
+</div>
+<p>
+Enable services for tlp:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo systemctl enable tlp.service
+sudo systemctl enable tlp-sleep.service
+</pre>
+</div>
+<p>
+<b>Tip</b> If you don't wont to reboot the system, but want immediately start tlp: 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">tlp start
+</pre>
+</div>
+<p>
+<b>Note!</b> Archwiki recommends to disable 'systemd-rfkill.service' to avoid conflicts.
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline56" class="outline-3">
+<h3 id="orgheadline56"><span class="section-number-3">3.10</span> Fonts</h3>
+<div class="outline-text-3" id="text-3-10">
+</div><div id="outline-container-orgheadline55" class="outline-4">
+<h4 id="orgheadline55"><span class="section-number-4">3.10.1</span> Infinality</h4>
+<div class="outline-text-4" id="text-3-10-1">
+<p>
+The <a href="https://wiki.archlinux.org/index.php/Infinality">infinality</a> patchset aims to greatly improve font rendering in freetype2 and friends. It adds multiple new capabilities.
+If you missed <code>Add repositories</code> step, it is necessary to add this lines to your <code>/etc/pacman.conf</code>:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">[infinality-bundle] # Add this if you have i686 architecture.</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">Server = http://bohoomil.com/repo/$arch</span>
+
+<span style="color: #3a81c3;">[</span>infinality-bundle-multilib<span style="color: #3a81c3;">]</span>
+<span style="color: #715ab1;">Server</span> = http://bohoomil.com/repo/multilib/$<span style="color: #715ab1;">arch</span>
+
+<span style="color: #3a81c3;">[</span>infinality-bundle-fonts<span style="color: #3a81c3;">]</span>
+<span style="color: #715ab1;">Server</span> = http://bohoomil.com/repo/fonts
+</pre>
+</div>
+<p>
+Next, import and sign the key:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">pacman-key -r <span style="color: #4e3163;">962DDE58</span>
+pacman-key --lsign-key <span style="color: #4e3163;">962DDE58</span>
+</pre>
+</div>
+<p>
+And don't forget to update pacman:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo pacman -Syyu
+</pre>
+</div>
+<p>
+<b>Tip</b> When conflict appears, remove <code>freetype2</code> and accept <code>freetype2-infinality-ultimate</code>. Same for <code>cairo</code> and <code>fontconfig</code>.
+<b>Tip</b> If you have unresolved conflict with <code>infinality-bundle-fonts</code>, I recommends to pick some fonts you will use manually, you will see numbers of all available fonts.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo pacman -S infinality-bundle-multilib infinality-bundle-fonts
+</pre>
+</div>
+
+<p>
+<b>Tip</b>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">xset q                  <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">You can check your font path with</span>
+fc-list : file          <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Show all installed fonts</span>
+fc-cache -vf            <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">For cache updating</span>
+fc-match --verbose sans <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">To query current setting, also shows you a lot of info about particular font type.</span>
+</pre>
+</div>
+<ul class="org-ul">
+<li><p>
+More fonts
+<b>Note!</b> A lot of fonts may trash your cache.
+You can use extra infinality fonts collection.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo pacman -Ss infinality-bundle-fonts-extra
+</pre>
+</div></li>
+<li><p>
+Picking preset
+Now lets configure fonts:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo fc-presets set <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Pick 1) combi preset</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Only if something goes wrong or you have problem with Chrome/Firefox fonts rendering, you can pick 4th option to reset</span>
+sudo fc-presets set <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Pick 4) to reset and then pick 1)</span>
+</pre>
+</div></li>
+
+<li>Fontconfig parameters
+Configuration can be done per-user through <code>$XDG_CONFIG_HOME/fontconfig/fonts.conf</code>. You can find it in my dotfles <code>.config/fontconfig/fonts.conf</code>.
+<b>Tip</b> When we activated the combi preset, it content could be changed, <code>/etc/fonts/conf.avail.infinality/combi</code>.
+<b>Note!</b> Infinality ArchWiki says that <code>/etc/fonts/local.conf</code> should either not exist, or have no infinality-related configurations in it.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline57" class="outline-3">
+<h3 id="orgheadline57"><span class="section-number-3">3.11</span> IDE</h3>
+<div class="outline-text-3" id="text-3-11">
+<p>
+<b>Note!</b> Be aware of <a href="https://wiki.archlinux.org/index.php/Infinality#Emacs">Noto Font</a>. First time I didn't realized that this may cause a problem, so I picked Noto font and I can tell you that spacemacs looks pretty ugly with this font family.
+</p>
+<ul class="org-ul">
+<li><p>
+So now I will install my IDE/text editor and configure it a bit:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo pacman -S emacs
+</pre>
+</div></li>
+<li><p>
+I'm using <a href="https://github.com/syl20bnr/spacemacs#introduction">spacemacs</a>, installation is pretty simple:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline68" class="outline-3">
+<h3 id="orgheadline68"><span class="section-number-3">3.12</span> Media</h3>
+<div class="outline-text-3" id="text-3-12">
+</div><div id="outline-container-orgheadline58" class="outline-4">
+<h4 id="orgheadline58"><span class="section-number-4">3.12.1</span> Browser</h4>
+<div class="outline-text-4" id="text-3-12-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">yaourt -S --noconfirm chromium chromium-pepper-flash
+</pre>
+</div>
+<ul class="org-ul">
+<li><p>
+Network
+(add more info and test)
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">yaourt -S tor zeronet
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline59" class="outline-4">
+<h4 id="orgheadline59"><span class="section-number-4">3.12.2</span> Notifications</h4>
+<div class="outline-text-4" id="text-3-12-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo pacman -S dunst
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline60" class="outline-4">
+<h4 id="orgheadline60"><span class="section-number-4">3.12.3</span> Documents</h4>
+<div class="outline-text-4" id="text-3-12-3">
+<p>
+Document text reader. Minimal and useful if you like key control.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo pacman -S zathura
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline61" class="outline-4">
+<h4 id="orgheadline61"><span class="section-number-4">3.12.4</span> IRC</h4>
+<div class="outline-text-4" id="text-3-12-4">
+<p>
+<a href="https://freenode.net/kb/answer/registration">Freenode FAQ</a> explains how to make registration.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo pacman -S weechat
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline62" class="outline-4">
+<h4 id="orgheadline62"><span class="section-number-4">3.12.5</span> Video</h4>
+<div class="outline-text-4" id="text-3-12-5">
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo pacman -S ffmpeg vlc
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline63" class="outline-4">
+<h4 id="orgheadline63"><span class="section-number-4">3.12.6</span> Screenshots</h4>
+<div class="outline-text-4" id="text-3-12-6">
+<div class="org-src-container">
+
+<pre class="src src-sh">yaourt -S --noconfirm scrot
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline64" class="outline-4">
+<h4 id="orgheadline64"><span class="section-number-4">3.12.7</span> Audio</h4>
+<div class="outline-text-4" id="text-3-12-7">
+<p>
+<a href="https://wiki.archlinux.org/index.php/Cmus">Cmus</a> command line music player.
+<a href="https://github.com/karlstav/cava">Cava</a> audio visualizer.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">yaourt -S cmus cava-git
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline65" class="outline-4">
+<h4 id="orgheadline65"><span class="section-number-4">3.12.8</span> Torrent tracker</h4>
+<div class="outline-text-4" id="text-3-12-8">
+<p>
+You may want to install <code>yaourt -S rtorrent</code> if you want rtorrent without vim keybindings
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">yaourt -S --noconfirm rtorrent-vi-color
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline66" class="outline-4">
+<h4 id="orgheadline66"><span class="section-number-4">3.12.9</span> Media transfer protocol</h4>
+<div class="outline-text-4" id="text-3-12-9">
+<div class="org-src-container">
+
+<pre class="src src-sh">yaourt -S libmpt simple-mtpfs
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline67" class="outline-4">
+<h4 id="orgheadline67"><span class="section-number-4">3.12.10</span> Virtualbox</h4>
+<div class="outline-text-4" id="text-3-12-10">
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo pacman -S virtualbox 
+sudo enasystemd-modules-load.service
+sudo vboxreload
+</pre>
+</div>
+<p>
+<b>Tip</b> Choose virtualbox-host-modules-arch for <a href="https://wiki.archlinux.org/index.php/VirtualBox">virtualbox</a>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline73" class="outline-3">
+<h3 id="orgheadline73"><span class="section-number-3">3.13</span> Programming Environment</h3>
+<div class="outline-text-3" id="text-3-13">
+</div><div id="outline-container-orgheadline70" class="outline-4">
+<h4 id="orgheadline70"><span class="section-number-4">3.13.1</span> Nodejs</h4>
+<div class="outline-text-4" id="text-3-13-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo pacman -S nodejs npm
+</pre>
+</div>
+</div>
+<div id="outline-container-orgheadline69" class="outline-5">
+<h5 id="orgheadline69"><span class="section-number-5">3.13.1.1</span> npm</h5>
+<div class="outline-text-5" id="text-3-13-1-1">
+<ul class="org-ul">
+<li><p>
+Npm sudoers
+To solve <a href="https://docs.npmjs.com/getting-started/fixing-npm-permissions">EACCES error</a>. 
+<b>WARNING!</b> Option 1 can be dangerous and definitely a bad practice, use <a href="https://docs.npmjs.com/getting-started/fixing-npm-permissions#option-2-change-npms-default-directory-to-another-directory">second</a> instead:
+</p>
+<ol class="org-ol">
+<li>Make a directory for global installations:</li>
+</ol>
+<div class="org-src-container">
+
+<pre class="src src-sh">mkdir ~/.npm-global
+</pre>
+</div>
+<ol class="org-ol">
+<li>Configure npm to use the new directory path:</li>
+</ol>
+<div class="org-src-container">
+
+<pre class="src src-sh">npm config set prefix <span style="color: #2d9574;">'~/.npm-global'</span>
+</pre>
+</div>
+<ol class="org-ol">
+<li>Open or create a <code>~/.zprofile</code> and add this line:</li>
+</ol>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span style="color: #3a81c3;">export</span> <span style="color: #715ab1;">PATH</span>=~/.npm-global/bin:$<span style="color: #715ab1;">PATH</span>
+</pre>
+</div>
+<ol class="org-ol">
+<li>Update your system variables:</li>
+</ol>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span style="color: #3a81c3;">source</span> ~/.zprofile
+</pre>
+</div>
+<p>
+Now you can use <code>npm -g</code> without sudo, test it with any package:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">npm i -g gulp react react-native tern eslint babel-eslint eslint-plugin-react js-beautify
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline71" class="outline-4">
+<h4 id="orgheadline71"><span class="section-number-4">3.13.2</span> Java</h4>
+<div class="outline-text-4" id="text-3-13-2">
+<p>
+<a href="https://wiki.archlinux.org/index.php/Java">Archwiki</a>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo pacman -S jre8-openjdk-headless <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">install only java environment without GUI</span>
+</pre>
+</div>
+<p>
+Now you need to source from the command line or by logging out/in.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span style="color: #3a81c3;">source</span> /etc/profile
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline72" class="outline-4">
+<h4 id="orgheadline72"><span class="section-number-4">3.13.3</span> Android development</h4>
+<div class="outline-text-4" id="text-3-13-3">
+<p>
+There are 3 steps that need to be performed before you can develop Android applications on your Arch Linux box:
+</p>
+<ul class="org-ul">
+<li><p>
+Install the Android SDK core component,
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">yaourt -S --noconfirm android-sdk android-sdk-platform-tools android-sdk-build-tools
+</pre>
+</div>
+<p>
+Android SDK users group:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">groupadd sdkusers
+</pre>
+</div>
+<p>
+Add your user into this group:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">gpasswd -a &lt;user&gt; sdkusers
+</pre>
+</div>
+<p>
+Change folder's group:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">chown -R :sdkusers /opt/android-sdk/
+</pre>
+</div>
+<div class="org-src-container">
+
+<pre class="src src-sh">chmod -R g+w /opt/android-sdk/ <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Change permissions of the folder so the user that was just added to the group will be able to write in it:</span>
+</pre>
+</div></li>
+
+<li><p>
+Install one or <a href="https://wiki.archlinux.org/index.php/Android#Android_SDK_platform_API">several</a> Android SDK PLatform packages: 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">yaourt -S --noconfirm android-platform
+</pre>
+</div></li>
+
+<li><p>
+Install NDK
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">gpg --keyserver pgp.mit.edu --recv-keys F7E48EDB <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">add keyring first for ncurses5-compat-libs</span>
+yaourt -S android-ndk
+</pre>
+</div></li>
+
+<li><p>
+Install one of the IDEs compatible with the Android SDK.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">yaourt -S android-studio genymotion
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
