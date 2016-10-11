@@ -1,7 +1,7 @@
-# #+TITLE:  Arch Linux no DE install guide
+# #+TITLE: Arch Linux no DE install guide
 # #+AUTHOR: Nicholas Glazer
-# #+EMAIL:  glazer.nicholas@gmail.com
-# #+DATE:   2016-08-25
+# #+EMAIL: glazer.nicholas@gmail.com
+# #+DATE: 2016-08-25
 
 #+DESCRIPTION: This document catalogs a set of tips and tricks for composing documents in Org mode.
 #+KEYWORDS: arch, archlinux, quick reference, cheat sheet, recommended practices, arch intall guide, arch linux manual, no desktop environment, arch cheat sheet
@@ -36,7 +36,7 @@
     I assumed that you already have a bootable flash drive.
     If not, check [[https://wiki.archlinux.org/index.php/disk_cloning][dd]] and the official website for arch [[https://www.archlinux.org/download/][downloading]].
 *** BIOS config
-    So the very first step will be to load the flash drive.
+    Load the flash drive. \\
     You will need to change the boot priority in BIOS. And just after reboot, press =F2= or =del= to see the BIOS menu.
 *** Kernel boot options
     To avoid problems with tiny fonts or fan speed, better to run the new install with the kernel option which will disable console frame buffer.
@@ -86,22 +86,20 @@
     └─sdc1   8:33   1   7.5G  0 part
     #+end_example
 **** Partitioning
-     First you need to wipe your disks:
+     If you want clean install you need to wipe your disks:
      #+BEGIN_SRC sh
-     gdisk /dev/sdX # where X is your partition name 
+     gdisk /dev/sdX # where X is your drive name 
      #+END_SRC
-     Press =enter= first, then =x= for advanced config and =z= for zap.
+     Press =RET= first, then =x= for advanced config and =z= for zap.
      #+begin_warning
-     This may destroy data on your disk.
+     This will destroy data on your disk.
      #+end_warning
-
      #+begin_tip
      Sometimes you mess up with your ~root~ and want to reinstall the system, but you want to keep your ~/home~ directory untouched. You can do it easily. Wipe only *sda* and do nothing with *sdb*.
      #+end_tip
-
      And now create a new one:
      #+BEGIN_SRC sh
-     cgdisk /dev/sdX # where X is your partition name
+     cgdisk /dev/sdX # where X is your drive name
      #+END_SRC
 ***** SSD
       I will use *sda* (SSD) as a place for system files, for which speed is critical: bootstraping system, sysetem programs, etc...
@@ -114,7 +112,7 @@
       - *sda1* Should be exactly ~EF00~. Will boot the system.
       - *sda2* For my ~root~ I'd set 60G, you will be fine with even less. So if you may want to divide space for other distros (e.g. gentoo, ubuntu, fedora, etc..), 30G should be enough.
       - *sda3* This one is for another distro.
-      - I'd left *sda4* for Windows. I will make double boot later(not included to this guide).
+      - I'd left *sda4* for Windows. I will make double boot(not included to this guide).
       #+begin_attention
       I decided to make dual boot with Windows 10 for playing games and other weird things like photoshop. And I don't really want to use [[https://wiki.archlinux.org/index.php/Wine][wine]]. \\
       So in case you want just Arch Linux on your machine, ignore Windows partition steps.
@@ -177,15 +175,15 @@
     #+END_SRC
 *** Mirrorlist
     It's preferable to download data fast, that's why I want to use fastest [[https://wiki.archlinux.org/index.php/mirrors#List_by_speed][mirrors]]. \\
-    Backup first
+    Backup first:
     #+BEGIN_SRC sh
     cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
     #+END_SRC
-    Uncommenting
+    Uncommenting:
     #+BEGIN_SRC sh
     sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.backup
     #+END_SRC
-    Ranking
+    Ranking:
     #+BEGIN_SRC sh
     rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
     #+END_SRC

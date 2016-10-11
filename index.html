@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-10-10 Mon 20:52 -->
+<!-- 2016-10-11 Tue 14:03 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title></title>
@@ -317,7 +317,7 @@ If not, check <a href="https://wiki.archlinux.org/index.php/disk_cloning">dd</a>
 <h3 id="orgheadline2"><span class="section-number-3">1.2</span> BIOS config</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
-So the very first step will be to load the flash drive.
+Load the flash drive. <br  />
 You will need to change the boot priority in BIOS. And just after reboot, press <code>F2</code> or <code>del</code> to see the BIOS menu.
 </p>
 </div>
@@ -421,36 +421,34 @@ sdc      8:32   1   7.5G  0 disk                   *Flash Drive*
 <h4 id="orgheadline9"><span class="section-number-4">1.7.1</span> Partitioning</h4>
 <div class="outline-text-4" id="text-1-7-1">
 <p>
-First you need to wipe your disks:
+If you want clean install you need to wipe your disks:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">gdisk /dev/sdX <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">where X is your partition name</span>
+<pre class="src src-sh">gdisk /dev/sdX <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">where X is your drive name</span>
 </pre>
 </div>
 <p>
-Press <code>enter</code> first, then <code>x</code> for advanced config and <code>z</code> for zap.
+Press <code>RET</code> first, then <code>x</code> for advanced config and <code>z</code> for zap.
 </p>
 <div class="warning">
 <p>
-This may destroy data on your disk.
+This will destroy data on your disk.
 </p>
 
 </div>
-
 <div class="tip">
 <p>
 Sometimes you mess up with your <code>root</code> and want to reinstall the system, but you want to keep your <code>/home</code> directory untouched. You can do it easily. Wipe only <b>sda</b> and do nothing with <b>sdb</b>.
 </p>
 
 </div>
-
 <p>
 And now create a new one:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">cgdisk /dev/sdX <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">where X is your partition name</span>
+<pre class="src src-sh">cgdisk /dev/sdX <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">where X is your drive name</span>
 </pre>
 </div>
 </div>
@@ -514,7 +512,7 @@ I will use <b>sda</b> (SSD) as a place for system files, for which speed is crit
 <li><b>sda1</b> Should be exactly <code>EF00</code>. Will boot the system.</li>
 <li><b>sda2</b> For my <code>root</code> I'd set 60G, you will be fine with even less. So if you may want to divide space for other distros (e.g. gentoo, ubuntu, fedora, etc..), 30G should be enough.</li>
 <li><b>sda3</b> This one is for another distro.</li>
-<li>I'd left <b>sda4</b> for Windows. I will make double boot later(not included to this guide).</li>
+<li>I'd left <b>sda4</b> for Windows. I will make double boot(not included to this guide).</li>
 </ul>
 <div class="attention">
 <p>
@@ -687,7 +685,7 @@ And enable <code>SWAP</code>:
 <div class="outline-text-3" id="text-2-2">
 <p>
 It's preferable to download data fast, that's why I want to use fastest <a href="https://wiki.archlinux.org/index.php/mirrors#List_by_speed">mirrors</a>. <br  />
-Backup first
+Backup first:
 </p>
 <div class="org-src-container">
 
@@ -695,7 +693,7 @@ Backup first
 </pre>
 </div>
 <p>
-Uncommenting
+Uncommenting:
 </p>
 <div class="org-src-container">
 
@@ -703,7 +701,7 @@ Uncommenting
 </pre>
 </div>
 <p>
-Ranking
+Ranking:
 </p>
 <div class="org-src-container">
 
