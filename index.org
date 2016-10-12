@@ -102,7 +102,7 @@
      cgdisk /dev/sdX # where X is your drive name
      #+END_SRC
 ***** SSD
-      I will use *sda* (SSD) as a place for system files, for which speed is critical: bootstraping system, sysetem programs, etc...
+      I will use *sda* (SSD) as a place for system files, for which speed is critical: bootstraping system, system programs, etc...
       | #    | size      | Fs type | name |
       |------+-----------+---------+------|
       | sda1 | 1g        |    EF00 | boot |
@@ -154,8 +154,11 @@
          reboot
          #+END_SRC
 ** Installing Arch
+    #+begin_warning
+    Good idea will be to [[https://wiki.archlinux.org/index.php/Installation_guide][Archwiki installation guide]] first.
+    #+end_warning
 *** Mounting partitions
-    So the first thing we want to do is to assign ~/mnt~ to the ~root~ partition:
+    We want to assign ~/mnt~ to the ~root~ partition:
     #+BEGIN_SRC sh
     mount /dev/sda2 /mnt
     #+END_SRC
@@ -211,7 +214,7 @@
     nano /mnt/etc/fstab
     #+END_SRC
     #+begin_hint
-    While this is first editing with [[https://wiki.archlinux.org/index.php/nano][nano]]. You should know at least how to save and exit it:
+    While this is the first editing with [[https://wiki.archlinux.org/index.php/nano][nano]]. You should know at least how to save and exit it:
     - ctrl+o (save)
     - ctrl+x (exit)
     #+end_hint
@@ -304,29 +307,30 @@
     #Include = /etc/pacman.d/mirrorlist
     #+END_SRC
     #+begin_tip
-    While we are still inside ~pacman.conf~ file, let’s also add the [[https://wiki.archlinux.org/index.php/Arch_User_Repository][Arch User Repository (AUR)]], so we can easily install packages from AUR.
-    Add these lines at the bottom of the file:
-    #+BEGIN_SRC sh
-    [archlinuxfr]
-    Server = http://repo.archlinux.fr/$arch
-    SigLevel = Never
-    #+END_SRC
-    Also you may want to add [[https://wiki.archlinux.org/index.php/Infinality][infinality]] font libraries:
-    #+BEGIN_SRC sh
-    #[infinality-bundle] # Add this if you have i686 architecture.
-    #Server = http://bohoomil.com/repo/$arch
-    #SigLevel = Never
+    While we are still inside ~pacman.conf~ file, lets also add some useful [[https://wiki.archlinux.org/index.php/Unofficial_user_repositories][unofficial repositories]].
+
+    - You may want to add [[https://wiki.archlinux.org/index.php/Infinality][infinality]] font libraries.
+      Add these lines at the bottom of the file:
+      #+BEGIN_SRC sh
+      #[infinality-bundle] # Add this if you have i686 architecture.
+      #Server = http://bohoomil.com/repo/$arch
+      #SigLevel = Never
     
-    [infinality-bundle-multilib]
-    Server = http://bohoomil.com/repo/multilib/$arch
-    SigLevel = Never
+      [infinality-bundle-multilib]
+      Server = http://bohoomil.com/repo/multilib/$arch
+      SigLevel = Never
     
-    [infinality-bundle-fonts]
-    Server = http://bohoomil.com/repo/fonts
-    SigLevel = Never
-    #+END_SRC
+      [infinality-bundle-fonts]
+      Server = http://bohoomil.com/repo/fonts
+      SigLevel = Never
+      #+END_SRC
+
+    - To have pacman animation add this under the 'Misc options':
+      #+BEGIN_SRC org
+      ILoveCandy
+      #+END_SRC
     #+end_tip
-    And update the system. We should [[https://wiki.archlinux.org/index.php/mirrors#Force_pacman_to_refresh_the_package_lists][let system to know about changes]].
+    And update the system. We should [[https://wiki.archlinux.org/index.php/mirrors#Force_pacman_to_refresh_the_package_lists][let system know about the changes]].
     #+BEGIN_SRC sh
     pacman -Syyu
     #+END_SRC
@@ -411,7 +415,7 @@
      I'm personally prefer [[https://wiki.archlinux.org/index.php/Connman][connman]], there are few other options [[https://wiki.archlinux.org/index.php/netctl#Installation][netctl]], [[https://wiki.archlinux.org/index.php/NetworkManager][NetworkManager]], [[https://wiki.archlinux.org/index.php/Wicd][Wicd]] and even standalone [[https://wiki.archlinux.org/index.php/systemd-networkd][systemd-networkd]].
      Connman itself a command-line network manager. If you still cannot choose, there are few things [[https://github.com/wavexx/connman-notify#why-connman][why you should use it]].
      #+BEGIN_SRC sh
-     pacman -S connman wpa_supplicant # later you may want to install connman_dmenu for ez wifi setup: yaourt -S connman_dmenu 
+     pacman -S connman wpa_supplicant # later you may want to install connman_dmenu for ez wifi setup: pacaur -S connman_dmenu 
      #+END_SRC
      Wired connection support is out of the box. \\
      For wifi setup you will need to do few more steps. 
@@ -478,29 +482,52 @@
 ** Environment
 *** Intro
     So in this part you have a lot of different choices depend on your needs. If you are not a strong Linux user,
-    better decision will be to use [[https://wiki.archlinux.org/index.php/Desktop_environment][Desktop Environment]] like [[https://wiki.archlinux.org/index.php/GNOME][GNOME]] instead of just [[https://wiki.archlinux.org/index.php/Desktop_environment][Window Manager]]. However you still can [[https://wiki.archlinux.org/index.php/Awesome#With_GNOME][use tiling WM like awesome with GNOME]].
+    better decision will be to use [[https://wiki.archlinux.org/index.php/Desktop_environment][Desktop Environment]] like [[https://wiki.archlinux.org/index.php/GNOME][GNOME]] instead of just [[https://wiki.archlinux.org/index.php/Desktop_environment][Window Manager]]. However you still can [[https://wiki.archlinux.org/index.php/Awesome#With_GNOME][use tiling WM like Awesome with GNOME]].
     #+begin_hint
     For dvorak users! \\
-    Change keyboard after reboot:
+    To change keyboard after reboot:
     #+BEGIN_SRC sh
     setxkbmap dvorak
     #+END_SRC
     #+end_hint
 *** Dependencies
+    #+begin_attention
+    ~--noconfirm~ flag used here. If you're installing packages form AUR and you trust them, you can use this to autoinstall. But you still may want to check build scripts by yourself.
+    #+end_attention
     #+begin_note
     Help needed! \\
     This step is not completed yet, more packages should be added.
     #+end_note
     Lets install some important dependencies:
     #+BEGIN_SRC sh
-    sudo pacman -S yaourt zsh openssh termite rfkill unzip tree
+    sudo pacman -S zsh openssh expac termite rfkill unzip tree --noconfirm
     #+END_SRC
-    #+begin_attention
-    ~--noconfirm~ flag used here. If you trust packages, you can use this to autoinstall. But you still may want to check build scripts by yourself.
-    #+end_attention
-    #+BEGIN_SRC sh
-    yaourt -S --noconfirm feh emacs htop lm_sensors thefuck connman_dmenu-git xclip aspell-en
-    #+END_SRC
+**** AUR
+     Read more about [[https://wiki.archlinux.org/index.php/Arch_User_Repository][Arch User Repository]].
+     #+begin_attention
+     According to [[https://wiki.archlinux.org/index.php/AUR_helpers#Comparison_table][AUR helpers comparison table]] you can choose AUR wrapper for your taste.
+     #+end_attention
+     To install [[https://github.com/rmarquis/pacaur][pacaur]] you have to do several steps. \\
+     - Install cower first and then pacaur: ::
+          Fetch Dave Reisner's key to be able to verify cower:
+          #+BEGIN_SRC sh
+	        gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 487EACC08557AD082088DABA1EB2638FF56C0C53
+          #+end_SRC
+          Clone with git and install with [[https://wiki.archlinux.org/index.php/Makepkg][makepkg]]:
+          #+BEGIN_SRC sh
+          cd && mkdir pacaur
+	        git clone "https://aur.archlinux.org/cower.git"
+          cd cower
+          makepkg --syncdeps --install --noconfirm
+          git clone "https://aur.archlinux.org/pacaur.git"
+          cd pacaur
+          makepkg --syncdeps --install --noconfirm
+          cd && rm -rf pacaur
+          #+END_SRC
+          Test it:
+          #+BEGIN_SRC sh
+          pacaur -S --noconfirm feh htop lm_sensors thefuck connman_dmenu-git xclip aspell-en
+          #+END_SRC
 *** Drivers
 **** Video
      #+begin_warning
@@ -546,7 +573,7 @@
 *****  Keyboard backlight
       [[https://wiki.archlinux.org/index.php/ASUS_Zenbook_Prime_UX31A#Using_asus-kbd-backlight_from_AUR][Asus-kbd-backlight]] one of the solutions that solved issues with keyboard backlight.
       #+BEGIN_SRC sh
-      yaourt -S asus-kbd-backlight
+      pacaur -S asus-kbd-backlight
       #+END_SRC
       - Allow users to change the brightness ::
       #+BEGIN_SRC sh
@@ -588,7 +615,7 @@
      The config is basically the [[https://wiki.archlinux.org/index.php/Haskell][Haskell]] file. So you should know Haskell a little bit to configure it without problems. \\
      For better understanding you may want to read [[http://beginners-guide-to-xmonad.readthedocs.io/index.html][this beginners tutorial]].
      #+BEGIN_SRC sh
-     yaourt -S --noconfirm xmonad xmonad-contrib xmobar dmenu2 dzen2 stalonetray conky compton
+     pacaur -S --noconfirm xmonad xmonad-contrib xmobar dmenu2 dzen2 stalonetray conky compton
      #+END_SRC
 **** Gnome
      Read [[*Intro][intro]] above.
@@ -606,7 +633,7 @@
 **** Awesome
      If you have never used tiling Window Managers before, read this [[https://awesomewm.org/wiki/My_first_awesome#Change_the_theme][beginners guide]] for [[https://wiki.archlinux.org/index.php/awesome%0Ahttps://wiki.archlinux.org/index.php/awesome][awesomeWM]].
      #+BEGIN_SRC org
-     yaourt -S --noconfirm awesome vicious shifty
+     pacaur -S --noconfirm awesome vicious shifty
      #+END_SRC
    - Themes ::
      This one is pretty good.
@@ -639,7 +666,7 @@
     sudo pacman -S termite w3m tmux
     #+END_SRC
 **** zsh
-     [[https://github.com/sorin-ionescu/prezto][Prezto]] looks much lightweight and faster solution than [[https://github.com/robbyrussell/oh-my-zsh][oh-my-zsh]].
+     [[https://github.com/sorin-ionescu/prezto][Prezto]] looks much lightweight and faster solution than [[https://github.com/robbyrussell/oh-my-zsh][oh-my-zsh]]. //
      Run Zsh first:
      #+BEGIN_SRC sh
      zsh
@@ -761,15 +788,15 @@
 **** Browser
      - Chromium ::
        #+BEGIN_SRC sh
-       yaourt -S --noconfirm chromium chromium-pepper-flash
+       pacaur -S --noconfirm chromium chromium-pepper-flash
        #+END_SRC
      - Firefox :: 
        #+BEGIN_SRC sh
-       yaourt -S --noconfirm firefox
+       pacaur -S --noconfirm firefox
        #+END_SRC
      - Network ::
        #+BEGIN_SRC sh
-       yaourt -S tor zeronet
+       pacaur -S tor zeronet
        #+END_SRC
 **** Wallpaper
      We have already installed [[https://wiki.archlinux.org/index.php/Feh][feh]].
@@ -802,27 +829,27 @@
      #+END_SRC
 **** Screenshots
      #+BEGIN_SRC sh
-     yaourt -S --noconfirm scrot
+     pacaur -S --noconfirm scrot
      #+END_SRC
 **** Audio
      - Cmus ::
           [[https://wiki.archlinux.org/index.php/Cmus][Cmus]] command line music player.
           #+BEGIN_SRC sh
-          yaourt -S cmus
+          pacaur -S cmus
           #+END_SRC
      - Visualizer: ::
           [[https://github.com/karlstav/cava][Cava]] audio visualizer.
           #+BEGIN_SRC sh
-          yaourt -S cava-git
+          pacaur -S cava-git
           #+END_SRC
 **** Torrent tracker
-     If you want rtorrent without vim keybindings, you should install ~yaourt -S rtorrent~.
+     If you want rtorrent without vim keybindings, you should install ~pacaur -S rtorrent~.
      #+BEGIN_SRC sh
-     yaourt -S --noconfirm rtorrent-vi-color
+     pacaur -S --noconfirm rtorrent-vi-color
      #+END_SRC
 **** Media transfer protocol
      #+BEGIN_SRC sh
-     yaourt -S libmpt simple-mtpfs
+     pacaur -S libmpt simple-mtpfs
      #+END_SRC
 **** Virtualbox
      #+BEGIN_SRC sh
@@ -876,7 +903,7 @@
      There are 3 steps that need to be performed before you can develop Android applications on your Arch Linux box:
      - Install the Android SDK core component: ::
           #+BEGIN_SRC sh
-          yaourt -S --noconfirm android-sdk android-sdk-platform-tools android-sdk-build-tools
+          pacaur -S --noconfirm android-sdk android-sdk-platform-tools android-sdk-build-tools
           #+END_SRC
           Android SDK users group:
           #+BEGIN_SRC sh
@@ -897,19 +924,19 @@
 
      - Install one or [[https://wiki.archlinux.org/index.php/Android#Android_SDK_platform_API][several]] Android SDK PLatform packages: ::
           #+BEGIN_SRC sh
-          yaourt -S --noconfirm android-platform
+          pacaur -S --noconfirm android-platform
           #+END_SRC
 
      - Install one of the IDEs compatible with the Android SDK: ::
           #+BEGIN_SRC sh
-          yaourt -S android-studio genymotion 
+          pacaur -S android-studio genymotion 
           #+END_SRC
 
      - Install [[https://developer.android.com/ndk/index.html][NDK]] (optional) ::
           Add keyring for ncurses5-compat-libs:
           #+BEGIN_SRC sh
           gpg --keyserver pgp.mit.edu --recv-keys F7E48EDB
-          yaourt -S android-ndk
+          pacaur -S android-ndk
           #+END_SRC
 
 
