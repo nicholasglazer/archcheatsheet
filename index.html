@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-10-13 Thu 17:22 -->
+<!-- 2016-10-15 Sat 15:30 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>Arch Linux no DE install guide</title>
@@ -350,7 +350,7 @@ As a <a href="https://wiki.archlinux.org/index.php/Dvorak">dvorak</a> keyboard l
 </div>
 <div class="attention">
 <p>
-If you use <code>querty</code>, skip this step. 
+If you use <code>qwerty</code>, skip this step. 
 </p>
 
 </div>
@@ -649,7 +649,7 @@ Press <code>y</code> if you have this warning:
 <div class="outline-text-2" id="text-2">
 <div class="warning">
 <p>
-Good idea will be to read <a href="https://wiki.archlinux.org/index.php/Installation_guide">Archwiki installation guide</a> first.
+Good idea to read <a href="https://wiki.archlinux.org/index.php/Installation_guide">Archwiki installation guide</a> first.
 </p>
 
 </div>
@@ -698,29 +698,27 @@ And enable <code>SWAP</code>:
 <div class="outline-text-3" id="text-2-2">
 <p>
 It's preferable to download data fast, that's why I want to use fastest <a href="https://wiki.archlinux.org/index.php/mirrors#List_by_speed">mirrors</a>. <br  />
-Backup first:
+</p>
+<dl class="org-dl">
+<dt>Backup:</dt><dd><p>
+         uoeu
 </p>
 <div class="org-src-container">
 
 <pre class="src src-sh">cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
 </pre>
-</div>
-<p>
-Uncommenting:
-</p>
-<div class="org-src-container">
+</div></dd>
+<dt>Uncommenting:</dt><dd><div class="org-src-container">
 
 <pre class="src src-sh">sed -i <span style="color: #2d9574;">'s/^#Server/Server/'</span> /etc/pacman.d/mirrorlist.backup
 </pre>
-</div>
-<p>
-Ranking:
-</p>
-<div class="org-src-container">
+</div></dd>
+<dt>Ranking:</dt><dd><div class="org-src-container">
 
 <pre class="src src-sh">rankmirrors -n <span style="color: #4e3163;">6</span> /etc/pacman.d/mirrorlist.backup &gt; /etc/pacman.d/mirrorlist
 </pre>
-</div>
+</div></dd>
+</dl>
 <div class="note">
 <p>
 If ranking process took less then (&lt;1min), you should check your internet connection if it's available. This process may take up to 10 min.
@@ -1180,13 +1178,24 @@ The root options is very delicate part, you should double check them for your la
 <h4 id="orgheadline32"><span class="section-number-4">2.15.1</span> Connman</h4>
 <div class="outline-text-4" id="text-2-15-1">
 <p>
-I'm personally prefer <a href="https://wiki.archlinux.org/index.php/Connman">connman</a>, there are few other options <a href="https://wiki.archlinux.org/index.php/netctl#Installation">netctl</a>, <a href="https://wiki.archlinux.org/index.php/NetworkManager">NetworkManager</a>, <a href="https://wiki.archlinux.org/index.php/Wicd">Wicd</a> and even standalone <a href="https://wiki.archlinux.org/index.php/systemd-networkd">systemd-networkd</a>.
+Personally, I prefer <a href="https://wiki.archlinux.org/index.php/Connman">connman</a>, there are few other options <a href="https://wiki.archlinux.org/index.php/netctl#Installation">netctl</a>, <a href="https://wiki.archlinux.org/index.php/NetworkManager">NetworkManager</a>, <a href="https://wiki.archlinux.org/index.php/Wicd">Wicd</a> and even standalone <a href="https://wiki.archlinux.org/index.php/systemd-networkd">systemd-networkd</a>.
 Connman itself a command-line network manager. If you still cannot choose, there are few things <a href="https://github.com/wavexx/connman-notify#why-connman">why you should use it</a>.
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">pacman -S connman wpa_supplicant <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">later you may want to install connman_dmenu for ez wifi setup: pacaur -S connman_dmenu</span>
+<pre class="src src-sh">pacman -S connman wpa_supplicant
 </pre>
+</div>
+<div class="note">
+<p>
+Later you may want to install connman<sub>dmenu</sub> for ez wifi setup: 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">pacaur -S connman_dmenu
+</pre>
+</div>
+
 </div>
 <p>
 Wired connection support is out of the box. <br  />
@@ -1231,7 +1240,7 @@ systemctl disable netctl.service <span style="color: #2aa1ae; background-color: 
 <h4 id="orgheadline33"><span class="section-number-4">2.15.2</span> Netctl</h4>
 <div class="outline-text-4" id="text-2-15-2">
 <p>
-I felt some pain with ntectl bugs, trying to configure everything to work properly. And it takes too much time. But just in case you still need/want this one.
+I felt some pain with ntectl bugs, configure everything to work properly takes too much time. But just in case you still need/want this one.
 </p>
 <dl class="org-dl">
 <dt>Checking drivers:</dt><dd><p>
@@ -1311,8 +1320,8 @@ reboot
 <h3 id="orgheadline37"><span class="section-number-3">3.1</span> Intro</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
-So in this part you have a lot of different choices depend on your needs. If you are not a strong Linux user,
-better decision will be to use <a href="https://wiki.archlinux.org/index.php/Desktop_environment">Desktop Environment</a> like <a href="https://wiki.archlinux.org/index.php/GNOME">GNOME</a> instead of just <a href="https://wiki.archlinux.org/index.php/Desktop_environment">Window Manager</a>. However you still can <a href="https://wiki.archlinux.org/index.php/Awesome#With_GNOME">use tiling WM like Awesome with GNOME</a>.
+In this part you have a lot of different choices depend on your needs. <br  />
+If you are new to Linux, best decision will be to use <a href="https://wiki.archlinux.org/index.php/Desktop_environment">Desktop Environment</a> like <a href="https://wiki.archlinux.org/index.php/GNOME">GNOME</a> instead of just <a href="https://wiki.archlinux.org/index.php/Desktop_environment">Window Manager</a>. However you still can <a href="https://wiki.archlinux.org/index.php/Awesome#With_GNOME">use tiling WM like Awesome with GNOME</a>.
 </p>
 <div class="hint">
 <p>
@@ -1333,7 +1342,7 @@ To change keyboard after reboot:
 <div class="outline-text-3" id="text-3-2">
 <div class="attention">
 <p>
-<code>--noconfirm</code> flag used here. If you're installing packages form AUR and you trust them, you can use this to autoinstall. But you still may want to check build scripts by yourself.
+<code>--noconfirm</code> flag used here. If you're installing packages form AUR and you trust them, you can use this to autoinstall packages. But you still may want to check build scripts by yourself.
 </p>
 
 </div>
@@ -1361,12 +1370,12 @@ Read more about <a href="https://wiki.archlinux.org/index.php/Arch_User_Reposito
 </p>
 <div class="attention">
 <p>
-According to <a href="https://wiki.archlinux.org/index.php/AUR_helpers#Comparison_table">AUR helpers comparison table</a> you can choose AUR wrapper for your taste.
+According to <a href="https://wiki.archlinux.org/index.php/AUR_helpers#Comparison_table">AUR helpers comparison table</a> you can choose AUR wrapper by your taste.
 </p>
 
 </div>
 <p>
-To install <a href="https://github.com/rmarquis/pacaur">pacaur</a> you have to do several steps. <br  />
+To install <a href="https://github.com/rmarquis/pacaur">pacaur</a> you have to make several steps. <br  />
 </p>
 <dl class="org-dl">
 <dt>Install cower first and then pacaur:</dt><dd><p>
@@ -1412,19 +1421,34 @@ Test it:
 <div class="outline-text-4" id="text-3-3-1">
 <div class="warning">
 <p>
-Be careful, this part may cause problems. <br  />
-If you don't know what you are doing, you should <b>read <a href="https://wiki.archlinux.org/index.php/bumblebee#Installing_Bumblebee_with_Intel.2FNVIDIA">bumblebee</a> article first!</b>
+<b>Be careful, this part may cause problems!</b>
 </p>
 
 </div>
 <p>
-Install dependencies:
+Check your video card first: 
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">sudo pacman -S bumblebee mesa xf86-video-intel nvidia lib32-virtualgl lib32-nvidia-utils lib32-mesa-libgl
+<pre class="src src-sh">lspci -k | grep -A <span style="color: #4e3163;">2</span> -E <span style="color: #2d9574;">"(VGA|3D)"</span>
 </pre>
 </div>
+<p>
+If you have <a href="https://wiki.archlinux.org/index.php/NVIDIA">NVIDIA</a> video card, follow this steps:
+</p>
+<div class="attention">
+<p>
+If you don't know what you are doing, you should read <a href="https://wiki.archlinux.org/index.php/bumblebee#Installing_Bumblebee_with_Intel.2FNVIDIA">bumblebee</a> article first!
+</p>
+
+</div>
+<dl class="org-dl">
+<dt>Install dependencies:</dt><dd><div class="org-src-container">
+
+<pre class="src src-sh">sudo pacman -S bumblebee mesa xf86-video-intel nvidia lib32-virtualgl lib32-nvidia-utils lib32-mesa-libgl
+</pre>
+</div></dd>
+</dl>
 <div class="note">
 <ul class="org-ul">
 <li>Pick <code>mesa-libgl</code> if conflict.</li>
@@ -1432,22 +1456,18 @@ Install dependencies:
 </ul>
 
 </div>
-<p>
-Add username to bumblebee group:
-</p>
-<div class="org-src-container">
+<dl class="org-dl">
+<dt>Add username to bumblebee group:</dt><dd><div class="org-src-container">
 
 <pre class="src src-sh">gpasswd -a USER bumblebee
 </pre>
-</div>
-<p>
-Enable bumblebee service:
-</p>
-<div class="org-src-container">
+</div></dd>
+<dt>Enable bumblebee service:</dt><dd><div class="org-src-container">
 
 <pre class="src src-sh">sudo systemctl enable bumblebeed.service
 </pre>
-</div>
+</div></dd>
+</dl>
 </div>
 </div>
 <div id="outline-container-orgheadline41" class="outline-4">
@@ -1472,7 +1492,7 @@ For touchpad <b>tap-to-click</b> use <a href="https://wiki.archlinux.org/index.p
 <dl class="org-dl">
 <dt>Install <a href="https://wiki.archlinux.org/index.php/PulseAudio#Installation">pulseaudio</a> and utils, and manage it</dt><dd><div class="org-src-container">
 
-<pre class="src src-sh">sudo pacman -S alsa-lib alsa-utils pulseaudio
+<pre class="src src-sh">sudo pacman -S alsa-utils pulseaudio
 </pre>
 </div></dd>
 <dt><a href="https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture#Unmute_with_alsamixer">Unmute</a> with alsamixer</dt><dd><div class="org-src-container">
@@ -1503,23 +1523,19 @@ For touchpad <b>tap-to-click</b> use <a href="https://wiki.archlinux.org/index.p
 </pre>
 </div>
 <dl class="org-dl">
-<dt>Allow users to change the brightness</dt><dd></dd>
-</dl>
-<div class="org-src-container">
+<dt>Allow users to change the brightness</dt><dd><div class="org-src-container">
 
 <pre class="src src-sh">sudo asus-kbd-backlight allowusers
 </pre>
-</div>
-<dl class="org-dl">
-<dt>And enable services</dt><dd></dd>
-</dl>
-<div class="org-src-container">
+</div></dd>
+<dt>And enable services</dt><dd><div class="org-src-container">
 
 <pre class="src src-sh">sudo systemctl daemon-reload
 sudo systemctl start asus-kbd-backlight.service
 sudo systemctl enable asus-kbd-backlight.service
 </pre>
-</div>
+</div></dd>
+</dl>
 </div>
 </div>
 <div id="outline-container-orgheadline44" class="outline-5">
@@ -1603,7 +1619,7 @@ Read <a href="#orgheadline37">intro</a> above.
 </p>
 <div class="note">
 <p>
-This configurations was not tested by me properly. So if you have any suggestions, you can share your experience, feel free to contribute.
+This configurations was not tested by me properly. So if you have any suggestions, you can share your experience, feel free to contribute. <br  />
 </p>
 
 </div>
@@ -1635,7 +1651,7 @@ If you have never used tiling Window Managers before, read this <a href="https:/
 </div>
 <dl class="org-dl">
 <dt>Themes</dt><dd><p>
-     This one is pretty good.
+          This one is pretty good.
 </p>
 <div class="org-src-container">
 
@@ -1910,7 +1926,7 @@ Infinality ArchWiki says that <code>/etc/fonts/local.conf</code> should either n
 <div class="outline-text-4" id="text-3-10-1">
 <div class="warning">
 <p>
-Be aware of <a href="https://wiki.archlinux.org/index.php/Infinality#Emacs">Noto Font</a> for emacs. First time I didn't realized that this may cause a troubles. I picked Noto font and I can tell you for sure that spacemacs looks pretty ugly with this font family.
+Be aware of <a href="https://wiki.archlinux.org/index.php/Infinality#Emacs">Noto Font</a> for emacs. First time I didn't realized that this may cause a problems. I picked Noto font and I can tell you for sure that spacemacs looks pretty ugly with this font family.
 </p>
 
 </div>
@@ -2262,7 +2278,7 @@ pacaur -S android-ndk
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Nicholas Glazer</p>
-<p class="date">Created: 2016-10-13 Thu 17:22</p>
+<p class="date">Created: 2016-10-15 Sat 15:30</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

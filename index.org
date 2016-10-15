@@ -40,7 +40,7 @@
     loadkeys dvorak
     #+END_SRC
     #+begin_attention
-    If you use =querty=, skip this step. 
+    If you use =qwerty=, skip this step. 
     #+end_attention
 *** Network connection
     After archiso has booted you want to make internet connection: 
@@ -148,7 +148,7 @@
          #+END_SRC
 ** Installing Arch
     #+begin_warning
-    Good idea will be to read [[https://wiki.archlinux.org/index.php/Installation_guide][Archwiki installation guide]] first.
+    Good idea to read [[https://wiki.archlinux.org/index.php/Installation_guide][Archwiki installation guide]] first.
     #+end_warning
 *** Mounting partitions
     We want to assign ~/mnt~ to the ~root~ partition:
@@ -171,18 +171,19 @@
     #+END_SRC
 *** Mirrorlist
     It's preferable to download data fast, that's why I want to use fastest [[https://wiki.archlinux.org/index.php/mirrors#List_by_speed][mirrors]]. \\
-    Backup first:
-    #+BEGIN_SRC sh
-    cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
-    #+END_SRC
-    Uncommenting:
-    #+BEGIN_SRC sh
-    sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.backup
-    #+END_SRC
-    Ranking:
-    #+BEGIN_SRC sh
-    rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
-    #+END_SRC
+    - Backup: ::
+         uoeu
+         #+BEGIN_SRC sh
+         cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+         #+END_SRC
+    - Uncommenting: ::
+         #+BEGIN_SRC sh
+         sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.backup
+         #+END_SRC
+    - Ranking: :: 
+         #+BEGIN_SRC sh
+         rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
+         #+END_SRC
     #+begin_note
     If ranking process took less then (<1min), you should check your internet connection if it's available. This process may take up to 10 min.
     #+end_note
@@ -405,11 +406,17 @@
      #+end_warning
 *** Network
 **** Connman
-     I'm personally prefer [[https://wiki.archlinux.org/index.php/Connman][connman]], there are few other options [[https://wiki.archlinux.org/index.php/netctl#Installation][netctl]], [[https://wiki.archlinux.org/index.php/NetworkManager][NetworkManager]], [[https://wiki.archlinux.org/index.php/Wicd][Wicd]] and even standalone [[https://wiki.archlinux.org/index.php/systemd-networkd][systemd-networkd]].
+     Personally, I prefer [[https://wiki.archlinux.org/index.php/Connman][connman]], there are few other options [[https://wiki.archlinux.org/index.php/netctl#Installation][netctl]], [[https://wiki.archlinux.org/index.php/NetworkManager][NetworkManager]], [[https://wiki.archlinux.org/index.php/Wicd][Wicd]] and even standalone [[https://wiki.archlinux.org/index.php/systemd-networkd][systemd-networkd]].
      Connman itself a command-line network manager. If you still cannot choose, there are few things [[https://github.com/wavexx/connman-notify#why-connman][why you should use it]].
      #+BEGIN_SRC sh
-     pacman -S connman wpa_supplicant # later you may want to install connman_dmenu for ez wifi setup: pacaur -S connman_dmenu 
+     pacman -S connman wpa_supplicant  
      #+END_SRC
+     #+begin_note
+     Later you may want to install connman_dmenu for ez wifi setup: 
+     #+BEGIN_SRC sh
+     pacaur -S connman_dmenu 
+     #+END_SRC
+     #+end_note
      Wired connection support is out of the box. \\
      For wifi setup you will need to do few more steps. 
      #+BEGIN_SRC sh
@@ -433,7 +440,7 @@
      #+END_SRC
      #+end_attention
 **** Netctl
-     I felt some pain with ntectl bugs, trying to configure everything to work properly. And it takes too much time. But just in case you still need/want this one.
+     I felt some pain with ntectl bugs, configure everything to work properly takes too much time. But just in case you still need/want this one.
      - Checking drivers: ::
           Lets see our drivers, our goal is to find ~Network controller~
           #+BEGIN_SRC sh
@@ -474,8 +481,8 @@
     #+END_SRC
 ** Environment
 *** Intro
-    So in this part you have a lot of different choices depend on your needs. If you are not a strong Linux user,
-    better decision will be to use [[https://wiki.archlinux.org/index.php/Desktop_environment][Desktop Environment]] like [[https://wiki.archlinux.org/index.php/GNOME][GNOME]] instead of just [[https://wiki.archlinux.org/index.php/Desktop_environment][Window Manager]]. However you still can [[https://wiki.archlinux.org/index.php/Awesome#With_GNOME][use tiling WM like Awesome with GNOME]].
+    In this part you have a lot of different choices depend on your needs. \\
+    If you are new to Linux, best decision will be to use [[https://wiki.archlinux.org/index.php/Desktop_environment][Desktop Environment]] like [[https://wiki.archlinux.org/index.php/GNOME][GNOME]] instead of just [[https://wiki.archlinux.org/index.php/Desktop_environment][Window Manager]]. However you still can [[https://wiki.archlinux.org/index.php/Awesome#With_GNOME][use tiling WM like Awesome with GNOME]].
     #+begin_hint
     For dvorak users! \\
     To change keyboard after reboot:
@@ -485,7 +492,7 @@
     #+end_hint
 *** Dependencies
     #+begin_attention
-    ~--noconfirm~ flag used here. If you're installing packages form AUR and you trust them, you can use this to autoinstall. But you still may want to check build scripts by yourself.
+    ~--noconfirm~ flag used here. If you're installing packages form AUR and you trust them, you can use this to autoinstall packages. But you still may want to check build scripts by yourself.
     #+end_attention
     #+begin_note
     Help needed! \\
@@ -498,9 +505,9 @@
 **** AUR
      Read more about [[https://wiki.archlinux.org/index.php/Arch_User_Repository][Arch User Repository]].
      #+begin_attention
-     According to [[https://wiki.archlinux.org/index.php/AUR_helpers#Comparison_table][AUR helpers comparison table]] you can choose AUR wrapper for your taste.
+     According to [[https://wiki.archlinux.org/index.php/AUR_helpers#Comparison_table][AUR helpers comparison table]] you can choose AUR wrapper by your taste.
      #+end_attention
-     To install [[https://github.com/rmarquis/pacaur][pacaur]] you have to do several steps. \\
+     To install [[https://github.com/rmarquis/pacaur][pacaur]] you have to make several steps. \\
      - Install cower first and then pacaur: ::
           Fetch Dave Reisner's key to be able to verify cower:
           #+BEGIN_SRC sh
@@ -524,25 +531,32 @@
 *** Drivers
 **** Video
      #+begin_warning
-     Be careful, this part may cause problems. \\
-     If you don't know what you are doing, you should *read [[https://wiki.archlinux.org/index.php/bumblebee#Installing_Bumblebee_with_Intel.2FNVIDIA][bumblebee]] article first!*
+     *Be careful, this part may cause problems!*
      #+end_warning
-     Install dependencies:
+     Check your video card first: 
      #+BEGIN_SRC sh
-     sudo pacman -S bumblebee mesa xf86-video-intel nvidia lib32-virtualgl lib32-nvidia-utils lib32-mesa-libgl
+     lspci -k | grep -A 2 -E "(VGA|3D)"
      #+END_SRC
+     If you have [[https://wiki.archlinux.org/index.php/NVIDIA][NVIDIA]] video card, follow this steps:
+     #+begin_attention
+     If you don't know what you are doing, you should read [[https://wiki.archlinux.org/index.php/bumblebee#Installing_Bumblebee_with_Intel.2FNVIDIA][bumblebee]] article first!
+     #+end_attention
+     - Install dependencies: ::
+           #+BEGIN_SRC sh
+           sudo pacman -S bumblebee mesa xf86-video-intel nvidia lib32-virtualgl lib32-nvidia-utils lib32-mesa-libgl
+           #+END_SRC
      #+begin_note
      - Pick ~mesa-libgl~ if conflict.
      - Pick ~xf86-input-libinput~ if conflict, for the [[https://wiki.archlinux.org/index.php/ASUS_Zenbook_Pro_UX501#Touch_Pad][touchpad]].
-       #+end_note
-     Add username to bumblebee group:
-     #+BEGIN_SRC sh
-     gpasswd -a USER bumblebee
-     #+END_SRC
-     Enable bumblebee service:
-     #+BEGIN_SRC sh
-     sudo systemctl enable bumblebeed.service
-     #+END_SRC
+     #+end_note
+     - Add username to bumblebee group: ::
+           #+BEGIN_SRC sh
+           gpasswd -a USER bumblebee
+           #+END_SRC
+     - Enable bumblebee service: ::
+           #+BEGIN_SRC sh
+           sudo systemctl enable bumblebeed.service
+           #+END_SRC
 **** Touchpad
      For touchpad *tap-to-click* use [[https://wiki.archlinux.org/index.php/Libinput#Common_options][X11/xorg.conf.d/30-touchpad.conf]] you can also copy it from my [[https://github.com/NicholasGlazer/dotfiles][dotfiles]].
      #+BEGIN_SRC sh
@@ -552,7 +566,7 @@
      [[https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture#Installation][ALSA]] is a set of buit-in kernel modules, but after install it may be muted.
      - Install [[https://wiki.archlinux.org/index.php/PulseAudio#Installation][pulseaudio]] and utils, and manage it ::
        #+BEGIN_SRC sh
-       sudo pacman -S alsa-lib alsa-utils pulseaudio
+       sudo pacman -S alsa-utils pulseaudio
        #+END_SRC
      - [[https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture#Unmute_with_alsamixer][Unmute]] with alsamixer ::
        #+BEGIN_SRC sh
@@ -569,15 +583,16 @@
       pacaur -S asus-kbd-backlight
       #+END_SRC
       - Allow users to change the brightness ::
-      #+BEGIN_SRC sh
-      sudo asus-kbd-backlight allowusers
-      #+END_SRC
+
+           #+BEGIN_SRC sh
+           sudo asus-kbd-backlight allowusers
+           #+END_SRC
       - And enable services ::
-      #+BEGIN_SRC sh
-      sudo systemctl daemon-reload
-      sudo systemctl start asus-kbd-backlight.service
-      sudo systemctl enable asus-kbd-backlight.service
-      #+END_SRC
+           #+BEGIN_SRC sh
+           sudo systemctl daemon-reload
+           sudo systemctl start asus-kbd-backlight.service
+           sudo systemctl enable asus-kbd-backlight.service
+           #+END_SRC
 ***** Xmodmap
       If you want to indicate that the current keymap table should be printed on the standard output in the form of expressions that can be fed back to xmodmap.
       #+BEGIN_SRC sh
@@ -613,7 +628,7 @@
 **** Gnome
      Read [[*Intro][intro]] above.
      #+begin_note
-     This configurations was not tested by me properly. So if you have any suggestions, you can share your experience, feel free to contribute.
+     This configurations was not tested by me properly. So if you have any suggestions, you can share your experience, feel free to contribute. \\
      #+end_note
      #+BEGIN_SRC sh
      sudo pacman -S gnome gnome-extra gnome-software
@@ -628,11 +643,11 @@
      #+BEGIN_SRC org
      pacaur -S --noconfirm awesome vicious shifty
      #+END_SRC
-   - Themes ::
-     This one is pretty good.
-     #+BEGIN_SRC sh
-     git clone --recursive https://github.com/barwinco/pro /.config/awesome
-     #+END_SRC
+     - Themes ::
+          This one is pretty good.
+          #+BEGIN_SRC sh
+          git clone --recursive https://github.com/barwinco/pro /.config/awesome
+          #+END_SRC
 *** Display Manager
 **** Slim (abandoned)
       #+begin_danger
@@ -767,7 +782,7 @@
 *** IDE
 **** Emacs
      #+begin_warning
-     Be aware of [[https://wiki.archlinux.org/index.php/Infinality#Emacs][Noto Font]] for emacs. First time I didn't realized that this may cause a troubles. I picked Noto font and I can tell you for sure that spacemacs looks pretty ugly with this font family.
+     Be aware of [[https://wiki.archlinux.org/index.php/Infinality#Emacs][Noto Font]] for emacs. First time I didn't realized that this may cause a problems. I picked Noto font and I can tell you for sure that spacemacs looks pretty ugly with this font family.
      #+end_warning
     - Install and configure: ::
       #+BEGIN_SRC sh
