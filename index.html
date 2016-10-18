@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-10-15 Sat 15:30 -->
+<!-- 2016-10-18 Tue 14:15 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>Arch Linux no DE install guide</title>
@@ -214,7 +214,7 @@ for the JavaScript code in this tag.
 <li><a href="#orgheadline35">2.16. Reboot</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline78">3. Environment</a>
+<li><a href="#orgheadline79">3. Environment</a>
 <ul>
 <li><a href="#orgheadline37">3.1. Intro</a></li>
 <li><a href="#orgheadline39">3.2. Dependencies</a>
@@ -279,15 +279,16 @@ for the JavaScript code in this tag.
 <li><a href="#orgheadline71">3.11.11. Virtualbox</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline77">3.12. Programming Environment</a>
+<li><a href="#orgheadline78">3.12. Programming Environment</a>
 <ul>
-<li><a href="#orgheadline74">3.12.1. Nodejs</a>
+<li><a href="#orgheadline75">3.12.1. Nodejs</a>
 <ul>
-<li><a href="#orgheadline73">3.12.1.1. npm</a></li>
+<li><a href="#orgheadline73">3.12.1.1. yarn</a></li>
+<li><a href="#orgheadline74">3.12.1.2. npm</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline75">3.12.2. Java</a></li>
-<li><a href="#orgheadline76">3.12.3. Android development</a></li>
+<li><a href="#orgheadline76">3.12.2. Java</a></li>
+<li><a href="#orgheadline77">3.12.3. Android development</a></li>
 </ul>
 </li>
 </ul>
@@ -1313,8 +1314,8 @@ reboot
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline78" class="outline-2">
-<h2 id="orgheadline78"><span class="section-number-2">3</span> Environment</h2>
+<div id="outline-container-orgheadline79" class="outline-2">
+<h2 id="orgheadline79"><span class="section-number-2">3</span> Environment</h2>
 <div class="outline-text-2" id="text-3">
 </div><div id="outline-container-orgheadline37" class="outline-3">
 <h3 id="orgheadline37"><span class="section-number-3">3.1</span> Intro</h3>
@@ -2116,11 +2117,11 @@ Choose virtualbox-host-modules-arch for <a href="https://wiki.archlinux.org/inde
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline77" class="outline-3">
-<h3 id="orgheadline77"><span class="section-number-3">3.12</span> Programming Environment</h3>
+<div id="outline-container-orgheadline78" class="outline-3">
+<h3 id="orgheadline78"><span class="section-number-3">3.12</span> Programming Environment</h3>
 <div class="outline-text-3" id="text-3-12">
-</div><div id="outline-container-orgheadline74" class="outline-4">
-<h4 id="orgheadline74"><span class="section-number-4">3.12.1</span> Nodejs</h4>
+</div><div id="outline-container-orgheadline75" class="outline-4">
+<h4 id="orgheadline75"><span class="section-number-4">3.12.1</span> Nodejs</h4>
 <div class="outline-text-4" id="text-3-12-1">
 <div class="org-src-container">
 
@@ -2129,8 +2130,34 @@ Choose virtualbox-host-modules-arch for <a href="https://wiki.archlinux.org/inde
 </div>
 </div>
 <div id="outline-container-orgheadline73" class="outline-5">
-<h5 id="orgheadline73"><span class="section-number-5">3.12.1.1</span> npm</h5>
+<h5 id="orgheadline73"><span class="section-number-5">3.12.1.1</span> yarn</h5>
 <div class="outline-text-5" id="text-3-12-1-1">
+<p>
+Facebook has made a replacement for npm - <a href="https://github.com/yarnpkg/yarn">yarn</a>.
+It looks like faster solution with more features. <br  />
+You can install in in several ways:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">pacaur -S yarn --noconfirm
+</pre>
+</div>
+<p>
+or
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">npm i -g yarn
+</pre>
+</div>
+<p>
+Read more in <a href="https://code.facebook.com/posts/1840075619545360">facebook's blog</a>.
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline74" class="outline-5">
+<h5 id="orgheadline74"><span class="section-number-5">3.12.1.2</span> npm</h5>
+<div class="outline-text-5" id="text-3-12-1-2">
 <p>
 To solve <a href="https://docs.npmjs.com/getting-started/fixing-npm-permissions">EACCES error</a>. 
 </p>
@@ -2183,8 +2210,8 @@ Now you can use <code>npm -g</code> without sudo, test it with any package:
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline75" class="outline-4">
-<h4 id="orgheadline75"><span class="section-number-4">3.12.2</span> Java</h4>
+<div id="outline-container-orgheadline76" class="outline-4">
+<h4 id="orgheadline76"><span class="section-number-4">3.12.2</span> Java</h4>
 <div class="outline-text-4" id="text-3-12-2">
 <p>
 Install only <a href="https://wiki.archlinux.org/index.php/Java">java</a> environment without GUI:
@@ -2204,8 +2231,8 @@ Now you need to source from the command line or by logging out/in:
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline76" class="outline-4">
-<h4 id="orgheadline76"><span class="section-number-4">3.12.3</span> Android development</h4>
+<div id="outline-container-orgheadline77" class="outline-4">
+<h4 id="orgheadline77"><span class="section-number-4">3.12.3</span> Android development</h4>
 <div class="outline-text-4" id="text-3-12-3">
 <p>
 There are 3 steps that need to be performed before you can develop Android applications on your Arch Linux box:
@@ -2278,7 +2305,7 @@ pacaur -S android-ndk
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Nicholas Glazer</p>
-<p class="date">Created: 2016-10-15 Sat 15:30</p>
+<p class="date">Created: 2016-10-18 Tue 14:15</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

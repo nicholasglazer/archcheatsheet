@@ -873,31 +873,43 @@
      #+BEGIN_SRC sh
      sudo pacman -S nodejs npm
      #+END_SRC
+***** yarn
+      Facebook has made a replacement for npm - [[https://github.com/yarnpkg/yarn][yarn]].
+      It looks like faster solution with more features. \\
+      You can install in in several ways:
+      #+BEGIN_SRC sh
+      pacaur -S yarn --noconfirm
+      #+END_SRC
+      or
+      #+BEGIN_SRC sh
+      npm i -g yarn
+      #+END_SRC
+      Read more in [[https://code.facebook.com/posts/1840075619545360][facebook's blog]].
 ***** npm
-        To solve [[https://docs.npmjs.com/getting-started/fixing-npm-permissions][EACCES error]]. 
-        #+begin_warning
-        Option 1 can be dangerous and definitely a bad practice, use [[https://docs.npmjs.com/getting-started/fixing-npm-permissions#option-2-change-npms-default-directory-to-another-directory][second]] instead:
-        #+end_warning
-        Make a directory for global installations:
-        #+BEGIN_SRC sh
-        mkdir ~/.npm-global
-        #+END_SRC
-        Configure npm to use the new directory path:
-        #+BEGIN_SRC sh
-        npm config set prefix '~/.npm-global'
-        #+END_SRC
-        Open or create a =~/.zprofile= and add this line:
-        #+BEGIN_SRC sh
-        export PATH=~/.npm-global/bin:$PATH
-        #+END_SRC
-        Update your system variables:
-        #+BEGIN_SRC sh
-        source ~/.zprofile
-        #+END_SRC
-        Now you can use ~npm -g~ without sudo, test it with any package:
-        #+BEGIN_SRC sh
-        npm i -g gulp react react-native tern eslint babel-eslint eslint-plugin-react js-beautify
-        #+END_SRC
+      To solve [[https://docs.npmjs.com/getting-started/fixing-npm-permissions][EACCES error]]. 
+      #+begin_warning
+      Option 1 can be dangerous and definitely a bad practice, use [[https://docs.npmjs.com/getting-started/fixing-npm-permissions#option-2-change-npms-default-directory-to-another-directory][second]] instead:
+      #+end_warning
+      Make a directory for global installations:
+      #+BEGIN_SRC sh
+      mkdir ~/.npm-global
+      #+END_SRC
+      Configure npm to use the new directory path:
+      #+BEGIN_SRC sh
+      npm config set prefix '~/.npm-global'
+      #+END_SRC
+      Open or create a =~/.zprofile= and add this line:
+      #+BEGIN_SRC sh
+      export PATH=~/.npm-global/bin:$PATH
+      #+END_SRC
+      Update your system variables:
+      #+BEGIN_SRC sh
+      source ~/.zprofile
+      #+END_SRC
+      Now you can use ~npm -g~ without sudo, test it with any package:
+      #+BEGIN_SRC sh
+      npm i -g gulp react react-native tern eslint babel-eslint eslint-plugin-react js-beautify
+      #+END_SRC
 **** Java
      Install only [[https://wiki.archlinux.org/index.php/Java][java]] environment without GUI:
      #+BEGIN_SRC sh
