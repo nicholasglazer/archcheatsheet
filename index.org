@@ -1,4 +1,4 @@
-
+for dir in "$HOME/.emacs.d/elpa/org-"*/; do find $dir -name "*.elc" -delete; done
 #+TITLE: Arch Linux no DE install guide
 #+AUTHOR: Nicholas Glazer
 #+EMAIL: glazer.nicholas@gmail.com
@@ -9,6 +9,11 @@
 #+LANGUAGE: en
 #+OPTIONS: toc:4 h:4 tex:t f:t
 #+OPTIONS: prop:("VERSION")
+
+# Local variables:
+# after-save-hook: org-html-export-to-html
+# end:
+
 
 #+SETUPFILE: ./theme-readtheorg.setup
 
@@ -22,941 +27,1314 @@
 
 #+name: Arch
 #+attr_html: :align center
-[[./arch-logo.png]] 
+[[./img/arch-logo.png][arch-logo.png]] 
+** Installation
+*** DONE Preparations
+    CLOSED: [2018-11-06 Tue 23:53]
+    It is always good idea to take a look at the [[https://wiki.archlinux.org/index.php/installation_guide][arch wiki installation guide]].  \\
+**** DONE Live USB
+     CLOSED: [2018-11-07 Wed 02:11]
+     Assuming that you already have a bootable flash drive. \\
+     If not, check [[https://wiki.archlinux.org/index.php/disk_cloning][dd]] and the official website for the arch [[https://www.archlinux.org/download/][downloading]].
 
-** Preparations
-*** Live usb
-    I assumed that you already have a bootable flash drive.
-    If not, check [[https://wiki.archlinux.org/index.php/disk_cloning][dd]] and the official website for arch [[https://www.archlinux.org/download/][downloading]].
-*** BIOS config
-    Load the flash drive. \\
-    You will need to change the boot priority in BIOS. And just after reboot, press =F2= or =del= to see the BIOS menu.
-*** Kernel boot options
-    To avoid problems with tiny fonts or fan speed, better to run the new install with the kernel option which will disable console frame buffer.
-    To do this, when selection menu appears, press =E=, type =nomodeset= in the very beginning of the line and press =Enter=.
-*** Changing layout
-    As a [[https://wiki.archlinux.org/index.php/Dvorak][dvorak]] keyboard layout user, my first step will be changing keyboard layout:
-    #+BEGIN_SRC sh
-    loadkeys dvorak
-    #+END_SRC
-    #+begin_attention
-    If you use =qwerty=, skip this step. 
-    #+end_attention
-*** Network connection
-    After archiso has booted you want to make internet connection: 
-    #+BEGIN_SRC sh
-    wifi-menu
-    #+END_SRC
-    Now lets check the connection:
-    #+BEGIN_SRC sh
-    ping -c 3 google.com
-    #+END_SRC
-*** UEFI
-    Lets make sure we're using [[https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface][UEFI]] mode:
-    #+BEGIN_SRC sh
-    efivar -l
-    #+END_SRC
-    If output has some variables, everything is fine.
-*** Partition scheme
-    Good. Now lets check [[https://wiki.archlinux.org/index.php/Partitioning][partition]] scheme.
-    #+BEGIN_SRC sh
-    lsblk
-    #+END_SRC
-    In most cases you will see at least 2 drives. I have 3 drives:
-    #+begin_example
-    NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
-    sda      8:0    0 119.2G  0 disk                   *SSD*
-    ├─sda1   8:1    0     1G  0 part /boot
-    ├─sda2   8:2    0    60G  0 part /
-    ├─sda3   8:3    0    30G  0 part 
-    └─sda4   8:4    0  28.2G  0 part 
-    sdb      8:16   0 931.5G  0 disk                   *HDD*
-    ├─sdb1   8:17   0   400G  0 part /home
-    ├─sdb2   8:18   0    24G  0 part [SWAP]
-    ├─sdb3   8:19   0   300G  0 part 
-    └─sdb4   8:20   0 207.5G  0 part 
-    sdc      8:32   1   7.5G  0 disk                   *Flash Drive*
-    └─sdc1   8:33   1   7.5G  0 part
-    #+end_example
-**** Partitioning
-     If you want clean install you need to wipe your disks:
+     The easiest way to make a dualboot system is to install Windows first. It will create EFI partition with =bootmgr.efi= for you. 
+     #+begin_attention
+     So if you desire to have a dualboot you should install Windows and then continue with arch installation. \\
+     If you want solo archlinux skip this. You still could open ~.exe~ files with [[https://wiki.archlinux.org/index.php/Wine][wine]].
+     #+end_attention
+***** DONE BIOS config
+      CLOSED: [2018-11-07 Wed 02:04]
+      Once it's done, load the flash drive. \\
+      Press =F2= or =del= to open BIOS menu. \\
+      You need to change the boot priority in BIOS. \\
+      F10 and reboot.
+***** DONE Kernel boot options
+      CLOSED: [2018-11-07 Wed 02:11]
+      If you have issues with the tiny fonts or fan speed, you should run the installation with the kernel option which disables console frame buffer. \\
+      To make this, when the selection menu appears, press =E= and type =nomodeset= at the beginning of the line then press =Enter=.
+      #+begin_note
+      You can pass your default kernel options with [[*Kernel options][#rEFInd kerenel options]] later.
+      #+end_note
+**** DONE Changing layout
+     CLOSED: [2018-11-07 Wed 02:12]
+     If you're e.g. a [[https://wiki.archlinux.org/index.php/Dvorak][dvorak]] user, your first step could be changing the keyboard layout:
      #+BEGIN_SRC sh
-     gdisk /dev/sdX # where X is your drive name 
+     loadkeys dvorak # =qwerty= users should skip this step. 
      #+END_SRC
-     Press =RET= first, then =x= for advanced config and =z= for zap.
-     #+begin_warning
-     This will destroy data on your disk.
-     #+end_warning
+**** DONE Network connection
+     CLOSED: [2018-11-07 Wed 02:14]
+     After archiso has been booted you may want to make wireless internet connection, wired connection should be done automatically: 
+     #+BEGIN_SRC sh
+     wifi-menu
+     #+END_SRC
+     To check connection:
+     #+BEGIN_SRC sh
+     ping -c 3 archlinux.org
+     #+END_SRC
+**** DONE Update the system clock
+     CLOSED: [2018-11-07 Wed 02:14]
+     To ensure that system clock is accurate.
+     #+BEGIN_SRC sh
+     timedatectrl set-ntp true
+     #+END_SRC
+     Check the status:
+     #+BEGIN_SRC sh
+     timedatectrl status
+     #+END_SRC
+**** DONE UEFI
+     CLOSED: [2018-11-07 Wed 02:14]
+     Lets make sure we're using [[https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface][UEFI]] mode:
+     #+BEGIN_SRC sh
+     ls /sys/firmware/efi/efivars/
+     or
+     efivar -l
+     #+END_SRC
+     If output has some variables, everything is fine. If not, the system may be booted in BIOS or CSM mode.
+**** DONE Partitioning
+     CLOSED: [2018-11-07 Wed 02:20]
+     This part could be confusing, so I'll cover some basics here.
+
+     To check your [[https://wiki.archlinux.org/index.php/Partitioning][partition]] scheme type:
+     #+BEGIN_SRC sh
+     lsblk
+     #+END_SRC
+     You should see at least 1 drive, I have 3 including temporary flash drive:
+     #+begin_example
+     NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+     sda      8:0    0   465G  0 disk                   *SSD*
+     ├─sda1   8:1    0   499M  0 part 
+     ├─sda2   8:2    0   100M  0 part /boot          
+     ├─sda3   8:3    0    16M  0 part 
+     ├─sda4   8:4    0   185G  0 part 
+     └─sda5   8:5    0   200G  0 part /
+     sdb      8:16   0 931.5G  0 disk                   *HDD*
+     ├─sdb1   8:17   0   400G  0 part /home
+     ├─sdb2   8:18   0    24G  0 part [SWAP]
+     └─sdb3   8:19   0   508G  0 part 
+     sdc      8:32   1   7.5G  0 disk                   *Flash Drive*
+     └─sdc1   8:33   1   7.5G  0 part
+     #+end_example
      #+begin_tip
-     Sometimes you mess up with your ~root~ and want to reinstall the system, but you want to keep your ~/home~ directory untouched. You can do it easily. Wipe only *sda* and do nothing with *sdb*.
+     You should not see any mount points unless you mount partitions to them, we will do it later.
      #+end_tip
-     And now create a new one:
-     #+BEGIN_SRC sh
-     cgdisk /dev/sdX # where X is your drive name
-     #+END_SRC
-***** SSD
-      I will use *sda* (SSD) as a place for system files, for which speed is critical: bootstraping system, system programs, etc...
-      | #    | size      | Fs type | name |
-      |------+-----------+---------+------|
-      | sda1 | 1g        |    EF00 | boot |
-      | sda2 | 60g       |    8300 | root |
-      | sda3 | 30g       |    8300 | -    |
-      | sda4 | else 28.2 |    0700 | -    |
-      - *sda1* Should be exactly ~EF00~. Will boot the system.
-      - *sda2* For my ~root~ I'd set 60G, you will be fine with even less. So if you may want to divide space for other distros (e.g. gentoo, ubuntu, fedora, etc..), 30G should be enough.
-      - *sda3* This one is for another distro.
-      - I'd left *sda4* for Windows. I will make double boot(not included to this guide).
-      #+begin_attention
-      I decided to make dual boot with Windows 10 for playing games and other weird things like photoshop. And I don't really want to use [[https://wiki.archlinux.org/index.php/Wine][wine]]. \\
-      So in case you want just Arch Linux on your machine, ignore Windows partition steps.
-      #+end_attention
-***** HHD
-      I will use *sdb* (HDD) as a place for user files: configuration, music, projects, ect...
-      | #    | size        | FS type | name  | Description                                                   |
-      |------+-------------+---------+-------+---------------------------------------------------------------|
-      | sdb1 | 400g        |    8300 | home  | linux filesystem                                              |
-      | sdb2 | 24g         |    8200 | swap  | 1.5 of my RAM memory[16G]                                     |
-      | sdb3 | 300g        |    0700 | whome | microsoft basic data                                          |
-      | sbd4 | else 207.5g |    8300 | -     | Just in case I will mount /var or install another linux there |
+***** DONE Disks partitioning
+      CLOSED: [2018-11-07 Wed 02:17]
+      If you are doing dual boot system with Windows, then *EFI System Partition* is created. You must mount it as a =/boot= for Linux bootloader. \\
+      
+      If you want to make clean solo arch installation you can wipe your drive:
+      #+begin_warning
+      This will destroy all the data on chosen drive. \\
+      Don't wipe ~sda~ if you're making dual boot and have Windows installed.
+      #+end_warning
+      #+BEGIN_SRC sh
+      gdisk /dev/sdX # where X is your drive name 
+      #+END_SRC
+      Press =RET= first, then =x= for advanced config and =z= for zap.
+      And now create a new one:
+      #+BEGIN_SRC sh
+      cgdisk /dev/sdX # where X is your drive name
+      #+END_SRC
+      #+begin_note
+      [[https://wiki.archlinux.org/index.php/Gdisk][gdisk]] is for GPT only, if you need MBR(/which is atavism/), rather use fdisk or parted because they could cover both GPT and MBR. \\
+      It is also possible to [[https://wiki.archlinux.org/index.php/Gdisk#Convert_between_MBR_and_GPT][convert between MBR and GPT]] with gdisk.
+      #+end_note
+      #+begin_tip
+      If you want to create any stacked block devices for LVM, disk encryption or [[https://wiki.archlinux.org/index.php/RAID][RAID]], do it now.
+      You also can enable [[https://wiki.archlinux.org/index.php/Solid_state_drive#TRIM][TRIM]] for SSD.
+      #+end_tip
+****** SSD
+      It's better to use SSD (~sda~ in this case) for the system files where speed is important e.g.: bootloader, programs, et.c.
+      | #    | size | FS type | mountpoint |
+      |------+------+---------+------------|
+      | sda1 | 499M |    0c01 | -          |
+      | sda2 | 100M |    EF00 | boot       |
+      | sda3 | 16M  |    0c01 | -          |
+      | sda4 | 185G |    0700 | -          |
+      | sda5 | 200G |    8300 | root       |
+      - *sda1,3* Microsoft reserved space.
+      - *sda2* To boot the system it must be exactly ~EF00~. In case of dual boot, Windows will create this partition automatically.
+      - *sda4* Windows partition.
+      - *sda5* I set 200G for the ~root~, but it could be less: ~60-100G should be fine, depends on your needs.
+****** HDD
+      On the other hand HDD (~sdb~ in this case) could be used as a place for user files e.g.: music, projects, configurations, et.c..
+      | #    | size | FS type | mountpoint | description                |
+      |------+------+---------+------------+----------------------------|
+      | sdb1 | 400G |    8300 | home       | linux file system          |
+      | sdb2 | 24G  |    8200 | swap       | 1.5 of my RAM memory (16G) |
+      | sdb3 | 508G |    0700 | winhome    | microsoft basic data       |
       - *sdb1* ~/home~ place for your user files.
-      - *sdb2* ~SWAP~ depends on your RAM quantity. Usually you should take 1.5 of your RAM.
-      - Notice that I set *sdb3* as 0700 and it will contain Windows files.
-      - *sdb4* You may use this space however you want. You can mount it to the ~/usr~ or to the other distro.
-*** Assigning file system to drives
-    - /boot ::
-         Boot need to be Fat32 as UEFI requirement.
+      - *sdb2* ~SWAP~ depends on your RAM quantity. Usually you should take x1 or x1.5 of your RAM. If you will take less, there is a still a chance of [[*Hibernation][#hibernating]] successfully.
+      - *sdb3*  will contain Windows files.
+      #+begin_tip
+      You also have choice to use space to e.g. mount ~/usr~ or ~/var~.
+      #+end_tip
+***** DONE Mounting the file systems
+      CLOSED: [2018-11-07 Wed 02:17]
+      We want to assign ~/mnt~ to the ~root~ partition:
+      #+BEGIN_SRC sh
+      mount /dev/sda5 /mnt
+      #+END_SRC
+      Next we need to create some new folders in our ~/mnt~:
+      #+BEGIN_SRC sh
+      mkdir /mnt/boot
+      mkdir /mnt/home
+      #+END_SRC
+      Mount them accordingly:
+      #+BEGIN_SRC sh
+      mount /dev/sda2 /mnt/boot
+      mount /dev/sdb1 /mnt/home
+      #+END_SRC
+***** DONE Format the partitions
+      CLOSED: [2018-11-07 Wed 02:19]
+      Partitions must be formatted with an appropriate file system:
+      - SWAP ::
+         #+BEGIN_SRC sh
+         mkswap /dev/sdb2
+         swapon /dev/sdb2
+         #+END_SRC
+      - Linux ::
+         #+BEGIN_SRC sh
+         mkfs.ext4 /dev/sda5
+         mkfs.ext4 /dev/sdb1
+         #+END_SRC
+         #+begin_tip
+         Press =y= if you have this warning: ~/dev/sdxY contains a ext4 file system~
+         #+end_tip
+      - /boot ::
+         #+begin_attention
+         *You already have EFI partition if you have Windows installed*
+         #+end_attention
+         Boot must be Fat32 as UEFI requirement.
          #+BEGIN_SRC sh
          mkfs.fat -F32 /dev/sda1
          #+END_SRC
-    - SWAP ::
-         #+BEGIN_SRC sh
-         mkswap /dev/sdb2
-         #+END_SRC
-    - Linux ::
-         #+BEGIN_SRC sh
-         mkfs.ext4 /dev/sda2
-         mkfs.ext4 /dev/sdb1
-         mkfs.ext4 /dev/sdb4
-         #+END_SRC
-    #+begin_tip
-    Press =y= if you have this warning: 
-    ~/dev/sdxY contains a ext4 file system~
-         #+end_tip
-    - And reboot ::
-         #+BEGIN_SRC sh
-         reboot
-         #+END_SRC
-** Installing Arch
-    #+begin_warning
-    Good idea to read [[https://wiki.archlinux.org/index.php/Installation_guide][Archwiki installation guide]] first.
-    #+end_warning
-*** Mounting partitions
-    We want to assign ~/mnt~ to the ~root~ partition:
-    #+BEGIN_SRC sh
-    mount /dev/sda2 /mnt
-    #+END_SRC
-    Next we need to create some new folders in our ~/mnt~:
-    #+BEGIN_SRC sh
-    mkdir /mnt/boot
-    mkdir /mnt/home
-    #+END_SRC
-    Mount this folders:
-    #+BEGIN_SRC sh
-    mount /dev/sda1 /mnt/boot
-    mount /dev/sdb1 /mnt/home
-    #+END_SRC
-    And enable ~SWAP~:
-    #+BEGIN_SRC sh
-    swapon /dev/sdb2
-    #+END_SRC
-*** Mirrorlist
-    It's preferable to download data fast, that's why I want to use fastest [[https://wiki.archlinux.org/index.php/mirrors#List_by_speed][mirrors]]. \\
-    - Backup: ::
-         uoeu
-         #+BEGIN_SRC sh
-         cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
-         #+END_SRC
-    - Uncommenting: ::
-         #+BEGIN_SRC sh
-         sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.backup
-         #+END_SRC
-    - Ranking: :: 
-         #+BEGIN_SRC sh
-         rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
-         #+END_SRC
-    #+begin_note
-    If ranking process took less then (<1min), you should check your internet connection if it's available. This process may take up to 10 min.
-    #+end_note
-*** Arch base files
-    Ok, now lets install base packages to our assigned ~root~.
-    In this step you may also want to install some packages, which may be useful while system installing, like [[https://git-scm.com/doc][git]] or [[https://www.gnu.org/software/wget/][wget]].
-    #+BEGIN_SRC sh
-    pacstrap -i /mnt base base-devel git
-    #+END_SRC
-    Press =RET= and agree with everything.
-*** Generate and edit fstab file
-    Before we will generate fstab, lets delete the old one:
-    #+BEGIN_SRC sh
-    rm /mnt/etc/fstab
-    #+END_SRC
-    Now generate the new one:
-    #+BEGIN_SRC sh
-    genfstab -U -p /mnt >> /mnt/etc/fstab
-    #+END_SRC
-    And check if everything is correct:
-    #+BEGIN_SRC sh
-    nano /mnt/etc/fstab
-    #+END_SRC
-    #+begin_hint
-    While this is the first editing with [[https://wiki.archlinux.org/index.php/nano][nano]]. You should know at least how to save and exit it:
-    - ctrl+o (save)
-    - ctrl+x (exit)
-    #+end_hint
-    #+begin_tip
-    You also may want to write down your ~root~ UUID. It will be useful later in [[*Bootloader][bootloader]] step.
-    #+end_tip
-**** Enable [[https://ru.wikipedia.org/wiki/TRIM][TRIM]] (for SSD)
-     #+begin_attention
-     You may want to do this if your ~SWAP~ is on *SSD*.
-     #+end_attention
+*** DONE Install and configure the system
+    CLOSED: [2018-11-07 Wed 02:30]
+**** DONE Mirrorlist
+     CLOSED: [2018-11-07 Wed 02:20]
+     On the live system all mirrors are enabled, and sorted by their synchronization status and speed at the time the installation was created.
+     #+begin_tip
+     Still sometimes you may want to [[https://wiki.archlinux.org/index.php/Mirrors#Soring_mirrors][sort mirrors]].
+     #+end_tip
+     The higher a mirror is placed in the list, the more priority it is given when downloading a package.
+     So it's better to check this file and edit it with geographically closest mirrors on the top.
      #+BEGIN_SRC sh
-     nano /mnt/etc/fstab
+     vim /etc/pacman.d/mirrorlist
      #+END_SRC
-     Add this line to a file, where ~X~ is your ~SWAP~ partition:
-     #+BEGIN_SRC org
-     /dev/sdX none swap defaults,discard 0 0 
-     #+END_SRC
-*** Chroot into the system
-    Lets enter the system:
-    #+BEGIN_SRC sh
-    arch-chroot /mnt
-    #+END_SRC
-*** Vim
-    Next important step will be installing [[https://wiki.archlinux.org/index.php/vim][vim]] text editor:
-    #+BEGIN_SRC sh
-    pacman -S vim
-    #+END_SRC
-    #+begin_note
-    If you're not familiar with vim and you don't have time to learn this *great* console editor, just skip this step and continue using *nano*.
+     The file you edited will be copied with ~pacstrap~ later.
+
+     [[*Vim][#Vim]] should already be installed. It could be your first time you editing with vim, so navigation helpers below:
+     #+begin_note
+     - press =esc= to make sure you are in *command mode*
+     - =h= =j= =k= =l= for navigating
+     - by pressing =v= you will enter *visual mode* or *visual line mode* by pressing =shift + v=
+     - then you can paste it with =p=
+     - select what you need to cut and type =dd=
+     - to save and exit press =esc= and type =:wq= (you will see this letters on the very bottom)
+     #+end_note
+     If you don't want to spent time learning this powerfull tool (which I highly recommend), you have several other options including [[https://wiki.archlinux.org/index.php/nano][nano]].
+     #+begin_note
+     To use nano you should at least know how to save and exit:
+     - ctrl+o (save)
+     - ctrl+x (exit)
     #+end_note
-*** Locale
-    #+BEGIN_SRC sh
-    vim /etc/locale.gen
-    #+END_SRC
-    #+begin_hint
-    - press =esc= to make sure you are in *command mode*.
-    - for search press =/= and type:
-      #+BEGIN_SRC sh
-      en_US.UTF-8
-      #+END_SRC
-    - hit =RET= 
-    - =n= for next match till you reach commented one
-    - by pressing =i= you can enter insert mode (you can type now)
-    - =h= =j= =k= =l= for navigating
-    - remove comments =#= with any method you prefer ;)
-    - Save and exit:
-      - =esc= and type =:wq= (you will see this letters in a very bottom)
-    #+end_hint
-    And execute this commands one by one:
-    #+BEGIN_SRC sh
-    locale-gen
-    echo LANG=en_US.UTF-8 > /etc/locale.conf
-    export LANG=en_US.UTF-8
-    #+END_SRC
-*** Localtime
-    Replace ~Israel~ with any country you prefer more. You may also want to do =ls /usr/share/zoneinfo/= first, to explore zoneinfo folder.
-    #+BEGIN_SRC sh
-    ln -s /usr/share/zoneinfo/Israel > /etc/localtime
-    #+END_SRC
-*** Hardware clock
-    #+BEGIN_SRC sh
-    hwclock --systohc -–utc
-    #+END_SRC
-*** Hostname
+**** DONE Arch base files
+     CLOSED: [2018-11-07 Wed 02:21]
+     Now install base packages to our assigned ~root~.
+     #+BEGIN_SRC sh
+     pacstrap /mnt base base-devel git wpa_supplicant
+     #+END_SRC
+     In this step you also may want to install additional packages like [[*Git][git]] or [[https://www.gnu.org/software/wget/][wget]].
+     I also recommend to install[[https://wiki.archlinux.org/index.php/WPA_supplicant][ wpa_supplicant]] in case you will use wireless connection. You can pick preferred [[https://wiki.archlinux.org/index.php/Network_configuration#Network_managers][network manager]] later.
+**** DONE Generate and edit fstab file
+     CLOSED: [2018-11-07 Wed 02:23]
+     Generate the new fstab:
+     #+BEGIN_SRC sh
+     genfstab -U /mnt >> /mnt/etc/fstab
+     #+END_SRC
+     And check if everything is correct:
+     #+BEGIN_SRC sh
+     vim /mnt/etc/fstab
+     #+END_SRC
+     #+begin_warning
+     This is very important to check your ~/mnt/etc/fstab~ file, because you will not be able to run system properly.
+     #+end_warning
+     You should see something like this:
+     #+begin_example
+     # <file system by UUID>                         <dir>  <type>   <options>       <dump>  <fsck>
+     UUID=XXXX-XXXX                                  /boot   vfat    defaults        0       2
+     UUID=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX       /       ext4    defaults        0       1
+     UUID=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX       /home   ext4    defaults        0       2
+     UUID=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX       none    swap    defaults        0       0
+     #+end_example
+**** DONE Chroot into the system
+     CLOSED: [2018-11-07 Wed 02:24]
+     Switch into root with the new system:
+     #+BEGIN_SRC sh
+     arch-chroot /mnt
+     #+END_SRC
+**** DONE Locale
+     CLOSED: [2018-11-07 Wed 02:24]
+     Uncomment needed locales e.g. ~en_US.UTF-8 UTF-8~:
+     #+BEGIN_SRC sh
+     vim /etc/locale.gen
+     #+END_SRC
+     And generate them:
+     #+BEGIN_SRC sh
+     locale-gen
+     #+END_SRC
+     Also add =LANG= variable:
+     #+BEGIN_SRC sh
+     cat > /etc/locale.conf
+     echo "LANG=en_US.UTF-8" > /etc/locale.conf
+     #+END_SRC
+     For e.g. dvorak users to make layout persistent:
+     #+BEGIN_SRC sh
+     cat > /etc/vconsole.conf
+     echo "KEYMAP=dvorak" > /etc/vconsole.conf
+     #+END_SRC
+**** DONE Network configuration
+     CLOSED: [2018-11-07 Wed 02:24]
     [[https://en.wikipedia.org/wiki/Hostname][Hostname]] is a unique name created to identify a machine on a network. \\
     - Basic method that *working in arch-chroot*. ::
          Replace ~uniquename~ with anything you want:
          #+BEGIN_SRC sh
          echo uniquename > /etc/hostname
          #+END_SRC
+
     #+begin_hint
     Later you will see something like ~user@uniquename~
     #+end_hint
     #+begin_attention
-    You able to generate hostname with ~hostnamectl~ later. But beware this method is *not working in arch-chroot!*.
+    You will be able to generate hostname with ~hostnamectl~ later. This method is *not working in arch-chroot*.
     #+BEGIN_SRC sh
     hostnamectl set-hostname myhostname
     #+END_SRC
     #+end_attention
-*** Add repositories
-    Enabling multilib and Arch community repositories. \\
-    If you are running a 64bit system then you need to enable the multilib repository.
-    To do this open the ~pacman.conf~ file:
+    Add matching entries to the hosts:
     #+BEGIN_SRC sh
-    vim /etc/pacman.conf
+    vim /etc/hosts
     #+END_SRC
-    Uncomment this:
-    #+BEGIN_SRC sh
-    #[multilib]
-    #Include = /etc/pacman.d/mirrorlist
-    #+END_SRC
-    #+begin_tip
-    While we are still inside ~pacman.conf~ file, lets also add some useful [[https://wiki.archlinux.org/index.php/Unofficial_user_repositories][unofficial repositories]].
-
-    - You may want to add [[https://wiki.archlinux.org/index.php/Infinality][infinality]] font libraries.
-      Add these lines at the bottom of the file:
-      #+BEGIN_SRC sh
-      #[infinality-bundle] # Add this if you have i686 architecture.
-      #Server = http://bohoomil.com/repo/$arch
-      #SigLevel = Never
-    
-      [infinality-bundle-multilib]
-      Server = http://bohoomil.com/repo/multilib/$arch
-      SigLevel = Never
-    
-      [infinality-bundle-fonts]
-      Server = http://bohoomil.com/repo/fonts
-      SigLevel = Never
-      #+END_SRC
-
-    - To have pacman animation add this under the 'Misc options':
-      #+BEGIN_SRC org
-      ILoveCandy
-      #+END_SRC
-    #+end_tip
-    And update the system. We should [[https://wiki.archlinux.org/index.php/mirrors#Force_pacman_to_refresh_the_package_lists][let system know about the changes]].
-    #+BEGIN_SRC sh
-    pacman -Syyu
-    #+END_SRC
-*** Passwords
-    - Root password ::
+    #+begin_example
+    127.0.0.1     localhost
+    ::1           localhost
+    127.0.1.1     uniquename.localdomain uniquename
+    #+end_example
+    If the system has a permanent IP address, it should be used instead of ~127.0.1.1~ \\
+    See more in [[https://wiki.archlinux.org/index.php/Network_configuration][network configuration]].
+**** DONE Add community repositories
+     CLOSED: [2018-11-07 Wed 02:26]
+     Enabling *multilib* for the arch community repositories.
+     #+begin_attention
+     =multilib= is for 64bit system.
+     #+end_attention
+     To do this open the ~pacman.conf~ file:
+     #+BEGIN_SRC sh
+     vim /etc/pacman.conf
+     #+END_SRC
+     Uncomment this:
+     #+BEGIN_SRC sh
+     #[multilib]
+     #Include = /etc/pacman.d/mirrorlist
+     #+END_SRC
+     #+begin_tip
+     You also may add [[https://wiki.archlinux.org/index.php/Unofficial_user_repositories][unofficial repositories]] with caution.
+     - To have pacman animation add this under the 'Misc options':
+     #+BEGIN_SRC org
+     ILoveCandy
+     #+END_SRC
+     - You will need 'Color' option for [[*AUR][#yay]] later.
+     #+end_tip
+     And update the system. We should [[https://wiki.archlinux.org/index.php/mirrors#Force_pacman_to_refresh_the_package_lists][let system know about the changes]].
+     #+BEGIN_SRC sh
+     pacman -Syyu
+     #+END_SRC
+**** DONE Password and User
+     CLOSED: [2018-11-07 Wed 02:28]
+     - Root password ::
          #+BEGIN_SRC sh
          passwd
          #+END_SRC
-    - User password ::
-         We need to add at least one user. \\
-         Replace ~username~ with one preffered by you:
+     - User password ::
+         You should add at least one user. \\
+         Replace =username= with preferred one:
          #+BEGIN_SRC sh
-         useradd -m -g users -G wheel,storage,power -s /bin/zsh username
+         useradd -m -g users -G wheel,storage,power -s /bin/bash username
          #+END_SRC
          And set password for a new user:
          #+BEGIN_SRC sh
          passwd username
          #+END_SRC
-*** Sudoers
-    #+begin_warning
-    [[https://wiki.archlinux.org/index.php/Sudo#Using_visudo][Impontant to know!]]
-    It is imperative that sudoers be free of syntax errors! Any error makes sudo unusable. Always edit it with visudo to prevent errors.
-    #+end_warning
-    #+BEGIN_SRC sh
-    EDITOR=vim visudo
-    #+END_SRC
-    And we should uncomment this line:
-    #+BEGIN_SRC org
-    %wheel ALL=(ALL) ALL
-    #+END_SRC
-    #+begin_note
-    This system will be only for my own usage. \\
-    If you are using server or someone else have access to the wheel group. You may want to require sudoers to type root password, instead of their own. \\
-    In this case add this line:
-    #+BEGIN_SRC org
-    Defaults rootpw
-    #+END_SRC
-    #+end_note
-*** Bootloader
-**** Checking EFI
-     #+begin_verse
-     @gloriouseggroll recommended to double check if our EFI variables had been mounted.
-     #+end_verse
+**** DONE Sudoers
+     CLOSED: [2018-11-07 Wed 02:29]
+     #+begin_warning
+     Read about [[https://wiki.archlinux.org/index.php/Sudo#Using_visudo][visudo]] before editing!
+     Any errors makes *sudo* unusable. *Always* edit ~/etc/sudoers~ file with visudo to prevent errors.
+     #+end_warning
      #+BEGIN_SRC sh
-     mount -t efivarfs efivarfs /sys/firmware/efi/efivars
+     EDITOR=vim visudo
      #+END_SRC
-     You will see something like ~efivarfs is already mounted~, this means everything is fine.
-**** Boot manager
-     So the [[https://wiki.archlinux.org/index.php/systemd-boot#Standard_root_installations][systemd-boot]] is a replacement for [[https://wiki.archlinux.org/index.php/GRUB][grub]].
-     #+BEGIN_SRC sh
-     bootctl install
+     Since you added user to the =wheel= group, user will gain full root privileges, you need to uncomment this line:
+     #+BEGIN_SRC org
+     %wheel ALL=(ALL) ALL
      #+END_SRC
-**** Root UUID
-     Do you remember I told you to write down your UUID root partition? \\
-     If you didn't wrote it, type this:
-     #+BEGIN_SRC sh
-     blkid -s PARTUUID -o value /dev/sdxY # Where 'x' is the device letter and 'Y' is the partition number.
+     #+begin_note
+     If you are using a server or someone else has access to the wheel group. \\
+     You may want to require sudoers to type root password. \\
+     In this case add this line:
+     #+BEGIN_SRC org
+     Defaults rootpw
      #+END_SRC
-     ~root~ partition is your goal. In my case I have root assigned to sda2.
-**** [[https://wiki.archlinux.org/index.php/systemd-boot#Standard_root_installations][Kernel]] ~arch.conf~ file
-     Update [[https://wiki.archlinux.org/index.php/microcode#systemd-boot][microcode]] to avoid freezes:
+     Read more about [[https://wiki.archlinux.org/index.php/Sudo#Root_password][root password]].
+     #+end_note
+**** DONE Microcode
+     CLOSED: [2018-11-07 Wed 02:29]
+     You should enable [[https://wiki.archlinux.org/index.php/microcode#systemd-boot][microcode]] updates, my laptop has intel CPU:
      #+BEGIN_SRC sh
      pacman -S intel-ucode
      #+END_SRC
-     Create a conf file:
+     #+begin_hint
+     Install ~amd-ucode~ if you have AMD CPU.
+     #+end_hint
+**** DONE Bootloader
+     CLOSED: [2018-11-07 Wed 02:30]
+     You have different choices like [[https://wiki.archlinux.org/index.php/systemd-boot#Standard_root_installations][systemd-boot]] or [[https://wiki.archlinux.org/index.php/GRUB][grub]]. \\
+     For the dual boot I'm using [[https://wiki.archlinux.org/index.php/REFInd][rEFInd]]:
      #+BEGIN_SRC sh
-     vim /boot/loader/entries/arch.conf
+     pacman -S refind-efi
      #+END_SRC
-     And add:
-     #+BEGIN_SRC org
-     title Arch Linux
-     linux /vmlinuz-linux
-     initrd /intel-ucode.img
-     initrd /initramfs-linux.img
-     options root=PARTUUID=write_down_root_UUID_here rw i915.preliminary_hw_support=1 intel_idle.max_cstate=1 i915.enable_execlists=0 acpi_osi= acpi_backlight=native quiet
-     #+END_SRC
-     #+begin_warning
-     The root options is very delicate part, you should double check them for your laptop model. For [[https://wiki.archlinux.org/index.php/ASUS_Zenbook_Pro_UX501][Zenbook Pro UX501VM]] I have this options working properly.
-     #+end_warning
-*** Network
-**** Connman
-     Personally, I prefer [[https://wiki.archlinux.org/index.php/Connman][connman]], there are few other options [[https://wiki.archlinux.org/index.php/netctl#Installation][netctl]], [[https://wiki.archlinux.org/index.php/NetworkManager][NetworkManager]], [[https://wiki.archlinux.org/index.php/Wicd][Wicd]] and even standalone [[https://wiki.archlinux.org/index.php/systemd-networkd][systemd-networkd]].
-     Connman itself a command-line network manager. If you still cannot choose, there are few things [[https://github.com/wavexx/connman-notify#why-connman][why you should use it]].
-     #+BEGIN_SRC sh
-     pacman -S connman wpa_supplicant  
-     #+END_SRC
-     #+begin_note
-     Later you may want to install connman_dmenu for ez wifi setup: 
-     #+BEGIN_SRC sh
-     pacaur -S connman_dmenu 
-     #+END_SRC
-     #+end_note
-     Wired connection support is out of the box. \\
-     For wifi setup you will need to do few more steps. 
-     #+BEGIN_SRC sh
-     connmanctl                       # Should enter connmanctl> shell
-     connmanctl> enable wifi          # Lets make sure that wifi is enabled.
-     connmanctl> scan wifi            # Scan for any Wi-Fi technologies.
-     connmanctl> services             # List of services.
-     connmanctl> agent on             # Register the agent to handle user requests.
-     #+END_SRC
-     You now need to connect to one of the protected services. To do this easily, just use tab completion for the ~wifi_~ service.
-     #+BEGIN_SRC sh
-     connmanctl> connect wifi_*****   # The agent will then ask you to provide any information the daemon needs to complete the connection.
-     connmanctl> quit                 # Exiting
-     #+END_SRC
-     If the information you provided is correct you should now be connected to the wifi.
-     #+begin_attention
-     Make sure you disable everything that can be in conflict:
-     #+BEGIN_SRC sh
-     systemctl --type=service         # to check what services are running
-     systemctl disable netctl.service # NetworkManager.service / dhcpcd.service
-     #+END_SRC
-     #+end_attention
-**** Netctl
-     I felt some pain with ntectl bugs, configure everything to work properly takes too much time. But just in case you still need/want this one.
-     - Checking drivers: ::
-          Lets see our drivers, our goal is to find ~Network controller~
-          #+BEGIN_SRC sh
-          lspci -k
-          ip link
-          #+END_SRC
-     #+begin_note
-     You can check [[https://wiki.archlinux.org/index.php/Wireless_network_configuration#Check_the_driver_status][more]] commands if you have any problems.
-     #+end_note
-     - And lets bring the interface up: ::
-          It usually starts with ~w~, in my case I have ~wlp3s0~:
-          #+BEGIN_SRC sh
-          ip link set wlp3s0 up
-          #+END_SRC
-     - Installing: ::
-           #+BEGIN_SRC sh
-           sudo pacman -S wpa_actiond wpa_supplicant dhclient dialog
-           #+END_SRC
-     #+begin_attention
-     - Default DHCP client ::
-          I've had issues with connections, and 'dhclient' solved them.
-          #+BEGIN_SRC sh
-          sudo vim /etc/netctl/dhcp
-          #+END_SRC
-          #+BEGIN_SRC org
-          #!/bin/sh
-          DHCPClient='dhclient'
-          #+END_SRC
-     - Iwlwifi issue ::
-          iwlwifi [[https://bbs.archlinux.org/viewtopic.php?id=213363][bug]] and [[https://wiki.archlinux.org/index.php/Wireless_network_configuration#iwlwifi][iwlwifi.conf]] just in case.
-     #+end_attention
-*** Reboot
-    It is necessary to reboot now:
-    #+BEGIN_SRC sh
-    exit
-    umount -R /mnt
-    reboot
-    #+END_SRC
-** Environment
-*** Intro
-    In this part you have a lot of different choices depend on your needs. \\
-    If you are new to Linux, best decision will be to use [[https://wiki.archlinux.org/index.php/Desktop_environment][Desktop Environment]] like [[https://wiki.archlinux.org/index.php/GNOME][GNOME]] instead of just [[https://wiki.archlinux.org/index.php/Desktop_environment][Window Manager]]. However you still can [[https://wiki.archlinux.org/index.php/Awesome#With_GNOME][use tiling WM like Awesome with GNOME]].
-    #+begin_hint
-    For dvorak users! \\
-    To change keyboard after reboot:
-    #+BEGIN_SRC sh
-    setxkbmap dvorak
-    #+END_SRC
-    #+end_hint
-*** Dependencies
-    #+begin_attention
-    ~--noconfirm~ flag used here. If you're installing packages form AUR and you trust them, you can use this to autoinstall packages. But you still may want to check build scripts by yourself.
-    #+end_attention
-    #+begin_note
-    Help needed! \\
-    This step is not completed yet, more packages should be added.
-    #+end_note
-    Lets install some important dependencies:
-    #+BEGIN_SRC sh
-    sudo pacman -S zsh openssh expac termite rfkill unzip tree --noconfirm
-    #+END_SRC
-**** AUR
-     Read more about [[https://wiki.archlinux.org/index.php/Arch_User_Repository][Arch User Repository]].
-     #+begin_attention
-     According to [[https://wiki.archlinux.org/index.php/AUR_helpers#Comparison_table][AUR helpers comparison table]] you can choose AUR wrapper by your taste.
-     #+end_attention
-     To install [[https://github.com/rmarquis/pacaur][pacaur]] you have to make several steps. \\
-     - Install cower first and then pacaur: ::
-          Fetch Dave Reisner's key to be able to verify cower:
-          #+BEGIN_SRC sh
-	        gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 487EACC08557AD082088DABA1EB2638FF56C0C53
-          #+end_SRC
-          Clone with git and install with [[https://wiki.archlinux.org/index.php/Makepkg][makepkg]]:
-          #+BEGIN_SRC sh
-          cd && mkdir pacaur
-	        git clone "https://aur.archlinux.org/cower.git"
-          cd cower
-          makepkg --syncdeps --install --noconfirm
-          git clone "https://aur.archlinux.org/pacaur.git"
-          cd pacaur
-          makepkg --syncdeps --install --noconfirm
-          cd && rm -rf pacaur
-          #+END_SRC
-          Test it:
-          #+BEGIN_SRC sh
-          pacaur -S --noconfirm feh htop lm_sensors thefuck connman_dmenu-git xclip aspell-en
-          #+END_SRC
-*** Drivers
-**** Video
-     #+begin_warning
-     *Be careful, this part may cause problems!*
-     #+end_warning
-     Check your video card first: 
-     #+BEGIN_SRC sh
-     lspci -k | grep -A 2 -E "(VGA|3D)"
-     #+END_SRC
-     If you have [[https://wiki.archlinux.org/index.php/NVIDIA][NVIDIA]] video card, follow this steps:
-     #+begin_attention
-     If you don't know what you are doing, you should read [[https://wiki.archlinux.org/index.php/bumblebee#Installing_Bumblebee_with_Intel.2FNVIDIA][bumblebee]] article first!
-     #+end_attention
-     - Install dependencies: ::
-           #+BEGIN_SRC sh
-           sudo pacman -S bumblebee mesa xf86-video-intel nvidia lib32-virtualgl lib32-nvidia-utils lib32-mesa-libgl
-           #+END_SRC
-     #+begin_note
-     - Pick ~mesa-libgl~ if conflict.
-     - Pick ~xf86-input-libinput~ if conflict, for the [[https://wiki.archlinux.org/index.php/ASUS_Zenbook_Pro_UX501#Touch_Pad][touchpad]].
-     #+end_note
-     - Add username to bumblebee group: ::
-           #+BEGIN_SRC sh
-           gpasswd -a USER bumblebee
-           #+END_SRC
-     - Enable bumblebee service: ::
-           #+BEGIN_SRC sh
-           sudo systemctl enable bumblebeed.service
-           #+END_SRC
-**** Touchpad
-     For touchpad *tap-to-click* use [[https://wiki.archlinux.org/index.php/Libinput#Common_options][X11/xorg.conf.d/30-touchpad.conf]] you can also copy it from my [[https://github.com/NicholasGlazer/dotfiles][dotfiles]].
-     #+BEGIN_SRC sh
-     sudo pacman -S xf86-input-libinput
-     #+END_SRC
-**** Audio
-     [[https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture#Installation][ALSA]] is a set of buit-in kernel modules, but after install it may be muted.
-     - Install [[https://wiki.archlinux.org/index.php/PulseAudio#Installation][pulseaudio]] and utils, and manage it ::
-       #+BEGIN_SRC sh
-       sudo pacman -S alsa-utils pulseaudio
-       #+END_SRC
-     - [[https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture#Unmute_with_alsamixer][Unmute]] with alsamixer ::
-       #+BEGIN_SRC sh
-       alsamixer
-       #+END_SRC
-     - Test it ::
-       #+BEGIN_SRC sh
-       speaker-test -c 2
-       #+END_SRC
-**** Keboard
-*****  Keyboard backlight
-      [[https://wiki.archlinux.org/index.php/ASUS_Zenbook_Prime_UX31A#Using_asus-kbd-backlight_from_AUR][Asus-kbd-backlight]] one of the solutions that solved issues with keyboard backlight.
+     After customization should look like this:
+     [[./img/refind.png][refind.png]]
+***** Install refind:
+      REFInd will automatically find your EFI System Partition (ESP) with installation script.
+      You can use ~refind-install~ script with ~--root~ flag to help install it from a "live CD" or other emergency system, \\
+      notice that your =/boot= partition should be mounted. 
+      #+begin_hint
+      It's a common practice to use =man= utility to learn more about the particular program.
+      So if you need more options like ~--alldrivers~, feel free to check it with =man=. 
       #+BEGIN_SRC sh
-      pacaur -S asus-kbd-backlight
+      man refind-install
       #+END_SRC
-      - Allow users to change the brightness ::
+      #+end_hint
+      Run the script:
+      #+BEGIN_SRC sh
+      refind-install
+      #+END_SRC
+***** Kernel options
+      You should place your =refind_linux.conf= file in the same directory as your kernel. \\
+      And the basic config to run the system could look like this:
+      #+begin_example
+      ## This file should be present in the same directory as the EFISTUB kernel and initramfs files
+      ## More info at http://www.rodsbooks.com/refind/linux.html , http://www.rodsbooks.com/efi-bootloaders/efistub.html
 
-           #+BEGIN_SRC sh
-           sudo asus-kbd-backlight allowusers
-           #+END_SRC
-      - And enable services ::
-           #+BEGIN_SRC sh
-           sudo systemctl daemon-reload
-           sudo systemctl start asus-kbd-backlight.service
-           sudo systemctl enable asus-kbd-backlight.service
-           #+END_SRC
-***** Xmodmap
-      If you want to indicate that the current keymap table should be printed on the standard output in the form of expressions that can be fed back to xmodmap.
+      "Boot with defaults"    	"root=PARTUUID=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX rootfstype=ext4 rw add_efi_memmap initrd=/intel-ucode.img initrd=/initramfs-linux.img"
+      #+end_example
+      #+begin_hint
+      There are several ways to findout your PARTUUID, one of them is:
       #+BEGIN_SRC sh
-      xmodmap -pke 
+      blkid -s PARTUUID -o value /dev/sdxY #Where 'x' is the disk letter and 'Y' is the partition number.
       #+END_SRC
-*** X server and friends
-    #+BEGIN_SRC sh
-    sudo pacman -S xorg-server xorg-server-utils xorg-xbacklight xbindkeys xorg-xinit xorg-xinput xorg-twm xorg-xclock xterm xdotool
-    #+END_SRC
-    - xinit ::
-         If you want to create your own .xinitrc and not using one from [[https://github.com/NicholasGlazer/dotfiles][dotfiles]], do next:
-         Check if you have [[https://wiki.archlinux.org/index.php/Xinit#xinitrc][xinitrc]] file in your user directory:
-         #+BEGIN_SRC sh
-         cat ~/.xinitrc
-         #+END_SRC
-         If not you should create or copy it:
-         #+BEGIN_SRC sh
-         sudo touch ~/. Xinitrc # Or you can just copy it from my dotfiles
-         #+END_SRC
-         Don't forget to make it executable:
-         #+BEGIN_SRC sh
-         sudo chmod +x ~/.xinitrc
-         #+END_SRC
-         To check if everything working properly we can execute command =startx=.
-*** Window Manager/Desktop Environment
-**** Xmonad
-     This is my current Window Manager I'm spending most of time with. \\
-     The config is basically the [[https://wiki.archlinux.org/index.php/Haskell][Haskell]] file. So you should know Haskell a little bit to configure it without problems. \\
-     For better understanding you may want to read [[http://beginners-guide-to-xmonad.readthedocs.io/index.html][this beginners tutorial]].
+      In this guide root assigned to sda5.
+      #+end_hint
+      Also, to set the default boot OS based on the loader's title, which appears in the main menu beneath the icons when you select the loader by uncommenting or adding:
+      #+BEGIN_SRC sh
+      default_selection "+,vmlinuz"
+      #+END_SRC
+      Notice that you can put custom kernel options here, e.g.: I'm using ~acpi_osi=! acpi_osi="Windows 2009" acpi_backlight=native~ for my [[https://wiki.archlinux.org/index.php/ASUS_Zenbook_Pro_UX501][Zenbook Pro UX501VM]] because of [[https://wiki.archlinux.org/index.php/NVIDIA_Optimus#Lockup_issue_.28lspci_hangs.29][known Nvidia issue]]. \\
+      And ~nmi_watchdog=0~ to disable watchdog for the energy savings. \\
+      Make space for [[*Hibernation][#hibernation]].
+      #+begin_warning
+      For novice linux users it's better to learn more about [[https://wiki.archlinux.org/index.php/Kernel][kernel]] and re-check how to pass parameters [[https://wiki.archlinux.org/index.php/REFInd#Passing_kernel_parameters][in rEFInd]].
+      #+end_warning
+***** rEFInd customization
+      You have ability to use themes in rEFInd. I'm using [[https://github.com/EvanPurkhiser/rEFInd-minimal][refind-minimal]] theme. You will need to setup [[*Git][#git]] first.
+    - Create a folder called =themes= in the same directory with =refind.conf= ::
+      #+BEGIN_SRC sh
+      mkdir themes
+      cd themes
+      #+END_SRC
+    - Clone theme repository:: 
+      #+BEGIN_SRC sh
+      git clone https://github.com/EVanPurkhiser/rEFInd-minimal.git
+      #+END_SRC
+    - To enable the theme add ~include themes/rEFInd-minimal/theme.conf~ in the end of =refind.conf=:: 
+**** DONE Reboot
+     CLOSED: [2018-11-07 Wed 02:30]
+     Exit the chroot environment and reboot the system:
      #+BEGIN_SRC sh
-     pacaur -S --noconfirm xmonad xmonad-contrib xmobar dmenu2 dzen2 stalonetray conky compton
-     #+END_SRC
-**** Gnome
-     Read [[*Intro][intro]] above.
-     #+begin_note
-     This configurations was not tested by me properly. So if you have any suggestions, you can share your experience, feel free to contribute. \\
-     #+end_note
-     #+BEGIN_SRC sh
-     sudo pacman -S gnome gnome-extra gnome-software
-     sudo systemctl enable gdm.service # enable login manager
+     exit
+     umount -R /mnt
      reboot
      #+END_SRC
-     #+begin_warning
-     Gnome use [[https://wiki.archlinux.org/index.php/NetworkManager][NetworkManager]] which is not compatible with connman, so you should ignore connman step, or disable NetworkManager.
-     #+end_warning
-**** Awesome
-     If you have never used tiling Window Managers before, read this [[https://awesomewm.org/wiki/My_first_awesome#Change_the_theme][beginners guide]] for [[https://wiki.archlinux.org/index.php/awesome%0Ahttps://wiki.archlinux.org/index.php/awesome][awesomeWM]].
-     #+BEGIN_SRC org
-     pacaur -S --noconfirm awesome vicious shifty
-     #+END_SRC
-     - Themes ::
-          This one is pretty good.
-          #+BEGIN_SRC sh
-          git clone --recursive https://github.com/barwinco/pro /.config/awesome
-          #+END_SRC
-*** Display Manager
-**** Slim (abandoned)
-      #+begin_danger
-      The SliM project has been abandoned, so it may be dangerous using it without any support.
-      #+end_danger
-      [[https://wiki.archlinux.org/index.php/SLiM#Configuration][Slim]] is an option if you decided not to use DE and want to keep everything minimal.
+*** TODO Environment
+**** DONE Preliminaries (important)
+     CLOSED: [2018-11-06 Tue 23:56]
+     This part depends on your personal choices, which means you have very different options to create the system of your dream. \\
+     
+     It could be very useful to collect your configs in one place, usually people call them dotfiles. \\
+     It allows you to share your configs across other machines, distros or community :). \\
+
+     Here you can find different [[https://wiki.archlinux.org/index.php/Dotfiles][dotfiles]] for all tastes. You also can check my [[https://github.com/NicholasGlazer/dotfiles][dotfiles]].
+     #+begin_hint
+     Wise idea will be to take a look at [[https://wiki.archlinux.org/index.php/General_recommendations][Arch general recommendations]].
+     #+end_hint
+***** Establish internet connection
+      Since you installed [[*Arch base files][#wpa_supplicant]] you have ability to establish wireless connection. \\
+      This commands will allow you to establish temporary connection untill reboot.
+      #+begin_note
+      #+begin_attention
+      Because of the process substitution, you cannot run this command with sudo and must use a root shell:
+      #+end_attention
       #+BEGIN_SRC sh
-      sudo pacman -S slim
-      sudo systemctl enable slim.service
-      sudo git clone https://github.com/naglis/slim-minimal.git /usr/share/slim/themes/slim-minimal
+      wpa_supplicant -B -i /interface/ -c <(wpa_passphrase /SSID/ /passpharase/)
+      dhcpcd /interface/
+      #+END_SRC
+      Don't forget to change user:
+      #+BEGIN_SRC sh
+      su /username/
+      #+END_SRC
+      #+end_note
+      #+begin_note
+      To discover your /interface/ type this:
+      #+BEGIN_SRC sh
+      lspci -k
+      ip link
+      #+END_SRC
+      It usually starts with ~w~. \\
+      Check [[https://wiki.archlinux.org/index.php/Wireless_network_configuration#Check_the_driver_status][wireless configuration]] if you have any problems.
+      #+end_note
+***** Git
+      In order to use [[https://git-scm.com/doc][git]], you need to set at least name and email:
+      #+BEGIN_SRC sh
+      git config --global user.name "John Doe"
+      git config --global user.email "johndoe@example.com"
+      git config --global core.editor emacs
+      #+END_SRC
+      For user-specific configuration I'm using =~/.config/git/config=. 
+      #+begin_attention
+      Emacs and vim are popular text editors used by developers. And highly recommended by author of this guide. \\
+      If you not familiar with emacs, you may need to search for specific instructions for how to set up your favorite editor with Git.
+      #+end_attention
+      You can read official [[https://git-scm.com/book/en/v2/Getting-Started-Fist-Time-Git-Setup][First-Time Git Setup]] guide.
+***** AUR
+      You can read more about [[https://wiki.archlinux.org/index.php/Arch_User_Repository][Arch User Repository]]. \\
+      Suggest to install [[https://github.com/Jguer/yay][yay]] . \\
+      #+begin_note
+      With [[https://wiki.archlinux.org/index.php/AUR_helpers#Comparison_table][AUR helpers comparison table]] you can choose /AUR wrapper/ by your taste.
+      #+end_note
+      Clone with git and install with [[https://wiki.archlinux.org/index.php/Makepkg][makepkg]]:
+      #+BEGIN_SRC sh
+	    git clone https://aur.archlinux.org/yay.git
+      cd yay
+      makepkg -si
+      cd .. && rm -rf yay
+      yay -Ps    #print system stats
       #+END_SRC
       #+begin_note
-      - You may want to change this fields in ~/etc/slim.conf~:
-        #+BEGIN_SRC org
-        default_user        defaultUserItsMeLol
-        current_theme       slim-minimal
-        #+END_SRC
-      - If you have a trouble with logging, you have possibility to enter console from slim, to do this type ~console~ instead of username.
+      Yay depends on [[https://github.com/golang/go][go]]. If you have no plans to use it, feel free to clean it with yay:
+      #+BEGIN_SRC sh
+      yay -Yc    #this command will clean unneeded dependencies
+      #+END_SRC
       #+end_note
-*** Terminal
-    My choice is [[https://wiki.archlinux.org/index.php/Termite][termite]] this is kind of ~vim~ based terminal, which you can control with a lot of useful vim keybindings. \\
-    Also we will need tmux for terminal multiplexing. And w3m browser for images in console.
-    #+BEGIN_SRC sh
-    sudo pacman -S termite w3m tmux
-    #+END_SRC
-**** zsh
-     [[https://github.com/sorin-ionescu/prezto][Prezto]] looks much lightweight and faster solution than [[https://github.com/robbyrussell/oh-my-zsh][oh-my-zsh]]. //
-     Run Zsh first:
-     #+BEGIN_SRC sh
-     zsh
-     #+END_SRC
-     Clone prezto repository:
-     #+BEGIN_SRC sh
-     git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
-     #+END_SRC
-     Create a new Zsh configuration by copying the zsh configuration files provided:
-     #+BEGIN_SRC sh
-     setopt EXTENDED_GLOB
-       for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
-       ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
-     done
-     #+END_SRC
-     Set Zsh as your default shell and open new window with zsh:
-     #+BEGIN_SRC sh
-     chsh -s /bin/zsh && exit
-     #+END_SRC
-     Prezto provides several themes you can choose:
-     #+BEGIN_SRC sh
-     prompt -l # Check themes list
-     prompt -s nicoulaj # To preview a theme
-     #+END_SRC
-     Load the theme you like in =~/.zpreztorc=
-*** Power management
-    I will use [[https://wiki.archlinux.org/index.php/TLP][tlp]] tool for power management, also I will install Intel's [[https://wiki.archlinux.org/index.php/Powertop][powertop]].
-    #+BEGIN_SRC sh
-    sudo pacman -S tlp powertop
-    #+END_SRC
-    Enable services for tlp:
-    #+BEGIN_SRC sh
-    sudo systemctl enable tlp.service
-    sudo systemctl enable tlp-sleep.service
-    #+END_SRC
-    #+begin_hint
-    If you don't wont to reboot the system, but want immediately start tlp: 
-    #+BEGIN_SRC sh
-    tlp start 
-    #+END_SRC
-    #+end_hint
-    #+begin_note
-    Archwiki recommends to disable ~systemd-rfkill.service~ to avoid conflicts.
-    #+end_note
-*** Fonts
-**** Infinality
-     The [[https://wiki.archlinux.org/index.php/Infinality][infinality]] patchset aims to greatly improve font rendering in freetype2 and friends. It adds multiple new capabilities. \\
-     If you missed [[*Add repositories][Add repositories]] step, it is necessary to add this lines to your ~/etc/pacman.conf~:
-     #+BEGIN_SRC sh
-     #[infinality-bundle] # Add this if you have i686 architecture.
-     #Server = http://bohoomil.com/repo/$arch
-     
-     [infinality-bundle-multilib]
-     Server = http://bohoomil.com/repo/multilib/$arch
-     
-     [infinality-bundle-fonts]
-     Server = http://bohoomil.com/repo/fonts
-     #+END_SRC
-     Next, import and sign the key:
-     #+BEGIN_SRC sh
-     pacman-key -r 962DDE58
-     pacman-key --lsign-key 962DDE58
-     #+END_SRC
-     And don't forget to update pacman:
-     #+BEGIN_SRC sh
-     sudo pacman -Syyu
-     #+END_SRC
-     #+begin_attention
-     - When conflict appears, remove ~freetype2~ and accept ~freetype2-infinality-ultimate~. Same for ~cairo~ and ~fontconfig~.
-     - If you have unresolved conflict with ~infinality-bundle-fonts~, I recommend to pick some fonts manually, you will see numbers of all available fonts.
-     #+end_attention
-     #+BEGIN_SRC sh
-     sudo pacman -S infinality-bundle-multilib infinality-bundle-fonts
-     #+END_SRC
-     #+begin_hint
-     #+BEGIN_SRC sh
-     xset q                  # You can check your font path with
-     fc-list : file          # Show all installed fonts
-     fc-cache -vf            # For cache updating
-     fc-match --verbose sans # Query current setting, shows info about particular font type.
-     #+END_SRC
-     #+end_hint
-     - More fonts
-       #+begin_warning
-       A lot of fonts may trash your cache.
-       #+end_warning
-       You can add more with infinality fonts collection.
+***** Dependencies
+      Unsorted dependencies to install:
+      #+BEGIN_SRC sh
+      yay -S openssh htop dex screenfetch
+      #+END_SRC
+      #+begin_attention
+      If you're installing packages form AUR and you trust them, you can use ~--noconfirm~ flag to auto-install packages. \\
+      But you still may want to check build scripts sometimes ;).
+      #+end_attention
+**** DONE GUI
+     CLOSED: [2018-11-07 Wed 01:24]
+***** DONE Xorg and friends
+      CLOSED: [2018-11-07 Wed 01:07]
+      [[https://wiki.archlinux.org/index.php/Xorg#General][Xorg]] is the most popular display server among Linux users. You can find my X config in ~.dotfiles/X11~.
+      #+BEGIN_SRC sh
+      yay -Ss xorg xorg-xinit xorg-xmodmap xterm
+      #+END_SRC
+****** Xinitrc 
+       #+begin_attention
+       When/if you enable [[*Display Manager][#display manager]] it will run your WM/DE as a session and most of them are using [[*Xprofile][#Xprofile]]. \\
+       You can also run [[https://wiki.archlinux.org/index.php/Display_manager#Session_configuration][xinit as a session]], or even a standalone browser.
+       #+end_attention
+       You can copy the default [[https://wiki.archlinux.org/index.php/Xinit#xinitrc][xinitrc]] file from =/etc/X11/xinit/xinitrc=, \\
+       you should edit it before execution, since we didn't install =twm= and =xorg-xclock=:
        #+BEGIN_SRC sh
-       sudo pacman -Ss infinality-bundle-fonts-extra
+       cp /etc/X11/xinit/xinitrc ~/.xinitrc
        #+END_SRC
-     - Picking preset
-       Now lets configure fonts:
+       You can execute xmonad or any other WM/DE with =.xinitrc= as simple as:
        #+BEGIN_SRC sh
-       sudo fc-presets set # Pick 1) combi preset
+       #!/bin/sh
+       exec xmonad
+       #+END_SRC
+       #+begin_note
+       To execute =.xinitrc= run ~startx~ or ~xinit~. //
+       #+end_note
+****** Xresources
+       [[https://wiki.archlinux.org/index.php/X_resources][~/.Xresources]] file is useful if you want to add a color theme for some X applications, or configure X fonts appearance, or e.g. change the Xcursor theme. \\
+       Check [[https://wiki.archlinux.org/index.php/Color_output_in_console#Using_X_resources][wiki examples]]. You also can check my [[https://github.com/nicholasglazer/dotfiles/blob/master/.Xresources][config]].
+       #+begin_note
+       Most Display managers load the ~/.Xresources file on login.
+       #+end_note
+****** Touchpad
+       #+begin_attention
+       Laptop specific configuration.
+       #+end_attention
+       For touchpad [[https://wiki.archlinux.org/index.php/Libinput#Via_Xorg_configuration_file][tap-to-click ]]edit =/X11/xorg.conf.d/30-touchpad.conf= you can also find it in my [[https://github.com/NicholasGlazer/dotfiles][dotfiles]].
+       #+BEGIN_SRC sh
+       yay -S xf86-input-libinput
+       #+END_SRC
+****** Keboard
+       If you want to indicate that the current keymap table should be printed on the standard output in the form of expressions that can be fed back to xmodmap. \\
+       #+BEGIN_SRC sh
+       xmodmap -pke > ~/.Xmodmap
        #+END_SRC
        #+begin_hint
-       - If something goes wrong or you have problem with Chrome/Firefox fonts rendering, you can pick 4th option to reset
-       - When we activated the combi preset, it content could be changed ~/etc/fonts/conf.avail.infinality/combi~.
+       To temporary change your keyboard layout:
+       #+BEGIN_SRC sh
+       setxkbmap dvorak
+       #+END_SRC
        #+end_hint
-     - Fontconfig parameters
-       Configuration can be done per-user through ~$XDG_CONFIG_HOME/fontconfig/fonts.conf~. You can find it in my [[https://github.com/NicholasGlazer/dotfiles/tree/master/.config/fontconfig][dotfles]].
+***** DONE Video drivers
+      CLOSED: [2018-11-07 Wed 01:24]
+       Check your video card first: 
+       #+BEGIN_SRC sh
+       lspci | grep -e VGA -e 3D
+       #+END_SRC
+****** Nvidia
+       If you have [[https://wiki.archlinux.org/index.php/NVIDIA][NVIDIA]] card, follow this archor - [[*Nvidia hybrid graphics][#Nvidia hybrid graphics]].
+****** AMD
+       If you have [[https://wiki.archlinux.org/index.php/ATI][ATI]](AMD) card, your installation could be pretty easy, just follow the wiki.
+***** DONE Window Manager/Desktop Environment
+      CLOSED: [2018-11-07 Wed 01:24]
+      For Linux newcomers better decision could be to try [[https://wiki.archlinux.org/index.php/Desktop_environment][desktop environment]] like [[https://wiki.archlinux.org/index.php/KDE][KDE]] or [[https://wiki.archlinux.org/index.php/GNOME][GNOME]] first. \\ 
+      However you could install multiple [[https://wiki.archlinux.org/index.php/Desktop_environment][Window Managers]] or DE and change them [[https://wiki.archlinux.org/index.php/Xinit#Switching_between_desktop_environments/window_managers][with this script]] or with [[*Display Manager][display manager]]. \\
+      It is also possible to replace default DE's window manager with desired one, e.g.: [[https://wiki.haskell.org/Xmonad/Using_xmonad_in_KDE][xmonad in KDE]]. \\
+****** Xmonad
+       My favorite tiling window manager, spending most of my time with it. \\
+       See [[*Xmonad configuration][#Xmonad configuration]].
+******* Xmonad with KDE
+        Install [[*KDE][#KDE]] first.
+        Create a directory ~/.config/plasma-workspace/env if it does not already exist. Create a file there called =set_window_manager.sh= and add this:
+        #+BEGIN_SRC sh
+        export KDEWM=/usr/bin/xmonad
+        #+END_SRC
+        Restart your session and enjoy xmonad with KDE.
+        #+begin_attention
+        You should have [[*Xmonad configuration][#xmonad config]] in =~/.xmonad/xmonad.hs=.
+        #+end_attention
+****** KDE
+       Read more about [[https://wiki.archlinux.org/index.php/KDE][KDE5]].
+       #+BEGIN_SRC sh
+       yay -S plasma kde-applications kdeconnect powerdevil
+       sudo systemctl enable sddm.service # enable KDE login manager
+       reboot
+       #+END_SRC
+****** GNOME
+       Read more about [[https://wiki.archlinux.org/index.php/GNOME][GNOME]].
+       #+BEGIN_SRC sh
+       yay -S gnome gnome-extra
+       sudo systemctl enable gdm.service # enable GNOME login manager
+       reboot
+       #+END_SRC
+***** DONE Display Manager
+      CLOSED: [2018-11-07 Wed 01:24]
+****** Xprofile
+       [[https://wiki.archlinux.org/index.php/Xprofile][Xprofile]] allows you to execute commands at the beginning of the X user session. It is similar to [[*Xinitrc][#xinitrc]]. \\
+       If you want to add/modify this file, means that you decided to use [[*Xmonad][xmonad]] or any other WM. \\ 
+       Run programs you wish before the window manager is started:
+       #+BEGIN_SRC sh
+       # Start WM
+       exec xmonad
+       #+END_SRC
+       #+begin_note
+       I'm launching only xmonad because I launched commands like background or composite manager in my  ~xmonad.hs~ startup hook.\\
+       Should be obvious, that to launch programs they should be installed first.
+       #+end_note
+****** SDDM
+      #+begin_attention
+      If you picked GNOME, or any other *Desktop Environment*, you probably already have a Display Manager, so just skip this step.
+      SDDM is a part of [[*KDE][#KDE]] group.
+      #+end_attention
+      #+BEGIN_SRC sh
+      yay -S sddm
+      sudo systemctl enable sddm.service # enable Simple Desktop Display Manager
+      #+END_SRC
+      SDDM will load ~US~ by default, if you want to use specific keyboard layout rather then ~US~, generate it with =localectl set-x11-keymap=:
+      #+BEGIN_SRC sh
+      localectl set-x11-keymap dvorak
+      #+END_SRC
+**** DONE Networking
+     CLOSED: [2018-11-07 Wed 01:23]
+***** DONE Network Managers 
+      CLOSED: [2018-11-07 Wed 01:23]
+      The [[*Connman][#connman]] could be a good choice if you want cli manager with fast connection speed and stable work. \\
+      Nevertheless there are other options for internet connection, you can check the full list [[https://wiki.archlinux.org/index.php/Network_configuration#Network_managers][here]]. \\
+      If you want something with GUI you could use [[*NetworkManager][#NetworkManager]] or [[https://wiki.archlinux.org/index.php/Wicd][Wicd]]. \\
+      You could use native [[https://wiki.archlinux.org/index.php/systemd-networkd][systemd-networkd]] if you don't need wireless connection. \\
+      #+begin_attention
+      If you enabled services before, make sure to disable everything that can be in conflict:
+      #+BEGIN_SRC sh
+      systemctl --type=service                # to check services that are running
+      systemctl disable service_name.service  # and disable active NetworkManager.service / connman.service / et.c.
+      #+END_SRC
+      #+end_attention
+****** NetworkManager
+       Some desktop environments like GNOME that are using [[https://wiki.archlinux.org/index.php/NetworkManager][NetworkManager]] by default has a built-in tools, check network settings. \\ 
+       #+BEGIN_SRC sh
+       yay -S networkmanager
+       #+END_SRC
        #+begin_warning
-       Infinality ArchWiki says that ~/etc/fonts/local.conf~ should either not exist, or have no infinality-related configurations in it.
+       By default, WIFI password are stored in clear text, see [[https://wiki.archlinux.org/index.php/NetworkManager#Encrypted_Wi-Fi_passwords][#Encrypted passwords]].
        #+end_warning
-*** IDE
-**** Emacs
-     #+begin_warning
-     Be aware of [[https://wiki.archlinux.org/index.php/Infinality#Emacs][Noto Font]] for emacs. First time I didn't realized that this may cause a problems. I picked Noto font and I can tell you for sure that spacemacs looks pretty ugly with this font family.
-     #+end_warning
-    - Install and configure: ::
+******* Front-ends
+        - Applet =nm-applet= ::
+             To see notifications you should have [[*Notification manager][notification manager]].
+                #+BEGIN_SRC sh
+                yay -S network-manager-applet
+                #+END_SRC
+        - For [[*KDE][KDE]] ::
+             E.g. if you have KDE you can install it's applet instead.
+                #+BEGIN_SRC sh
+                yay -S plasma-nm
+                #+END_SRC
+        - Script :: 
+                Also there is a good lightweight alternative I'm using with [[*Xmonad][#xmonad]], which is a small script to manage NetworkManager connections with dmenu/rofi instead of nm-applet:
+                #+BEGIN_SRC sh
+                yay -S networkmanager-dmenu-git
+                #+END_SRC
+                You can
+****** Connman
+       [[https://wiki.archlinux.org/index.php/Connman][Connman]] itself is a command-line network manager. Check connman-notify readme to findout [[https://gitlab.com/wavexx/connman-notify#why-connman][why you could use it]].
+       #+BEGIN_SRC sh
+       yay -S connman
+       #+END_SRC
+       #+begin_note
+       You may want to install connman_dmenu to have connman applet: 
+       #+BEGIN_SRC sh
+       yay -S connman_dmenu 
+       #+END_SRC
+       #+end_note
+       Wired connection supports is out of the box.
+******* Config
+        For wireless setup you will need to do few more things. 
+        #+BEGIN_SRC sh
+        connmanctl                       # Should enter connmanctl> shell
+        connmanctl> enable wifi          # Lets make sure that wifi is enabled.
+        connmanctl> scan wifi            # Scan for any Wi-Fi technologies.
+        connmanctl> services             # List of services.
+        connmanctl> agent on             # Register the agent to handle user requests.
+        #+END_SRC
+        You now need to connect to one of the protected services. You can use tab completion for the ~wifi_~ service.
+        #+BEGIN_SRC sh
+        connmanctl> connect wifi_*****   # The agent will then ask you to provide any information the daemon needs to complete the connection.
+        connmanctl> quit                 # Exiting
+        #+END_SRC
+        If the information you provided is correct you should now be connected to the wifi.
+***** DONE VPN
+      CLOSED: [2018-11-07 Wed 01:24]
+      [[https://wiki.archlinux.org/index.php/WireGuard][Wireguard]] is an extremely simple yet fast and modern VPN that utilizes state-of-the-art cryptography.
       #+BEGIN_SRC sh
-      sudo pacman -S emacs
+      yay -S wireguard-tool
       #+END_SRC
-    - I'm using [[https://github.com/syl20bnr/spacemacs#introduction][spacemacs]], installation is pretty simple: ::
+      [[*NetworkManager][#NetworkManager]] VPN support is based on a plug-in system:
       #+BEGIN_SRC sh
-      git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+      yay -S networkmanager-wireguard-git
       #+END_SRC
-*** Media
-**** Browser
+      #+begin_attention
+      VPN support could be unstable.
+      #+end_attention
+**** TODO Multimedia
+***** TODO Audio drivers
+      [[https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture#Installation][ALSA]] provides kernel driven sound card drivers: 
+     - Install [[https://wiki.archlinux.org/index.php/PulseAudio#Installation][pulseaudio]] and utils, and manage it ::
+               #+BEGIN_SRC sh
+               yay -S alsa-utils pulseaudio pulseaudio-alsa
+               #+END_SRC
+     - [[https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture#Unmute_with_alsamixer][Unmute]] with alsamixer ::
+               #+BEGIN_SRC sh
+               alsamixer
+               #+END_SRC
+     - Test it ::
+               #+BEGIN_SRC sh
+               speaker-test -c 2
+               #+END_SRC
+***** DONE Fonts
+      CLOSED: [2018-11-07 Wed 01:10]
+      Install your favorite fonts. \\
+      I'm using ~ttf-font-awesome~ xmobar icons, so it's necessary to install if you will use [[*Xmonad configuration][#Xmonad configs]].
+      #+BEGIN_SRC sh
+      yay -S ttf-droid ttf-dejavu ttf-font-awesome adobe-source-code-pro-fonts
+      #+END_SRC
+***** DONE Media tools
+      CLOSED: [2018-12-07 Fri 04:34]
+      You may want to check the full list of [[https://wiki.archlinux.org/index.php/List_of_applications/Multimedia][media applications]].
+      [[./img/mpd.gif][mpd.gif]]
+     - CLI ::
+              [[https://wiki.archlinux.org/index.php/Music_Player_Daemon][Music Player Daemon]] or ~mpd~ is an audio player that has a server-client architecture. It plays audio files, organizes playlists and maintains a music database, all while using very few resources. \\
+              In order to use it pick a [[https://wiki.archlinux.org/index.php/Music_Player_Daemon#Clients][client]] by your taste, e.g. ncmpcpp - which is popular choice. I'm using [[https://github.com/ambientsound/pms][pms]]. [[http://lacocina.nl/audiophile-mpd][Additional config for audiophile]].
+              #+BEGIN_SRC sh
+              yay -S mpd 
+              
+              yay -S pmus-git # last time I checked pmus-git it was outdated on AUR, except some features like multiselect everything works fine
+              #
+              # alternative is 
+              go get -u github.com/ambientsound/pms
+              cd $GOPATH/src/github.com/ambientsound/pms # you should have $GOPATH
+              make
+              pms
+              #+END_SRC
+              [[https://wiki.archlinux.org/index.php/Mpv][Mpv]] - powerfull player where you can create [[https://github.com/mpv-player/mpv/wiki/User-Scripts][scripts]].
+              #+BEGIN_SRC sh
+              yay -S mpv
+              #+END_SRC
+              [[https://wiki.archlinux.org/index.php/Cmus][Cmus]] feature rich command line music player.
+              #+BEGIN_SRC sh
+              yay -S cmus
+              #+END_SRC
+     - GUI :: 
+              [[https://www.videolan.org/vlc/][vlc]] - popular cross-platform media player.
+              #+BEGIN_SRC sh
+              yay -S vlc
+              #+END_SRC
+              vimiv - image viewer with vim keybindings.
+              #+BEGIN_SRC sh
+              yay -S vimiv
+              #+END_SRC
+              [[https://wiki.archlinux.org/index.php/FFmpeg][FFmpeg]] is a complete, cross-platform solution to record, convert and stream audio and video. It includes libavcodec - the leading audio/video codec library.
+              #+BEGIN_SRC sh
+              yay -S ffmpeg
+              #+END_SRC
+     - Visualizer: ::
+              [[https://github.com/karlstav/cava][Cava]] - audio visualizer.
+              #+BEGIN_SRC sh
+              yay -S cava
+              #+END_SRC
+     - Other :: 
+              [[https://www.audacityteam.org/][Audacity]] - one of the best audio editors.
+              #+BEGIN_SRC sh
+              yay -S audacity
+              #+END_SRC
+***** DONE Browser
+      CLOSED: [2018-11-07 Wed 01:12]
      - Chromium ::
-       #+BEGIN_SRC sh
-       pacaur -S --noconfirm chromium chromium-pepper-flash
-       #+END_SRC
+            #+BEGIN_SRC sh
+            yay -S chromium
+            #+END_SRC
      - Firefox :: 
-       #+BEGIN_SRC sh
-       pacaur -S --noconfirm firefox
-       #+END_SRC
-     - Network ::
-       #+BEGIN_SRC sh
-       pacaur -S tor zeronet
-       #+END_SRC
-**** Wallpaper
-     We have already installed [[https://wiki.archlinux.org/index.php/Feh][feh]].
-     #+BEGIN_SRC sh
-     feh --bg-scale /path/to/image.file
-     #+END_SRC
-     After this ~.fehbg~ will be created. So you can modify it however you want. As an example how to make random backgrounds:
-     #+BEGIN_SRC sh
-     feh --randomize --bg-fill ~/.wallpaper/*
-    #+END_SRC
-**** Notifications
-     #+BEGIN_SRC sh
-     sudo pacman -S dunst
-     #+END_SRC 
-**** Documents
+            You also can benefit from [[https://wiki.archlinux.org/index.php/Firefox/Profile_on_RAM][firefox profile on RAM]].
+            #+BEGIN_SRC sh
+            yay -S firefox firefox-developer-edition
+            #+END_SRC
+     - Vivaldi :: 
+             [[https://vivaldi.com/][Vivaldi]] - based on Chromium and focused on personalization aspects. Compatible with most of Chrome's extensions.
+             #+BEGIN_SRC sh
+             yay -S vivaldi vivaldi-ffmpeg-codecs
+             #+END_SRC
+     - Tor ::
+              Big brother is watching you, use [[https://wiki.archlinux.org/index.php/Tor][tor]].
+              #+BEGIN_SRC sh
+              yay -S tor
+              #+END_SRC
+     - Brave ::
+              Blockchain browser from JS creator.
+              #+BEGIN_SRC sh
+              yay -S brave
+              #+END_SRC
+     - W3M ::
+              Pager/text-based web browser. It has vim-like keybindings, and is able to display images.
+              #+BEGIN_SRC sh
+              yay -S w3m
+              #+END_SRC
+***** DONE Documents reader
+      CLOSED: [2018-11-07 Wed 01:12]
     - Zathura text reader: ::
          Minimal and useful if you like key control.
          #+BEGIN_SRC sh
-         sudo pacman -S zathura zathura-djvu zathura-mupdf
+         yay -S zathura zathura-djvu zathura-pdf-mupdf zathura-cb # zathura-cb for comicbook support
          #+END_SRC
-**** IRC
-     - Weechat: ::
+***** DONE Screenshots
+      CLOSED: [2018-11-07 Wed 01:12]
+      scrot - simple and flexible solution to make screenshots.
+      #+BEGIN_SRC sh
+      yay -S scrot
+      #+END_SRC
+      Byzanz — simple screencast tool that produces GIF animations.
+      #+BEGIN_SRC sh
+      yay -S byzanz
+      #+END_SRC
+***** DONE Social
+      CLOSED: [2018-11-07 Wed 01:12]
+     -  Discord :: 
+          Think twice before installing discord
+          https://spyware.neocities.org/articles/discord.html
+     -  Telegram :: 
+          #+BEGIN_SRC sh
+          yay -S telegram-desktop
+          #+END_SRC
+     - Weechat IRC: ::
           [[https://freenode.net/kb/answer/registration][Freenode FAQ]] explains how to make registration.
           #+BEGIN_SRC sh
-          sudo pacman -S weechat
+          yay -S weechat
           #+END_SRC
-**** Video
-     #+BEGIN_SRC sh
-     sudo pacman -S ffmpeg vlc
-     #+END_SRC
-**** Screenshots
-     #+BEGIN_SRC sh
-     pacaur -S --noconfirm scrot
-     #+END_SRC
-**** Audio
-     - Cmus ::
-          [[https://wiki.archlinux.org/index.php/Cmus][Cmus]] command line music player.
-          #+BEGIN_SRC sh
-          pacaur -S cmus
-          #+END_SRC
-     - Visualizer: ::
-          [[https://github.com/karlstav/cava][Cava]] audio visualizer.
-          #+BEGIN_SRC sh
-          pacaur -S cava-git
-          #+END_SRC
-**** Torrent tracker
-     If you want rtorrent without vim keybindings, you should install ~pacaur -S rtorrent~.
-     #+BEGIN_SRC sh
-     pacaur -S --noconfirm rtorrent-vi-color
-     #+END_SRC
-**** Media transfer protocol
-     #+BEGIN_SRC sh
-     pacaur -S libmpt simple-mtpfs
-     #+END_SRC
-**** Virtualbox
-     #+BEGIN_SRC sh
-     sudo pacman -S virtualbox 
-     sudo enasystemd-modules-load.service
-     sudo vboxreload
-     #+END_SRC
-     #+begin_tip
-     Choose virtualbox-host-modules-arch for [[https://wiki.archlinux.org/index.php/VirtualBox][virtualbox]]
-     #+end_tip
-*** Programming Environment
-**** Nodejs
-     #+BEGIN_SRC sh
-     sudo pacman -S nodejs npm
-     #+END_SRC
-***** yarn
-      Facebook has made a replacement for npm - [[https://github.com/yarnpkg/yarn][yarn]].
-      It looks like faster solution with more features. \\
-      You can install in in several ways:
-      #+BEGIN_SRC sh
-      pacaur -S yarn --noconfirm
-      #+END_SRC
-      or
-      #+BEGIN_SRC sh
-      npm i -g yarn
-      #+END_SRC
-      Read more in [[https://code.facebook.com/posts/1840075619545360][facebook's blog]].
-***** npm
-      To solve [[https://docs.npmjs.com/getting-started/fixing-npm-permissions][EACCES error]]. 
+***** DONE Emacs
+      CLOSED: [2018-11-07 Wed 01:12]
+      Yet most powerfull text editor. 
       #+begin_warning
-      Option 1 can be dangerous and definitely a bad practice, use [[https://docs.npmjs.com/getting-started/fixing-npm-permissions#option-2-change-npms-default-directory-to-another-directory][second]] instead:
+      Learning curve!
       #+end_warning
-      Make a directory for global installations:
+    - Install and configure: ::
+         #+BEGIN_SRC sh
+         yay -S emacs
+         #+END_SRC
+    - I'm using [[https://github.com/syl20bnr/spacemacs#introduction][spacemacs]] vim + emacs keybindings, installation is pretty simple: ::
+         #+BEGIN_SRC sh
+         git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+         #+END_SRC
+***** DONE Torrent tracker
+      CLOSED: [2018-11-07 Wed 01:12]
+      If you want rtorrent without vim keybindings, install ~yay -S rtorrent~ instead.
       #+BEGIN_SRC sh
-      mkdir ~/.npm-global
+      yay -S rtorrent-vi-color
       #+END_SRC
-      Configure npm to use the new directory path:
+      Transmission is another option with GUI.
       #+BEGIN_SRC sh
-      npm config set prefix '~/.npm-global'
+      yay -S transmission
       #+END_SRC
-      Open or create a =~/.zprofile= and add this line:
+***** DONE File management
+      CLOSED: [2018-12-07 Fri 04:36]
+      If you need something with user interface you can try ~dolphin~ or ~nautilus~. \\
+      Also check my favorite [[*File manager][#File manager]].
       #+BEGIN_SRC sh
-      export PATH=~/.npm-global/bin:$PATH
+      yay -S dolphin
       #+END_SRC
-      Update your system variables:
+      #+begin_note
+      To see files and [[https://wiki.archlinux.org/index.php/File_permissions_and_attributes#Changing_permissions][file permissions]]. Type ~ls -l~ in the terminal.
+      #+end_note
+***** DONE Terminal
+      CLOSED: [2018-11-07 Wed 01:12]
+      See [[*Terminal emulator][#terminal emulator]].
+**** TODO Programming
+***** TODO Haskell
+      [[https://wiki.archlinux.org/index.php/Haskell][Haskell]] is a general purpose, purely functional, programming language. Xmonad is written in Haskell.
       #+BEGIN_SRC sh
-      source ~/.zprofile
+      yay -S ghc #Glasgow Haskell Compiler
       #+END_SRC
-      Now you can use ~npm -g~ without sudo, test it with any package:
+***** TODO ECMAscript
+      You have JS compiler in any browser. You still want to install [[https://wiki.archlinux.org/index.php/Node.js][Node.js]] as environment. \\
+      Wise idea will be to [[https://github.com/creationix/nvm#installation][install]] node version manager first:
       #+BEGIN_SRC sh
-      npm i -g gulp react react-native tern eslint babel-eslint eslint-plugin-react js-beautify
+      yay -S nvm 
+      nvm ls-remote
+      nvm install 11.3.0 # now you can use npm
       #+END_SRC
-**** Java
-     Install only [[https://wiki.archlinux.org/index.php/Java][java]] environment without GUI:
+      And add to ~.bashrc~ or ~.zshrc~, you will not find nvm with =which nvm=, it's not a binary.
+      #+BEGIN_SRC sh
+      export NVM_DIR="${XDG_CONFIG_HOME/:-$HOME/.}nvm" 
+      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+      #+END_SRC
+      You can also simply install:
+      #+BEGIN_SRC sh
+      yay -S nodejs npm # yarn
+      #+END_SRC
+**** DONE Xmonad configuration
+     CLOSED: [2018-12-07 Fri 04:36]
+     Xmonad is written in [[https://wiki.archlinux.org/index.php/Haskell][Haskell]], minimalistic and powerfull window manager with a lot of hackable features, \\ 
+     though its configuration could be tricky if it's your first experience with functional programming language. \\
+     No worries, it's not that hard, you can make [[https://wiki.archlinux.org/index.php/Xmonad#Configuration][simple configuration in a minutes with arch wiki.]] \\
+     For the better understanding you may want to read [[http://beginners-guide-to-xmonad.readthedocs.io/index.html][beginners tutorial]]. \\
+     For more detailed configuration with examples take a look at [[https://hackage.haskell.org/package/xmonad-contrib-0.15/docs/XMonad-Doc-Extending.html#g:8][XMonad.Doc.Extending]]. \\
+     You also may want to use existing [[https://wiki.haskell.org/Xmonad/Config_archive][configurations from the community]] or mine below 
+     ~.dotfiles/.xmonad/xmonad.hs~
+     [[./img/layouts.gif][layouts.gif]]
+     [[./img/accordion.gif][accordion.gif]]
+     Begin with the installation:
      #+BEGIN_SRC sh
-     sudo pacman -S jre8-openjdk-headless
+     yay -S xmonad xmonad-contrib
      #+END_SRC
-     Now you need to source from the command line or by logging out/in:
+     Xmonad has no status bar by default, so you'll need to [[*Status bar (XMobar)][pick]] by yourself.
+***** DONE Status bar (XMobar)
+      CLOSED: [2018-12-07 Fri 04:28]
+      XMobar is a minimalistic, text based status bar. \\
+      You can find all the documentation in [[https://archives.haskell.org/projects.haskell.org/xmobar/#system-monitor-plugins][haskell.org/xmobar]] or on the [[https://github.com/jaor/xmobar][github]]. \\
+      #+BEGIN_SRC sh
+      yay -S xmobar
+      #+END_SRC
+      Now you will need to configure it or use one of from the community or mine below
+      [[./img/xmobar.gif][xmobar.gif]]
+      ~.dotfiles/.config/xmobar/xmobarrc~
+***** DONE Vim
+      CLOSED: [2018-11-07 Wed 00:48]
+      Install vim, if not installed.
+      #+BEGIN_SRC sh
+      yay -S vim
+      #+END_SRC
+      To use a theme, e.g. [[https://github.com/sickill/vim-monokai][monokai]], copy ~theme.vim~ file.
+      #+BEGIN_SRC sh
+      mkdir ~/.vim/colors && cd ~/.vim/colors
+      wget https://raw.githubusercontent.com/sickill/vim-monokai/master/colors/monokai.vim
+      #+END_SRC
+      After that you need to create ~.vimrc~ file and add following:
+      #+BEGIN_SRC vim
+      syntax enable
+      colorscheme monokai
+      #+END_SRC
+      If your terminal is transparent and you want to keep vim transparent as well, add this:
+      #+BEGIN_SRC vim
+      hi! Normal ctermbg=NONE guibg=NONE
+      hi! NonText ctermbg=NONE guibg=NONE
+      #+END_SRC
+***** DONE Terminal emulator
+      CLOSED: [2018-11-07 Wed 01:20]
+      [[https://wiki.archlinux.org/index.php/Termite][Termite]] to launch transparent terminal, used as a default terminal in ~xmonad.hs~. \\
+      I use [[https://wiki.archlinux.org/index.php/Rxvt-unicode][urxvt]] in ~xmonad.hs~ mostly to launch different applications e.g.: [[*File manager][ranger]] or as a scrathpad terminal. \\
+      You can control both with a lot of useful vim keybindings.
+      #+BEGIN_SRC sh
+      yay -S termite rxvt-unicode terminology-git
+      #+END_SRC
+      [[./img/layouts.gif][layouts.gif]]
+****** DONE zsh
+       CLOSED: [2018-11-07 Wed 01:23]
+       [[https://github.com/sorin-ionescu/prezto][Prezto]] looks much lightweight and faster solution than [[https://github.com/robbyrussell/oh-my-zsh][oh-my-zsh]]. \\
+       Install and run Zsh first:
+       #+BEGIN_SRC sh
+       yay -S zsh
+       zsh
+       #+END_SRC
+       Clone prezto repository:
+       #+BEGIN_SRC sh
+       git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+       #+END_SRC
+       Create a new Zsh configuration by copying the zsh configuration files provided:
+       #+BEGIN_SRC sh
+       setopt EXTENDED_GLOB
+         for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
+         ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+       done
+       #+END_SRC
+       Set Zsh as your default shell and open new window with zsh:
+       #+BEGIN_SRC sh
+       chsh -s /bin/zsh && exit
+       #+END_SRC
+       Prezto provides several themes you can choose:
+       #+BEGIN_SRC sh
+       prompt -l          # Check themes list
+       prompt -s nicoulaj # To preview a theme
+       #+END_SRC
+       Save the theme you like in =~/.zpreztorc=
+****** DONE console utilities
+       CLOSED: [2018-11-07 Wed 01:20]
+       Tree is useful when you need to see a tree of folder structure in your terminal. \\
+       Fuck helps you auto-correct word ="suod" -> "sudo"=. \\
+       Tmux is a famous terminal multiplexer.
+       #+BEGIN_SRC sh
+       yay -S tree fuck tmux
+       #+END_SRC
+***** DONE Program Launcher
+      CLOSED: [2018-11-07 Wed 01:27]
+      [[https://wiki.archlinux.org/index.php/Rofi][Rofi]] is a part of my everyday environment, and good replacement for dmenu.
+      You may want to know how to use Rofi with [[https://github.com/DaveDavenport/rofi/tree/f41d946e337d7a3f51bf42cd9c4bf1ecc9fd826b#keybindings][keybindings]].
+      [[./img/rofi.gif][rofi.gif]]
+      #+BEGIN_SRC sh
+      yay -S rofi
+      rofi -combi-modi drun,ssh -font "hack 12" -show combi -theme solarized # -theme onemon
+      #+END_SRC
+      You can bind it with ~Xmonad.modMask~. I bound it near my point finger because of often usage =xK_d= (=xK_h= /on qwerty layout/):
+      #+BEGIN_SRC haskell
+      ((modm, xK_d), spawn "rofi -combi-modi drun,ssh -theme onedark -font 'hack 12' -show combi")
+      #+END_SRC
+***** DONE File manager
+      CLOSED: [2018-11-15 Thu 07:58]
+      [[https://wiki.archlinux.org/index.php/ranger][Ranger]] is my main file manager. It has vim-like keybindings, simple and powerfull. \\
+      You can find my global color config in ~.Xresources~ and /.conf/ file in ~.dotfiles/.config/ranger~.
+      #+BEGIN_SRC sh
+      yay -S ranger-git
+      #+END_SRC
+      To add [[https://github.com/ranger/ranger/wiki/Video-Previews][video preview]] follow git wiki.
+      #+BEGIN_SRC sh
+      yay -S ffmpegthumbnailer
+      #+END_SRC
+      [[./img/ranger.gif][ranger.gif]]
+      #+begin_note
+      I'm launching it from ~xmonad.hs~ through scrathpad(~urxvt -e ranger~) with =modm= + =r= keybindings.
+      #+end_note
+      #+begin_note
+      type =?= to see all keybindings
+
+      To copy the default ranger configurations launch the command:
+      #+BEGIN_SRC sh
+      ranger --copy-config=all
+      #+END_SRC
+      where
+      ~rc.conf~     - startup commands and keybindings, eg you can =set preview_images= true
+      ~commands.py~ - commands which are launched with :
+      ~rifle.conf~  - applications used when a given type of file is launched.
+      
+      For more tips and tricks see [[https://wiki.archlinux.org/index.php/ranger#Tips_and_tricks][wiki]]. \\
+      To add video preview read [[https://github.com/ranger/ranger/wiki/Video-Previews][github wiki]].
+      #+end_note
+***** TODO Notification manager
+      [[https://wiki.archlinux.org/index.php/Dunst][Dunst]] is a simple and configurable notification manager. \\
+      There is no need to start or enable dunst; it is called by systemd when programs send notifications through dbus. 
+      #+BEGIN_SRC sh
+      yay -S dunst
+      notify-send testTitle 'My Test Message'
+      #+END_SRC
+      #+begin_note
+      [[https://wiki.archlinux.org/index.php/Systemd/User#DISPLAY_and_XAUTHORITY][DISPLAY and XAUTHORITY]]
+      In case dunst not autostarted add this to your ~.xprofile~:
+      #+BEGIN_SRC sh
+      if [ -d /etc/X11/xinit/xinitrc.d ] ; then
+       for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
+        [ -x "$f" ] && . "$f"
+       done
+       unset f
+      fi
+      #+END_SRC
+      #+end_note
+***** DONE Wallpaper
+      CLOSED: [2018-11-07 Wed 00:33]
+      [[https://wiki.archlinux.org/index.php/Feh][feh]] is a simple bg solution.
+      #+BEGIN_SRC sh
+      yay -S feh
+      feh --bg-scale /path/to/image.file
+      #+END_SRC
+      After this ~.fehbg~ will be created. So you can modify it however you want. As an example how to make random backgrounds:
+      #+BEGIN_SRC sh
+      feh --randomize --bg-fill ~/.wallpaper/*
+      #+END_SRC
+      #+begin_attention
+      Instead of =.xinitrc= you can launch it in =~/.xmonad/xmonad.hs= like this:
+      #+BEGIN_SRC haskell
+      myStartupHook :: X()
+      myStartupHook = do
+          spawn "$HOME/.fehbg"
+      #+END_SRC
+      #+end_attention
+***** DONE PolicyKit
+      CLOSED: [2018-11-15 Thu 07:59]
+      [[https://wiki.archlinux.org/index.php/Systemd#ACPI_power_management][Polkit]] is also necessary for power management, notifications, [[https://wiki.archlinux.org/index.php/Networkmanager#Set_up_PolicyKit_permissions][NetworkManager permissions]], et.c. as an unprivileged user. \\
+      Desktop environments already includes polkit, Xmonad don't, so you will need to install and run it. You can use any existing polkit agent.
+      #+BEGIN_SRC sh
+      yay -S polkit polkit-kde-agent 
+      #+END_SRC
+      And add following to the ~.xinitrc~ or ~.xprofile~ just before you execute xmonad:
+      #+BEGIN_SRC sh
+      /usr/lib/polkit-kde-authentication-agent-1 &
+      #+END_SRC
+      Read more about polkit at [[https://www.freedesktop.org/software/polkit/docs/latest/polkit.8.html][freedesktop.org]].
+**** DONE Laptop specific
+     CLOSED: [2018-12-07 Fri 04:31]
+***** DONE Hibernation
+      CLOSED: [2018-11-07 Wed 00:31]
+      The native hibernation through systemd require two simple steps:
+      - Add ~resume=/dev/sdxY~ to the kernel, where ~x~ [[*HDD][#is your device]] and ~Y~ is your SWAP partition. :: 
+      - Add the =resume= hook to your ~etc/mkinitcpio.conf~ file and regenerate the initramfs afterward: :: 
+           In case if you making [[https://wiki.archlinux.org/index.php/Dm-crypt/Swap_encryption][encryption]], ~keyboard~ should be placed before ~encrypt~, because you will not able to decrypt without keyboard.
+           #+BEGIN_SRC sh
+           # find HOOKS in mkinitcpio.conf and it should look approximately similar 
+           HOOKS=(base udev autodetect mdconf block filesystem  resume  keyboard fsck) #You should put 'resume' after udev
+       
+           # run this in the terminal to regenerate the initramfs
+           mkinitcpio -p linux
+           #+END_SRC
+      I will also modify my ~/etc/systemd/logind.conf~ and change =HandleLidSwitch= option:
+      #+BEGIN_SRC sh
+      [Login]
+      HandleLidSwitch=hybrid-sleep
+      #+END_SRC
+      #+begin_note
+      It could be useful to check [[https://wiki.archlinux.org/index.php/Power_management/Suspend_and_hibernate][suspend and hibernate]] wiki article.
+      #+end_note
+***** DONE Nvidia hybrid graphics
+      CLOSED: [2018-11-07 Wed 00:32]
+       #+begin_warning
+       This part may cause hangs so follow with care!
+       #+end_warning
+       #+begin_attention
+       For laptops with hybrid Intel/NVIDIA graphics, you should read [[https://wiki.archlinux.org/index.php/bumblebee#Installing_Bumblebee_with_Intel.2FNVIDIA][bumblebee]] article first. \\
+       If you have lockup issues [[https://wiki.archlinux.org/index.php/NVIDIA_Optimus#Lockup_issue_.28lspci_hangs.29][read this]].
+
+       There is also an alternative to bumblebee, called [[https://wiki.archlinux.org/index.php/Nvidia-xrun][Nvidia-xrun]]. \\
+
+       If you will use [[*Power management][#TLP]] be aware of [[https://wiki.archlinux.org/index.php/TLP#Bumblebee_with_NVIDIA_driver][TLP with Bumblebee issue]].
+       #+end_attention
+     - Install dependencies: ::
+          #+BEGIN_SRC sh
+          sudo pacman -S mesa mesa-demos bumblebee bbswitch primus xf86-video-intel 
+          #+END_SRC
+          #+begin_attention
+          Use pacman to install appropriate driver, *DO NOT download it from the official website!*
+          There are different versions of appropriate drivers, you can check it with [[https://www.nvidia.com/Download/index.aspx][NVIDIA driver download website]]. \\
+          #+end_attention
+     - Add active user to bumblebee group: ::
+          #+BEGIN_SRC sh
+          gpasswd -a your_user_name bumblebee
+          #+END_SRC
+     - Enable bumblebee service: ::
+          #+BEGIN_SRC sh
+          sudo systemctl enable bumblebeed.service
+          #+END_SRC
+     - Edit ~/etc/bumblebee/bumblebee.conf~ with following::
+          #+BEGIN_SRC sh
+          Bridge=primus #Switch from 'auto'
+          [driver-nvidia]
+          PMMethod=bbswitch #Enable NVIDIA card after waking from suspend
+          #+END_SRC
+     - And define your card in ~/etc/bumblebee/xorg.conf.nvidia~, using correct BusID according to =lspci= output:: 
+          #+BEGIN_SRC sh
+          ...
+          BusID "PCI:1:0:0"
+          ...
+          #+END_SRC
+          #+begin_attention
+          Observe that the format of =lspci= is HEX, whilee in xorg it's decimals. \\
+          So if the output for example =01:00.0= the =BusID= shoud be =PCI:1:0:0=, or =00:02.0= will be =PCI:0:2:0=.
+          #+end_attention
+     - Test your card:: 
+         #+BEGIN_SRC sh
+         optirun glxspheres64 # You can run this only in graphical environment.
+         #+END_SRC
+         #+begin_attention
+         If you have a hang just before X loaded, try to force xorg.conf to use only intel device, you can see the example in my dotfiles.
+         #+end_attention
+****** Nvidia settings
+       If you want more control over the graphical interface or cli, you can install ~nvidia-settings~, and run it with optirun e.g.:
+       #+BEGIN_SRC sh
+       optirun nvidia-settings -c :8
+       #+END_SRC
+***** DONE Laptop Specific Keybindings
+      CLOSED: [2018-11-07 Wed 00:33]
+      You have several options how to manage keyboard backlight, for Asus I picked the [[https://wiki.archlinux.org/index.php/ASUS_Zenbook_Prime_UX31A#Using_asus-kbd-backlight_from_AUR][asus-kbd-backlight]].
+      #+BEGIN_SRC sh
+      yay -S asus-kbd-backlight
+      sudo systemctl enable asus-kbd-backlight.service #enable a service to allow user permissions
+      #+END_SRC
+      Commands examples:
+      #+BEGIN_SRC sh
+      asus-kbd-backlight up
+      asus-kbd-backlight down
+      asus-kbd-backlight max
+      asus-kbd-backlight off
+      asus-kbd-backlight night
+      asus-kbd-backlight 2
+      asus-kbd-backlight show
+      #+END_SRC
+      You can bind any commands to your xF86XK media keys now:
+      ~0~ here is your ~fn~ button (~haskell.hs~ example):
+      #+BEGIN_SRC haskell
+      ((0, xF86XK_KbdBrightnessUp  ), spawn "asus-kbd-backlight up"  ) -- F3 Keyboard backlight up
+      ((0, xF86XK_KbdBrightnessDown), spawn "asus-kbd-backlight down") -- F4 Keyboard backlight down
+      #+END_SRC
+      #+begin_note
+      Keyboard backlight should work automatically with any recent kernel. \\
+      Desktop environments that use UPower, like GNOME or KDE,  \\
+      work out the box and don't need any tool or script to register the keys and change the keyboard brightness. 
+      #+end_note
+**** DONE Power management
+     CLOSED: [2018-11-07 Wed 00:31]
+     If you configuring your laptop PM for the first time, I would recommend to read arch wiki [[https://wiki.archlinux.org/index.php/Power_management][power management]] article to understand the main concepts. \\
+     It could be very confusing to pick from a variety of power management tools. Here I'll briefly cover their relation to each other. \\
+     
+     Most of the packages are for the laptops, but still may want [[*Diagnosing tools][#diagnosing tools]] or different native [[*systemd-logind][#hibernation]] options. \\
+     There are "all-in-one" packages you can use e.g.: [[*Laptop Mode Tools][#LMT]] or [[*TLP][#TLP]], both are doing mostly the same. Sometimes there no need in such a tools, \\
+     because you also can manually disable most of the power hungry modules. \\
+     For example you can take advantage of [[*Nvidia hybrid graphics][#Optimus]] technology and switch off your graphic card, which will save a lot of energy - ~6W.
+     Turning on [[*Audio powersavings][#audio powersavings]] could save you 1-2W, also disk management with [[https://wiki.archlinux.org/index.php/S.M.A.R.T.][S.M.A.R.T]] and turning off modules like your [[https://wiki.archlinux.org/index.php/Power_management#Web_camera][web camera]], bluetooth, USB et.c.,\\
+     will help you to save more energy for your laptop. 
+
+     For example I'm using [[*systemd-logind][#systemd-logind]] + ~UPower~ + [[*Manual config][#manually]]/[[*TLP][#tlp]](temporary) \\
+     [[https://upower.freedesktop.org/][UPower]] is an abstraction layer for desktop applications to various power parameters. You can find config ~/etc/UPower/UPower.conf~. \\
+     Programs can use it to check battery status, adjust backlight, or suspend the system without having to care about the specific platform. \\
      #+BEGIN_SRC sh
-     source /etc/profile
+     yay -S asus-kbd-backlight
+     sudo systemctl enable asus-kbd-backlight.service #enable a service to allow user permissions
      #+END_SRC
-**** Android development
-     There are 3 steps that need to be performed before you can develop Android applications on your Arch Linux box:
-     - Install the Android SDK core component: ::
-          #+BEGIN_SRC sh
-          pacaur -S --noconfirm android-sdk android-sdk-platform-tools android-sdk-build-tools
-          #+END_SRC
-          Android SDK users group:
-          #+BEGIN_SRC sh
-          groupadd sdkusers
-          #+END_SRC
-          Add your user into this group:
-          #+BEGIN_SRC sh
-          gpasswd -a <user> sdkusers
-          #+END_SRC
-          Change folder's group:
-          #+BEGIN_SRC sh
-          chown -R :sdkusers /opt/android-sdk/
-          #+END_SRC
-          Change permissions so the user that was just added to the group will be able to write in it:
-          #+BEGIN_SRC sh
-          chmod -R g+w /opt/android-sdk/ 
-          #+END_SRC
+     UPower also uses [[*PolicyKit][polkit]] to allow various actions like hibernate without giving away full root privileges.\\
+     #+BEGIN_SRC sh
+     yay -S upower polkit
+     #+END_SRC
+***** DONE systemd-logind
+      CLOSED: [2018-11-07 Wed 00:19]
+      ~systemd-logind~ is a native handler and has functions for suspending/hibernating, it handles the most common ACPI events (lid switch, power button, etc.).
+      Worth reading wiki article power management with [[https://wiki.archlinux.org/index.php/Power_management#Power_management_with_systemd][with systemd]]. Also see [[*Hibernation][#Hibernation]]. \\
+***** DONE TLP
+      CLOSED: [2018-11-07 Wed 00:30]
+      [[https://wiki.archlinux.org/index.php/TLP][tlp]] - all-in-one tool for power management. Could be a good solution if you don't want to understand every technical detail. \\
+      For me right now it's in testing mode, means I'm running it and trying to see advantages against manual PM. \\
 
-     - Install one or [[https://wiki.archlinux.org/index.php/Android#Android_SDK_platform_API][several]] Android SDK PLatform packages: ::
-          #+BEGIN_SRC sh
-          pacaur -S --noconfirm android-platform
-          #+END_SRC
+      To use it without conflicts you need to [[https://wiki.archlinux.org/index.php/Systemd#Using_units][mask]] the systemd service ~systemd-rfkill.service~  \\
+      and socket ~systemd-rfkill.socket~ to avoid conflicts and assure \proper operation of TLP's radio device switching options. 
+      #+BEGIN_SRC sh
+      yay -S tlp tlp-rdw
+      yay -S tlpui-git # you can also install GUI (As of October 2018, the software is still in beta)
+      #+END_SRC
+      [[https://linrunner.de/en/tlp/docs/tlp-linux-advanced-power-management.html#arch][Enable services]] for tlp:
+      #+BEGIN_SRC sh
+      sudo systemctl enable tlp.service
+      sudo systemctl enable tlp-sleep.service
+      # in case if you installed tlp-rdw which is a Radio Device Wizard
+      sudo systemctl enable NetworkManager-dispatcher.service #requires NetworkManager
+      #+END_SRC
+      #+begin_attention
+      If you have hybrid graphic with bumblebee, you should tell TLP not to manage GPU by blacklisting it. Also check available settings in ~/etc/default/tlp~. \\
+      Blacklist your GPU:
+      #+BEGIN_SRC sh
+      RUNTIME_PM_BLACKLIST="01:00.0" #you can add more devices with spaces "01:00.0 00:02.0 ..."
+      #+END_SRC
+      Also I issued hags sometimes when I use ~tlp stat~, one of the solutions is enabling video card with bbswitch ~tee /proc/acpi/bbswitch<<<ON~
+      #+end_attention
+***** DONE ACPI events
+      CLOSED: [2018-11-06 Tue 23:52]
+      [[https://wiki.archlinux.org/index.php/Acpi][ACPI]](Advanced Configuration and Power Interface) - small program that displays kernel modules for different ACPI parts. \\
+      [[https://wiki.archlinux.org/index.php/Acpid][acpid]] is a daemon that handles ACPI events like battery, lid et.c..
+      #+begin_warning
+      You probably already have systemd-logind. So this acpi + acpid bundle is not needed.
+      #+end_warning
+***** DONE Laptop Mode Tools
+      CLOSED: [2018-11-07 Wed 00:25]
+      [[https://wiki.archlinux.org/index.php/Laptop_Mode_Tools][LMT]] — Combined with acpid(/note that acpid could conflict with systemd-logind/) and [[https://wiki.archlinux.org/index.php/CPU_frequency_scaling][CPU frequency scaling]], LMT provides most users with a complete laptop power management suite. 
+      #+BEGIN_SRC sh
+      yay -S laptop-mode-tools-git 
+      # you also can install optional dependencies for lmt
+      yay -S acpid bluez-utils hdparm sdparm wireless_tools
+      #enable lmt
+      sudo systemctl enable laptop-mode.service
+      #+END_SRC
+***** DONE Diagnosing tools
+      CLOSED: [2018-11-06 Tue 23:46]
+      - Intel's [[https://wiki.archlinux.org/index.php/Powertop][powertop]] for diagnosing your power state. ::
+           With powertop for some reason I have more watts in use. Don't know if it's a bug or mine fault, anyway not using it now.
+           #+BEGIN_SRC sh
+           yay -S powertop
+           #+END_SRC
+      - [[https://wiki.archlinux.org/index.php/S.M.A.R.T.][S.M.A.R.T.]](/Self-Monitoring, Analysis, and Reporting Technology/) ::
+           For analyzing and monitoring storage devices.
+           #+BEGIN_SRC sh
+           yay -S smartmontools
+           #+END_SRC
+      - [[https://github.com/afontenot/i7z][i7z]] ::
+           is an i7 (and now i3, i5) CPU reporting tool for Linux.
+           #+BEGIN_SRC sh
+           yay -S i7z 
+           #+END_SRC
+***** DONE Manual config
+****** DONE Audio powersavings
+       CLOSED: [2018-11-06 Tue 23:46]
+       By default, audio power saving is turned off by most drivers. If you not using tlp or any other tool that cover audio you way want to enable audio powersavings manually. \\
+       It can be enabled by setting the power_save parameter - /a time (in seconds) to go into idle mode./ \\
+       To idle the audio card after three seconds, pick one of the settings for your card:
+       #+BEGIN_SRC sh
+       # Check your driver with "lspci"
+       lspci -k | grep Audio
 
-     - Install one of the IDEs compatible with the Android SDK: ::
-          #+BEGIN_SRC sh
-          pacaur -S android-studio genymotion 
-          #+END_SRC
+       # settings for intel soundcard:
+       options snd_hda_intel power_save=3 
 
-     - Install [[https://developer.android.com/ndk/index.html][NDK]] (optional) ::
-          Add keyring for ncurses5-compat-libs:
-          #+BEGIN_SRC sh
-          gpg --keyserver pgp.mit.edu --recv-keys F7E48EDB
-          pacaur -S android-ndk
-          #+END_SRC
-
-
+       # use the following settings for ac97: 
+       options snd_ac97_codec power_save=3
+       #+END_SRC
+      
+****** TODO Blacklisting modules
+       You should blacklist unneeded modules that consumes energy.
