@@ -1,0 +1,2 @@
+# Redirect default Netlify subdomain to primary domain
+https://archcheatsheet.netlify.com/* https://archcheatsheet.com/:splat 301!
