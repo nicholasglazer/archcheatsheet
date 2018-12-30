@@ -1,0 +1,28 @@
+* About this project
+** Window Manager(Xmonad) 
+   Status bar (XMobar):
+   [[file:img/xmobar.gif]]
+   -----
+   Layouts:
+   [[file:img/layouts.gif]]
+   -----
+   Accordion:
+   [[file:img/accordion.gif]]
+   -----
+   Mpd scratchpad and selectGrid control:
+   [[file:img/mpd.gif]]
+   -----
+   Ranger scratchpad:
+   [[file:img/ranger.gif]]
+** Motivation
+   I'm collecting my experience here in a good looking format, it is worth sharing. \\
+   This guide could be useful for the people who want to install Arch Linux,  \\
+   also for individuals who desire lightweight and manual system with window manager or more automated but heavy desktop environment like GNOME or KDE. \\
+   Follow project [[http://nicholasglazer.github.io/arch-cheat-sheet][link]].
+** Author
+   You can write me your any crazy ideas to the [[https://github.com/nicholasglazer/arch-cheat-sheet/issues/new][github]] or [[mailto:glazer.nicholas@gmail.com][email]].
+** Contributing
+   This project welcome contributions from the community, if you want to help =index.org= is the place you want to start.\\
+   Please note that it's written in [[https://orgmode.org/][org mode]]. Org mode is default in Emacs, if you use another text editor check org integration article from [[https://en.wikipedia.org/wiki/Org-mode#Integration][wiki]]. \\
+   You can export file to HTML with ~org-html-export-to-html~ in emacs. Theme [[https://github.com/fniessen/org-html-themes#using-a-theme][here.]]
+

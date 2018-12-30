@@ -1,0 +1,40 @@
+{
+  "name": "archcheatsheet.com",
+  "version": "0.0.1",
+  "description": "Static Serverless PWA arch linux cheat sheet",
+  "main": "index.js",
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nicholasglazer/archcheatsheet.com.git"
+  },
+  "keywords": [
+    "arch",
+    "linux",
+    "cheat",
+    "sheet",
+    "archlinux",
+    "archlinux",
+    "guide",
+    "pwa",
+    "vuepress"
+  ],
+  "author": "Nicholas Glazer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nicholasglazer/archcheatsheet.com/issues"
+  },
+  "homepage": "https://github.com/nicholasglazer/archcheatsheet.com#readme",
+  "devDependencies": {
+    "@vuepress/plugin-back-to-top": "^1.0.0-alpha.0",
+    "@vuepress/plugin-google-analytics": "^1.0.0-alpha.0",
+    "@vuepress/plugin-i18n-ui": "^1.0.0-alpha.0",
+    "@vuepress/plugin-medium-zoom": "^1.0.0-alpha.0",
+    "@vuepress/plugin-pwa": "^1.0.0-alpha.0",
+    "stylus": "^0.54.5",
+    "vuepress": "^1.0.0-alpha.30"
+  }
+}
