@@ -1,11 +1,11 @@
 ---
 metaTitle: ArchCheatSheet
 home: true
-heroImage: /logo.png
+heroImage: /images/logo.png
 heroText: ArchCheatSheet
 tagline: Хотите установить линукс но не знаете с чего начать?
 actionText: Приступить →
-actionLink: /ru/cheatsheet/
+actionLink: /cheatsheet/
 features:
 - title: Базовая подготовка
   details: Информация для подготовки железа.
