@@ -29,12 +29,22 @@ module.exports = {
     ['@vuepress/back-to-top', true],
     ['@vuepress/pwa', {
       serviceWorker: true,
-      popupComponent: 'MySWUpdatePopup',
-      updatePopup: true
+      // TODO: figure out why MySWUpdatePopup doesn't closing after click
+      // updatePopup: {
+      //   '/': {
+      //     message: 'Quick site version update.',
+      //     buttonText: 'Update'
+      //   },
+      //   '/ru/': {
+      //     message: 'Быстрое обновление версии сайта.',
+      //     buttonText: 'Обновить'
+      //   }
+      // },
+      // popupComponent: 'MySWUpdatePopup'
     }],
     ['@vuepress/medium-zoom', true],
     ['@vuepress/google-analytics', {
-      ga: 'UA-131470501-1'
+      ga: 'UA-131561336-1'
     }],
   ],
   themeConfig: {
