@@ -13,6 +13,7 @@ module.exports = {
     }
   }, description: 'Arch Linux Cheat Sheet.',
   head: [
+    ['meta', { name: 'google-site-verification', content: 'ro0isjNlrmAESMtDHHzvwJKBBC_KNYvHIPY1aaFZMDw' }],
     ['link', { rel: 'icon', href: `/images/logo.png` }],
     ['link', { rel: 'manifest', href: '/manifest.json' }],
     ['meta', { name: 'theme-color', content: '#ffffff' }],
