@@ -7,12 +7,12 @@ tagline: Want to install Archlinux and looking for a friendly cheatsheet?
 actionText: Get Started →
 actionLink: /cheatsheet/
 features:
-- title: Base preparations
-  details: Setup to prepare your hardware.
+- title: Base
+  details: Hardware preparation setup.
 - title: Installation
-  details: Install linux core
+  details: Archlinux installation and configuration.
 - title: Environment
-  details: Choose your Arch working environment
+  details: Choose Archlinux working environment.
 footer: MIT Licensed | Copyright © 2018-present | made with <3 by Nicholas Glazer
 ---
 
