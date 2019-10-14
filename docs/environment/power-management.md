@@ -12,11 +12,14 @@ It could be very confusing to pick from a variety of power management tools. Her
 Most of the packages are for the laptops, but still may want [#diagnosing tools](#diagnosing-tools) or different native [#hibernation](#systemd-login) options.   
 
 There are "all-in-one" packages you can use e.g.: [#LMT](#laptop-mode-tools) or [#TLP](#tlp), both are doing mostly the same.    
-Sometimes there no need in such a tools, because you can disable most of the power hungry modules manually.
+Sometimes such tools are not needed because you can disable most power-hungry modules manually.
 - For example you can take advantage of [#Optimus](#nvidia_hybrid_graphics) technology and switch off your graphic card, which will save a lot of energy - **~6W**(*depends on card*).
-- Turning on [#audio powersavings](#org880569d) could save you **1-2W**, also disk management with [S.M.A.R.T](https://wiki.archlinux.org/index.php/S.M.A.R.T.) and turning off modules like your [web camera](https://wiki.archlinux.org/index.php/Power_management#Web_camera), bluetooth, USB et.c., will help you to save more energy for your laptop. 
+- Tweaking [#audio powersavings](#org880569d) could save you **1-2W**
+- Disk management with [S.M.A.R.T](https://wiki.archlinux.org/index.php/S.M.A.R.T.) and turning off modules like your [web camera](https://wiki.archlinux.org/index.php/Power_management#Web_camera), bluetooth, USB et.c., will help you to save even more energy for your laptop. 
 
 For example my stack is: [#systemd-logind](#systemd-login) + `UPower` + [#manually](#manual-config)   
+
+## Upower
 [UPower](https://upower.freedesktop.org/) - is an abstraction layer for desktop applications to various power parameters. You can find config at `/etc/UPower/UPower.conf`.   
 Programs may use it to check battery status, adjust backlight, or suspend the system without having to care about the specific platform.   
 ```sh
@@ -69,7 +72,7 @@ Also I had hangs with `tlp stat` , one of the solutions is enabling video card w
 - [ACPI](https://wiki.archlinux.org/index.php/Acpi)(Advanced Configuration and Power Interface) - small program that displays kernel modules for different ACPI parts.   
 [acpid](https://wiki.archlinux.org/index.php/Acpid) is a daemon that handles ACPI events like battery, lid et.c..
 ::: warning
-You probably already have systemd-logind. So this acpi + acpid bundle is not needed.
+You probably already have systemd-logind installed. So this acpi + acpid bundle is not needed.
 :::
 
 ## Laptop Mode Tools
