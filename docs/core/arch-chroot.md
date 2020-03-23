@@ -23,25 +23,26 @@ Also add `LANG` variable:
 cat > /etc/locale.conf
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
 ```
-Example to make dvorak layout persistent:
+This example will show you how to make dvorak layout persistent:
 ```sh
 cat > /etc/vconsole.conf
 echo "KEYMAP=dvorak" > /etc/vconsole.conf
 ```
+If you have AZERTY, colmark etc, just change `dvorak` with your favorite layout.
+Do nothing if you have QWERTY.
 
 ## Network configuration
 <a id="network-configuration"></a>
 [Hostname](https://en.wikipedia.org/wiki/Hostname) - is a unique name created to identify a machine on a network.   
 
-- **Basic method that **working in arch-chroot**.:** Replace `uniquename` with anything you want:
+- **Basic method that is **working in arch-chroot**.:** Replace `uniquename` with anything you want:
 ```sh
 echo uniquename > /etc/hostname
 ```
 ::: tip
-Later you will see something like `user@uniquename`
+The result of this manipulations will be something like: `user@uniquename`
 :::
-
-- You will be able to generate hostname with `hostnamectl` later. This method is **not working in arch-chroot**.
+- You will be able to generate hostname with `hostnamectl` later. Be aware that this method is **NOT WORKING in arch-chroot**.
 ```sh
 hostnamectl set-hostname myhostname
 ```
@@ -52,7 +53,7 @@ Add matching entries to the hosts, edit `vim /etc/hosts`.
 127.0.1.1     uniquename.localdomain uniquename
 ```
 If the system has a permanent IP address, it should be used instead of `127.0.1.1`   
-See more in [network configuration](https://wiki.archlinux.org/index.php/Network_configuration).
+See more in the official docs: [network configuration](https://wiki.archlinux.org/index.php/Network_configuration).
 
 ## Community repositories
 <a id="community-repositories"></a>
