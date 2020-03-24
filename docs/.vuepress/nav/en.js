@@ -1,14 +1,10 @@
 module.exports = [
   {
-    text: 'Cheatsheet',
-    link: '/cheatsheet/'
+    text: 'Core',
+    link: '/core/'
   },
   {
     text: 'Environment',
     link: '/environment/'
-  },
-  {
-    text: 'Contributing',
-    link: '/contributing/'
   }
 ]

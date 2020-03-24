@@ -1,17 +1,6 @@
 module.exports = {
   base: '/',
-  locales: {
-    '/': {
-      lang: 'en-US',
-      title: 'ArchCheatSheet',
-      description: 'Install archlinux guide without desktop environment. Xmonad/Xmobar as a window manager.'
-    },
-    '/ru/': {
-      lang: 'ru-RU',
-      title: 'ArchCheatSheet',
-      description: 'Гайд по установке archlinux с оконным менеджером Xmonad/Xmobar.'
-    }
-  }, description: 'Arch Linux Cheat Sheet.',
+  description: 'Arch Linux Cheat Sheet.',
   head: [
     ['meta', { name: 'google-site-verification', content: 'ro0isjNlrmAESMtDHHzvwJKBBC_KNYvHIPY1aaFZMDw' }],
     ['link', { rel: 'icon', href: `/images/logo.png` }],
@@ -25,7 +14,6 @@ module.exports = {
     ['meta', { name: 'msapplication-TileColor', content: '#ffffff' }]
   ],
   plugins: [
-    ['@vuepress/i18n-ui'],
     ['@vuepress/last-updated', true],
     ['@vuepress/back-to-top', true],
     ['@vuepress/pwa', {
@@ -57,21 +45,21 @@ module.exports = {
         lastUpdated: 'Last Updated',
         nav: require('./nav/en'),
         sidebar: {
-          '/cheatsheet/': getCheatsheetSidebar('Getting started', 'Archlinux installation'),
+          '/core/': getCoreSidebar('Getting started', 'Archlinux installation'),
           '/environment/': getEnvironmentSidebar('Environment', 'Laptop', 'The Way of Zen'),
         }
-      },
-      '/ru/': {
-        label: 'Русский(TODO)',
-        selectText: 'Язык',
-        editLinkText: 'Редактировать через GitHub',
-        lastUpdated: 'Было отредактировано',
-        nav: require('./nav/ru'),
-        sidebar: {
-          '/ru/cheatsheet/': getCheatsheetSidebar('Подготовка железа', 'Установка Archlinux'),
-          '/ru/environment/': getEnvironmentSidebar('Установка среды', 'Опционально', 'Путь дзен'),
-        }
       }
+      // '/ru/': {
+      //   label: 'Русский(TODO)',
+      //   selectText: 'Язык',
+      //   editLinkText: 'Редактировать через GitHub',
+      //   lastUpdated: 'Было отредактировано',
+      //   nav: require('./nav/ru'),
+      //   sidebar: {
+      //     '/ru/cheatsheet/': getCheatsheetSidebar('Подготовка железа', 'Установка Archlinux'),
+      //     '/ru/environment/': getEnvironmentSidebar('Установка среды', 'Опционально', 'Путь дзен'),
+      //   }
+      // }
     },
     repo: 'nicholasglazer/archcheatsheet.com',
     editLinks: true
@@ -79,7 +67,7 @@ module.exports = {
   evergreen: true
 }
 
-function getCheatsheetSidebar (groupA, groupB) {
+function getCoreSidebar (groupA, groupB) {
   return [
     {
       title: groupA,
