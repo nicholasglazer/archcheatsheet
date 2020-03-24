@@ -1,10 +1,5 @@
 # Contributing
 
-I put a lot of time and effort into this project, you can support me with a star or if you really want to help... so you can, you know, contribute to it by making pull requests to help great Arch community.
-
----
-
-If you want to contribute to a project and make it better, your help is very welcome. Don't hesitate to create an issue.
 
 ### How to make a clean pull request
 

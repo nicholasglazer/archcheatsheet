@@ -2,9 +2,14 @@
 metaTitle: Archlinux system, sudoers, archlinux change password, network configuration  | ArchCheatSheet
 ---
 
-# Chroot into the system
+# Switch into the root with a new system:
 <a id="chroot"></a>
-Switch into the root with a new system:
+
+Once last part while we was inside archiso was successfully done, it's time to start managing installed system.
+::: tip
+You can use archiso later as a recovery tool!
+:::
+Chroot into the system
 ```sh
 arch-chroot /mnt
 ```

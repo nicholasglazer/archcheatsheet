@@ -4,9 +4,17 @@ metaTitle: Archlinux config layout network-connection clock uefi | ArchCheatShee
 
 # Configuring
 <a id="configuring"></a>
-## Changing layout
+
+After succsessful bootstrapping, start putting configuration commands into the shell.
+___
+
+## Change layout while in archiso
 <a id="changing-layout"></a>
-If you're e.g. a [dvorak](https://wiki.archlinux.org/index.php/Dvorak) user, your first step could be changing the keyboard layout:
+If you're non-QWERTY user, e.g. a [dvorak](https://wiki.archlinux.org/index.php/Dvorak) user, make a step to change the keyboard layout:
+::: warning
+This will **temporary** change your layout inside archiso!
+:upside_down_face:	
+:::
 ```sh
 loadkeys dvorak
 ```
