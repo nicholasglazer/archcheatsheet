@@ -1,6 +1,13 @@
 module.exports = {
   base: '/',
-  description: 'Arch Linux Cheat Sheet.',
+  locales: {
+    '/': {
+      lang: 'en-US',
+      title: 'ArchCheatSheet',
+      description: 'Install archlinux guide without desktop environment. Xmonad/Xmobar as a window manager.'
+    }
+  },
+  description: 'Archlinux cheatsheet.',
   head: [
     ['meta', { name: 'google-site-verification', content: 'ro0isjNlrmAESMtDHHzvwJKBBC_KNYvHIPY1aaFZMDw' }],
     ['link', { rel: 'icon', href: `/images/logo.png` }],
@@ -19,18 +26,6 @@ module.exports = {
     ['@vuepress/pwa', {
       serviceWorker: true,
       updatePopup: true
-      // TODO: figure out why MySWUpdatePopup doesn't closing after click
-      // updatePopup: {
-      //   '/': {
-      //     message: 'Quick site version update.',
-      //     buttonText: 'Update'
-      //   },
-      //   '/ru/': {
-      //     message: 'Быстрое обновление версии сайта.',
-      //     buttonText: 'Обновить'
-      //   }
-      // },
-      // popupComponent: 'MySWUpdatePopup'
     }],
     ['@vuepress/medium-zoom', true],
     ['@vuepress/google-analytics', {
@@ -41,26 +36,14 @@ module.exports = {
     locales: {
       '/': {
         label: 'English',
-        selectText: 'Languages',
         editLinkText: 'Edit this page on GitHub',
         lastUpdated: 'Last Updated',
         nav: require('./nav/en'),
         sidebar: {
-          '/core/': getCoreSidebar('Getting started', 'Archlinux installation'),
+          '/core/': getCoreSidebar('Beginning of journey', 'Archlinux installation'),
           '/environment/': getEnvironmentSidebar('Environment', 'Laptop', 'The Way of Zen'),
         }
       }
-      // '/ru/': {
-      //   label: 'Русский(TODO)',
-      //   selectText: 'Язык',
-      //   editLinkText: 'Редактировать через GitHub',
-      //   lastUpdated: 'Было отредактировано',
-      //   nav: require('./nav/ru'),
-      //   sidebar: {
-      //     '/ru/cheatsheet/': getCheatsheetSidebar('Подготовка железа', 'Установка Archlinux'),
-      //     '/ru/environment/': getEnvironmentSidebar('Установка среды', 'Опционально', 'Путь дзен'),
-      //   }
-      // }
     },
     repo: 'nicholasglazer/archcheatsheet.com',
     editLinks: true

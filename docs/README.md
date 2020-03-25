@@ -5,7 +5,7 @@ heroImage: /images/logo.png
 heroText: ArchCheatSheet
 tagline: Want to install Archlinux and looking for a friendly cheatsheet?
 actionText: Get Started →
-actionLink: /cheatsheet/
+actionLink: /core/
 features:
 - title: Base
   details: Hardware preparation setup.
