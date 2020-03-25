@@ -4,3 +4,4 @@ node_modules
 .temp
 TODOs.md
 types
+docs/.vuepress/dist/*

@@ -18,6 +18,7 @@ module.exports = {
     ['@vuepress/back-to-top', true],
     ['@vuepress/pwa', {
       serviceWorker: true,
+      updatePopup: true
       // TODO: figure out why MySWUpdatePopup doesn't closing after click
       // updatePopup: {
       //   '/': {
