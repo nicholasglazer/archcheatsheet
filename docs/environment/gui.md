@@ -71,7 +71,7 @@ Check your video card model first:
 lspci | grep -e VGA -e 3D
 ```
 - **Nvidia:**   
-If you have [NVIDIA](https://wiki.archlinux.org/index.php/NVIDIA) card, follow this archor - [#Nvidia hybrid graphics](default-theme-config.md#nvidia-hybrid-graphics).
+If you have [NVIDIA](https://wiki.archlinux.org/index.php/NVIDIA) card see this - [#Nvidia hybrid graphics](laptop-specific.html#nvidia-hybrid-graphics).
 
 - **AMD:**   
 If you have [ATI](https://wiki.archlinux.org/index.php/ATI)(AMD) card, your installation could be pretty easy, just follow the wiki.
