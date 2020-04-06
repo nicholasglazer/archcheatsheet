@@ -68,6 +68,7 @@ cgdisk /dev/sdX # where X is your drive name
 ```
 ::: warning
 It will warn you "Non-GPT or damaged disk detected. This program will attempt to convert to GPT form or repair damage to GPT data structures, but may not succeed. Use gdisk or another disk reapir tool if you have a damaged GPT disk.", this is general case just skip it.
+:::
 
 ::: tip
 If you want to create any stacked block devices for LVM, disk encryption or [RAID](https://wiki.archlinux.org/index.php/RAID), do it now.
