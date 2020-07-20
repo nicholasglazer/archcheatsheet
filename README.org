@@ -3,19 +3,19 @@
 * About
 ** Window Manager(Xmonad) 
    Status bar (XMobar):
-   [[file:docs/.vuepress/dist/images/xmobar.gif]]
+   [[file:docs/.vuepress/public/images/xmobar.gif]]
    -----
    Layouts:
-   [[file:docs/.vuepress/dist/images/layouts.gif]]
+   [[file:docs/.vuepress/public/images/layouts.gif]]
    -----
    Accordion:
-   [[file:docs/.vuepress/dist/images/accordion.gif]]
+   [[file:docs/.vuepress/public/images/accordion.gif]]
    -----
    Mpd scratchpad and selectGrid control:
-   [[file:docs/.vuepress/dist/images/mpd.gif]]
+   [[file:docs/.vuepress/public/images/mpd.gif]]
    -----
    Ranger scratchpad:
-   [[file:docs/.vuepress/dist/images/ranger.gif]]
+   [[file:docs/.vuepress/public/images/ranger.gif]]
 ** Motivation
    I'm collecting my experience here in a good looking format, it is worth sharing. \\
    This guide could be useful for the people who want to install Arch Linux,  \\
