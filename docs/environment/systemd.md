@@ -7,4 +7,4 @@ metaTitle: Arch Linux bootloader using systemd, systemd-boot customization, boot
 The good thing is that it will autodetect your windows partitions in case of dual-booting, as well as others.
 It's lacking well support for customizations, but installation is quite fast.
 ## systemd-networkd
-[systemd-networkd](https://wiki.archlinux.org/index.php/systemd-networkd) is a good choice in case if you don't need wireless connection.   
+[systemd-networkd](https://wiki.archlinux.org/index.php/systemd-networkd) basically is a system daemon and a good choice in case if you don't need wireless connection.   
