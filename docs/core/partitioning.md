@@ -1,165 +1,245 @@
 ---
-metaTitle: Archlinux change partitions, mont partitions, make swap. | ArchCheatSheet
+metaTitle: Arch linux partitioning, windows10 dual boot partition, windows file system ntfs, manage partitions, change partitions, mount partitions, make swap, partitioning guide Linux, btrfs partition guide, btrfs snapshots installation, linux snapshots, how to choose a filesystem, how to choose file system.
 ---
 
 # Partitioning
 <a id="partitioning"></a>
-Lets cover some basics here, because this part could be confusing.
 
-To see your [partition](https://wiki.archlinux.org/index.php/Partitioning) scheme type:
+::: tip
+Read more about file systems [on this page ->](/environment/file-system)
+:::
+___
+Some helpful commands applied to file system.
 ```sh
 lsblk
+lsblk -f    # Output info about filesystems. This option is equivalent to "-o NAME,FSTYPE,SIZE,TYPE".
+fdisk -l    # Another way to get more data about drives.
 ```
 
 ## Scheme example
 <a id="Scheme example"></a>
-You should see at least 1 drive, this example has 3, including temporary flash drive:
+You should see at least 1 drive, this example has 3 drives including temporary flash drive:
+
+::: tip
+Sizes are taken from my Zenbook Pro as an example. This sizes may varying depends on your system and your needs.
+
+Table below is an output of `lsblk` and it is showing you what you might get once you format and mount everything.
+This may varying if you pick to use LVM, dual-boot, etc., you should get the idea.
+
+The `sda1`, `sda3`, `sda4` block devices will appear only if you're doing dual-boot with windows.
+:::
 ```sh
-NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
-sda      8:0    0   465G  0 disk                   *SSD*
-├─sda1   8:1    0   499M  0 part 
-├─sda2   8:2    0   100M  0 part /boot          
-├─sda3   8:3    0    16M  0 part 
-├─sda4   8:4    0   185G  0 part 
-└─sda5   8:5    0   200G  0 part /
-sdb      8:16   0 931.5G  0 disk                   *HDD*
-├─sdb1   8:17   0   400G  0 part /home
-├─sdb2   8:18   0    24G  0 part [SWAP]
-└─sdb3   8:19   0   508G  0 part 
-sdc      8:32   1   7.5G  0 disk                   *Flash Drive*
-└─sdc1   8:33   1   7.5G  0 part
+NAME   FSTYPE   SIZE TYPE PARTITION TYPE               HEXCODE MOUNTPOINT DEVICE
+sda             465G disk                                                 SSD
+├─sda1 ntfs     505M part Windows recovery environment 0c01
+├─sda2 vfat     100M part EFI System                   EF00    /boot
+├─sda3           16M part Microsoft reserved           0c01
+├─sda4 ntfs     145G part Microsoft basic data         0700    /winroot
+└─sda5 ext4     240G part Linux file system            8300    /root
+sdb             932G disk                                                 HDD
+└─sdb1          932G part
+sdc             7.5G disk                                                 Flash Drive
+└─sdc1          7.5G part
 ```
-::: tip
-For now you shouldn't see any mount points unless you mount partitions to them, this will be done later.
+::: warning
+You shouldn't see any mount points now, unless you mounted partitions to them; mounting will be done later.
 :::
 
-## Dual boot disks partitioning
-<a id="disk-partitioning"></a>
-If a single arch installation is desired, just ignore "windows" steps.
+# Create the partitions
+<a id="create-partition"></a>
 ::: tip
-If you're making **dual boot** system with Windows, then **EFI System Partition** has been created with Windows installation.  
-You must mount it as a `/boot` for the Linux bootloader.
-:::
-
-::: danger Wiping disk 
-This will destroy all data on chosen drive. Use with caution!
-
-Don't wipe `sda` in case you had installed Windows for dual boot system.
+If you're following [Windows dual-boot](/core/windows-dual-boot) way, means your system has been populated with Windows partitions, which means that **EFI System** has been created, but the size of this partition is only `100M`; It's not enough for my needs. The recommended size for the EFI System is about 250-500M.
+I might have more then 3 Linux distros for tests, so I'm choosing `500M`, but if the dual boot is the case even 100M is ok. But be aware that it will be 90%+ full.
 :::
 ---
 
-Now simply wipe drive with `gdisk`:
+## cgdisk
+<a id="cgdisk"></a>
+cgdisk has pseudo-GUI, so it could be easier to visualize the process of partitioning.
+Generally [cgdisk man page](https://jlk.fjfi.cvut.cz/arch/manpages/man/cgdisk.8) - is a good source of understanding what this program can do.
+Run it with:
+```sh
+root@archiso ~ # cgdisk /dev/sdX # where X is your drive name
+```
+::: danger disk manipulations
+Some actions might destroy all the data on chosen drive. Use with caution!
 
-::: warning Note!
-[gdisk](https://wiki.archlinux.org/index.php/Gdisk) is for GPT only, if you need MBR(*old way*), rather use fdisk or parted because they could cover both GPT and MBR.   
-It is also possible to [convert between MBR and GPT](https://wiki.archlinux.org/index.php/Gdisk#Convert_between_MBR_and_GPT) with gdisk.
+In case of dual-booting don't wipe any Windows related partitions.
 :::
 
-
+## Create EFI system partition
+<a id="create-efi-partition"></a>
+::: warnnig dual-boot
+If dual-booting, you may skip this, because Windows already created EFI system.
+:::
+Upper part of the screen shows you the disk - e.g. `/dev/sda`, one of the columns should contain `Free space`, select it and create a new partition.
+- To do that, in the bottom part of the screen there is a menu with [ New ] selector is picked by default, then press `RET`.
+- Now it's asking to allocate minimum and maximum space sector; starting from 2048 by default, you can press `RET` to accept its minimum.
+- After that you can put your desired space in {`K`,`M`, `G`, `T`, `P`} formats.
+example for vfat: `512M`.
 ```sh
-gdisk /dev/sdX # where X is your drive name 
+512M
 ```
-
-Press `RET` first, then `x` for advanced config and `z` for zap.
-And now create a new one:
-
+- Next we need to provide the hex code or default(8300) will be entered. The [EFI](https://wiki.archlinux.org/index.php/EFI_system_partition) hex code is `EF00`
 ```sh
-cgdisk /dev/sdX # where X is your drive name
+EF00
 ```
+- Next put any recognizable name, e.g. for this EFI system partition:
+```sh
+EFI
+```
+- At the bottom pick [Write] or press `w`. Accept write changes by typing `yes`. Then `q` to quit.
+
+::: tip
+Note that EFI partition shouldn't be a part of LVM. But you still have ability to use [GRUB LVM](https://wiki.archlinux.org/index.php/GRUB#LVM)
+:::
+
+### Dual-boot EFI limited space issue
+<a id="dual-boot-space"></a>
+I'll take extra steps to move everything from 100M EFI partition created by Windows, to the newly created EFI partition with sufficient space that fit my needs.
+```sh
+root@archiso ~ # mkdir /mnt/boot /mnt/bootwin
+root@archiso ~ # mkfs.fat -F32 /dev/sda5      # create new 500M EFI
+root@archiso ~ # mount /dev/sda1 /mnt/bootwin # mount default windows 100M EFI
+root@archiso ~ # mount /dev/sda5 /mnt/boot    # mount new 500M EFI
+root@archiso ~ # cp /mnt/bootwin/* /mnt/boot  # copy from 100M EFI to 500M EFI
+root@archiso ~ # unmount /dev/sda1            # unmount 100M EFI
+root@archiso ~ # cgdisk /dev/sda              # wipe 100M EFI
+```
+Last but not least, wipe the `sda1`(100M) disk with gdisk or cgdisk, because we need only one EFI partition.
 ::: warning
-It will warn you "Non-GPT or damaged disk detected. This program will attempt to convert to GPT form or repair damage to GPT data structures, but may not succeed. Use gdisk or another disk reapir tool if you have a damaged GPT disk.", this is general case just skip it.
+If you've been warned that "Non-GPT or damaged disk detected. This program will attempt to convert to GPT form or repair damage to GPT data structures, but may not succeed.
+Use gdisk or another disk repair tool if you have a damaged GPT disk.", usually it is a common case, you may skip it.
 :::
 
-The upper part of the screen will show you disk(sdaX) with free space to create new partition,
-in the bottom part of the screen there is a menu with [ New ] selector is picked by default, just press `RET`.
-Now it's asking to allocate minimum and maximum space sector starting from 2048 by default, press `RET` for the minimum and put your desired space.
+# Linux Volume Manager
+<a id="LVM"></a>
+My choice is ext4 + [LVM](https://wiki.archlinux.org/index.php/LVM) - simple, stable and safe to use solution.
+LVM is known as a common and pretty much recommended way to extend ext4 possibilities.
 
+## Manipulate LVM
+<a id="manipulate-lvm"></a>
+You should have now free space left on your disks. If you still didn't allocated them run `cgdisk /dev/sdX` to allocate all the rest of a free space to a separate partition,
+which we will use as a Physical Volume(PV) in lvm2.
+In my case I'll use the rest of the SSD free space on which Windows is located, so I can divide it at any time later.
 
-::: tip
-If you want to create any stacked block devices for LVM, disk encryption or [RAID](https://wiki.archlinux.org/index.php/RAID), do it now.
-You also can enable [TRIM](https://wiki.archlinux.org/index.php/Solid_state_drive#TRIM) for SSD.
-:::
+### Create PV and VG
+Physical Volumes(PV) are combined in Volume Groups(VG).
+Lets say you have 2 drives, each of it will be PV and we should add them to the VG.
 
-The wise idea will be to devide separate discs by their logic, dynamic and static.
-#### SSD
-<a id="SSD"></a>
-SSD  - The best usecase for SSD is the system files for which speed is crucial e.g.: bootloader, browser, games, et cetera...
-
-I'll put both Linux and Windows dynamic files on SSD ( [#sda](#scheme-example)).
-___
-| Tables | size | FS type | mountpoint |
-|--------|------|---------|------------|
-| sda1   | 499M | 0c01    | -          |
-| sda2   | 100M | EF00    | boot       |
-| sda3   | 16M  | 0c01    | -          |
-| sda4   | 185G | 0700    | -          |
-| sda5   | 500G | 8300    | root       |
-- **sda1,3** Microsoft reserved space. (*Dual boot case*: Windows partitioning system created them automatically.)
-- **sda2** To boot the system it must be exactly `EF00`. (*Dual boot case:* The reason of Windows installation on the first place, created automatically.)
-- **sda4** Windows partition. (*Dual boot case: You'll need this space to install Windows*)
-- **sda5** I'm personally using around 500G for the `root`, but it could be less: ~50-100G - should be fine; depend on your needs and usage, because it's possible to make system really tiny.
-
-#### HDD
-<a id="HDD"></a>
-HDD([#sdb](#scheme-example)) - The best usecase for HDD today to be used as a user static files storage e.g.: music, projects, configurations, et cetera...
-___
-| Tables | size | FS type | mountpoint | description                |
-|--------|------|---------|------------|----------------------------|
-| sdb1   | 400G |    8300 | home       | linux file system          |
-| sdb2   | 24G  |    8200 | swap       | 1.5 of my RAM memory (16G) |
-| sdb3   | 508G |    0700 | winhome    | microsoft basic data       |
-- **sdb1** `/home` place for the user's linux static files.
-- **sdb2** `SWAP` depends on your RAM quantity. Usually you should take x1 or x1.5 of your RAM. 
-::: warning SWAP NOTE
-So if you have 16G of RAM, you should be fine with 16G of SWAP disc space. 
-
-If you will take less RAM, there is still a good chance of successfull hibernating.
-:::
-- **sdb3**  (*Dual boot case:* It will contain static Windows files.)
-::: tip
-You also have choice to use space to mount e.g.: `/usr` or `/var`.
-:::
-
-## Mount partitions to the folders
-<a id="mounting-folders"></a>
-We want to assign `/mnt` to the `root` partition:
+There is a short way to create multiple PVs and combine them with VG simultaneously.
+Using vgcreate you can add as many PVs as you want just adding them as an argument like so `vgcreate vg0 /dev/sda1 /dev/sda2 /dev/sdb4 /dev/sdc`:
+In this case `vg0` - is a VG name which I defined for SSD.
+And `vg1` - is a VG for HDD.
 ```sh
-mount /dev/sda5 /mnt
-```
-Next we need to create some new folders in our `/mnt`:
-```sh
-mkdir /mnt/boot
-mkdir /mnt/home
-```
-
-Mount them accordingly:
-```sh
-mount /dev/sda2 /mnt/boot
-mount /dev/sdb1 /mnt/home
-```
-
-## Format the partitions
-<a id="format-partitions"></a>
-Partitions must be formatted with an appropriate file system:
-- **SWAP:** 
-```sh
-mkswap /dev/sdb2
-swapon /dev/sdb2
-```
-- **Linux:** 
-```sh
-mkfs.ext4 /dev/sda5
-mkfs.ext4 /dev/sdb1
+root@archiso ~ # vgcreate vg0 /dev/sda1
+root@archiso ~ # vgcreate vg1 /dev/sdb1
 ```
 ::: tip
-Press `y` if you have this warning: `/dev/sdxY contains a ext4 file system`
-:::
-- **/boot:** 
+Lets say you have another PV to add to the VG, do it like so:
 ```sh
-mkfs.fat -F32 /dev/sda1
+root@archiso ~ # vgextend vg0 /dev/sdb1
 ```
-::: tip
-Boot must be Fat32 as UEFI requirement.   
-
-You already have EFI partition if you installed Windows.
+And removing PV from VG:
+```sh
+root@archiso ~ # vgreduce vg0 /dev/sdb1
+```
 :::
+
+Separating concerns leads system to increase in performance.
+Besides it's good idea to separate `/var`, so you will never mess with `/var/logs` full drive issue, which could be a result of kernel panic.
+
+Next we will create Logical Volumes(LV) for two Virtual Groups(VG):
+```sh
+root@archiso ~ # lvcreate -L 80G vg0 -n lvroot
+root@archiso ~ # lvcreate -L 300G vg1 -n lvhome
+root@archiso ~ # lvcreate -L 16G vg1 -n lvswap
+root@archiso ~ # lvcreate -L 10G vg1 -n lvtmp
+root@archiso ~ # lvcreate -L 10G vg1 -n lvvar
+```
+::: warning SWAP NB
+`SWAP` depends on your RAM and usually you're taking x1 or x1.5 of your RAM.
+So if you have 16G of RAM, you should be fine with 16G of SWAP disc space.
+
+If you will take less RAM, there is still a good chance of successful hibernating.
+:::
+
+::: tip
+If you want full size to be populated: `lvcreate -l 100%FREE yourVGname -n yourEpicVolumeName`.
+But you need to left some free space for snapshots.
+
+Remember that you can start from small sizes and expand them later.
+
+There are handy commands with which you can see more info:
+`lvmdiskscan`
+`pvs`,`vgs`,
+`pvdisplay`, `vgdisplay`, `lvdisplay`
+:::
+
+## Format and mount LV
+<a id="format-mount"></a>
+::: tip
+`/mnt` refers to the `root` partition
+:::
+We can manipulate logical volumes now, as if they were normal partitions like `sda` etc.
+As you saw before, I've made two VGs one for SSD one for HDD.
+### SSD - vg0
+All dynamic folders comes to solid state drive:
+- `/root` and the rest `/usr`, etc.
+```sh
+root@archiso ~ # mkfs.ext4 /dev/vg0/lvroot
+root@archiso ~ # mount /dev/vg0/lvroot /mnt
+```
+
+- `/boot`
+::: warning
+Pay attention that we're not using LVM for the `/boot`!
+
+If you dual-booting this is the case when you shouldn't formatting boot partition twice.
+Same if you following [dual boot space step](#dual-boot-space)
+:::
+```sh
+root@archiso ~ # mkdir /mnt/boot
+root@archiso ~ # mkfs.fat -F32 /dev/sda5
+root@archiso ~ # mount /dev/sda5 /mnt/boot
+```
+
+### HDD - vg1
+And all media, cache, logs, tmp, swap and other static comes to the HDD:
+```sh
+root@archiso ~ # mkdir /mnt/home /mnt/var /mnt/tmp
+```
+`/home`
+```sh
+root@archiso ~ # mkfs.ext4 /dev/vg1/lvhome
+root@archiso ~ # mount /dev/vg1/lvhome /mnt/home
+```
+`[SWAP]`
+```sh
+root@archiso ~ # mkswap /dev/vg1/lvswap
+root@archiso ~ # swapon /dev/vg1/lvswap
+```
+`/var`
+```sh
+root@archiso ~ # mkfs.ext4 /dev/vg1/lvvar
+root@archiso ~ # mount /dev/vg1/lvvar /mnt/var
+```
+`/tmp`
+```sh
+root@archiso ~ # mkfs.ext4 /dev/vg1/lvtmp
+root@archiso ~ # mount /dev/vg1/lvtmp /mnt/tmp
+```
+## System snapshots
+<a id="system-snapshots"></a>
+Follow [this page ->](/environment/snapshots)
+
+## TRIM
+<a id="trim"></a>
+We might take advantage of [TRIM](https://wiki.archlinux.org/index.php/Solid_state_drive#LVM) with LVM for SSD.
+Available devices will appear in the DISC-GRAN and DISC-MAX columns.
+```sh
+lsblk --discard
+```
+## Encryption
+<a id="encryption"></a>
+[Disk encryption](https://wiki.archlinux.org/index.php/Dm-crypt) could be handy if you have any sensitive data that you want to protect with password.

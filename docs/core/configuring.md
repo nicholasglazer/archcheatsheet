@@ -1,21 +1,21 @@
 ---
-metaTitle: Arch linux step by step install guide, config layout, network-connection clock timedatectrl uefi, dvorak layout, iwd, archlinux | ArchCheatSheet
+metaTitle: Arch linux step by step install guide, config layout, network-connection clock timedatectrl uefi, dvorak layout, archlinux archiso.
 ---
 
-<a id="configuring"></a>
 # Configuring
+<a id="configuring"></a>
 After successful archiso boot, start entering configuration commands into the shell.
 ___
 
-<a id="UEFI"></a>
 ## UEFI check
+<a id="UEFI"></a>
 Before proceeding, it's worth checking the efivars to make sure we're booting in [UEFI](https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface) mode.
 ```sh
-ls /sys/firmware/efi/efivars/
+root@archiso ~ # ls /sys/firmware/efi/efivars/
 ```
 or
 ```sh
-efivar -l
+root@archiso ~ # efivar -l
 ```
 Variables from existing directory means everything is fine. If not, the system may be booted in BIOS or CSM mode.
 
@@ -26,44 +26,27 @@ If you're non-QWERTY user, e.g. a [dvorak](https://wiki.archlinux.org/index.php/
 This will **temporary** change your layout within archiso! :upside_down_face:
 :::
 ```sh
-loadkeys dvorak
+root@archiso ~ # loadkeys dvorak
 ```
 
-<a id="network-connection"></a>
 ## Network connection
-You may want to make wireless internet connection and take advantage of [iwd](https://wiki.archlinux.org/index.php/Iwd), since ~iwd.service~ enabled by default in archiso.
-To establish connection:
-```sh
-iwctl --passphrase **yourpassword** station **yourdevice** connect **yourSSID**
-```
+<a id="network-connection"></a>
 ::: tip
 Wired connection should be done automatically with ~systemd-networkd.service~, ~systemd-resolved.service~ which are enabled by default in archiso.
 :::
-
-# Connection issues
-If you encounter problems, check if your network interface is enabled:
+You may want to establish wireless internet connection and take advantage of [iwd](https://wiki.archlinux.org/index.php/Iwd), since ~iwd.service~ enabled by default in archiso.
+To establish connection:
 ```sh
-ip link
-ip link set **yourinterfase** up
+root@archiso ~ # iwctl --passphrase **yourpassword** station **yourdevice** connect **yourSSID**
 ```
-::: tip
-<BROADCAST,MULTICAST,UP> - ~UP~ is what indicates the sate is up.
+::: warning
+iwd and a lot of other programs that are presented in chroot, might not be in your fresh install;
+you will need to install them by yourself or pick a DE with preinstalled software.
 :::
-Other useful commands:
-```sh
-ifconfig
-lspci -k | grep Network
-lsusb -v                  #if it's a usb card
-dmesg | grep firmware
-```
 
-To verify the connection, ping any website:
-```sh
-ping -c 3 archlinux.org
-```
 
-<a id="system-clock"></a>
 ## Update the system clock
+<a id="system-clock"></a>
 To ensure that system clock is accurate.
 ```sh
 timedatectrl set-ntp true
