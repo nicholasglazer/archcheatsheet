@@ -1,9 +1,6 @@
 ---
 metaTitle: Networking configuration archlinux with connman, connman internet connection, connman linux no internet, connman.
 ---
----
-metaTitle: Networking configuration archlinux with iwd, iwd internet connection, iwd linux no internet, iwd.
----
 
 
 ### Connman

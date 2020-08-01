@@ -20,9 +20,9 @@ You may want to [sort mirrors](https://wiki.archlinux.org/index.php/Mirrors#Sori
 <a id="arch-base-files"></a>
 Now install base packages to our assigned root - `/mnt`.   
 ```sh
-pacstrap /mnt base linux linux-firmware git lvm2 iwd wpa_supplicant vim
+pacstrap /mnt base linux linux-firmware git lvm2 iwd man sudo vim openssh
 ```
-We will install more packages once [chroot]()
+We will install more packages on a [chroot step ->](/core/arch-chroot)
 
 ## Generate and edit fstab
 <a id="generate-and-edit-fstab"></a>

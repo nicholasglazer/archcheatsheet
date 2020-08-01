@@ -43,6 +43,17 @@ ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
 hwclock --systohc
 ```
 
+## Update the system clock
+<a id="system-clock"></a>
+To ensure that system clock is accurate.
+```sh
+timedatectrl set-ntp true
+```
+Check the status:
+```sh
+timedatectrl status
+```
+
 ## Network configuration
 <a id="network-configuration"></a>
 [Hostname](https://en.wikipedia.org/wiki/Hostname) - is a unique name created to identify a machine on a network.   
@@ -130,6 +141,28 @@ And set password for a new user:
 ```sh
 passwd username
 ```
+
+## Sudoers
+<a id="sudoers"></a>
+::: danger
+Read about [visudo](https://wiki.archlinux.org/index.php/Sudo#Using_visudo) before editing! Any errors makes **sudo** unusable.   
+**Always** edit `/etc/sudoers` file with `visudo` to prevent errors.
+:::
+```sh
+EDITOR=vim visudo
+```
+Since you added user to the `wheel` group, user will gain full root privileges, you need to uncomment this line:
+```sh
+%wheel ALL=(ALL) ALL
+```
+::: warning NOTE
+If you are using a server or someone else has access to the wheel group, you may want to require sudoers to type root password.   
+In this case add this line:
+```sh
+Defaults rootpw
+```
+:::
+Read more about [root password](https://wiki.archlinux.org/index.php/Sudo#Root_password).
 
 ## Microcode
 <a id="microcode"></a>

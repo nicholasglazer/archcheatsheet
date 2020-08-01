@@ -43,15 +43,6 @@ root@archiso ~ # iwctl --passphrase **yourpassword** station **yourdevice** conn
 iwd and a lot of other programs that are presented in chroot, might not be in your fresh install;
 you will need to install them by yourself or pick a DE with preinstalled software.
 :::
-
-
-## Update the system clock
-<a id="system-clock"></a>
-To ensure that system clock is accurate.
-```sh
-timedatectrl set-ntp true
-```
-Check the status:
-```sh
-timedatectrl status
-```
+::: tip spoiler
+I'm currently using [#iwd](/environment/iwd) as my main network manager.
+:::
