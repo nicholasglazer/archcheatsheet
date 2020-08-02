@@ -2,22 +2,22 @@
 metaTitle: Networking configuration archlinux with connman, connman internet connection, connman linux no internet, connman.
 ---
 
-
-### Connman
-
-[Connman](https://wiki.archlinux.org/index.php/Connman) itself is a command-line network manager. Check connman-notify readme to findout [why you could use it](https://gitlab.com/wavexx/connman-notify#why-connman).
+# Connman
+Generally talking [Connman](https://wiki.archlinux.org/index.php/Connman) is a command-line network manager.
+Notifications with connman-notify. [To better figure out why you could use it](https://gitlab.com/wavexx/connman-notify#why-connman).
 ```sh
-yay -S connman
+pacman -S connman
 ```
+There is a way to use [#iwd](/environment/iwd) instead [of wpa_supplicant archwiki](https://wiki.archlinux.org/index.php/ConnMan#Using_iwd_instead_of_wpa_supplicant)
 ::: tip
 You may want to install connman_dmenu to have connman applet:
 ```sh
-yay -S connman_dmenu
+pacman -S connman_dmenu
 ```
 :::
 Wired connection supported out of the box.
 
-#### Config
+## Simple usage
 For wireless setup you will need to do few more things.
 ```sh
 connmanctl                       # Should enter connmanctl> shell

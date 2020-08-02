@@ -8,93 +8,24 @@ metaTitle: Archlinux install guide environment configure Git, configure AUR | Ar
 Wise idea will be to take a look at [Arch general recommendations](https://wiki.archlinux.org/index.php/General_recommendations).
 :::
 
-This could be good idea to configuer Git and AUR before we begin.
+If you are not a big fan of heavy desktop environment like me and want everything to be done in a custom way, to have full control over your system!
+Follow my steps with the dotfiles and [no desktop environment way](/environment/no-desktop-environment)
 
 ---
-### Dotfiles
-<a id="dotfiles"></a>
-It could be very useful to collect your configs in one place, usually people call them dotfiles.   
-It allows you to share your configs across other machines, distros or community 8-).   
-
-You can find different [archwiki dotfiles](https://wiki.archlinux.org/index.php/Dotfiles) for different tastes. You also can check my [dotfiles](https://github.com/NicholasGlazer/dotfiles).
-
 ## Establish internet connection
 <a id="esteblish_internet_connection"></a>
+Since [#iwd](/environment/iwd) was installed with [#pacstrap =>](/core/base-files#pacstrap).
+In order to use it we must enable the service, find the device and connect to the wi-fi network. [See iwd =>](/environment/iwd)
 
-Since you installed `wpa_supplicant` you now have ability to establish wireless connection.   
-This commands will allow you to establish temporary connection untill reboot.
-::: tip NOTE
-Because of the process substitution, you cannot run this command with sudo and must use a root shell:
-```sh
-wpa_supplicant -B -i /interface/ -c <(wpa_passphrase /SSID/ /passpharase/)
-dhcpcd /interface/
-```
-Don't forget to change user:
-```sh
-su yourusername
-```
-:::
-::: tip NOTE
-To discover your *interface* type this:
-```sh
-lspci -k
-ip link
-```
-It usually starts with `w`.   
-Check [wireless configuration](https://wiki.archlinux.org/index.php/Wireless_network_configuration#Check_the_driver_status) if you have any problems.
-:::
+<a id="dotfiles"></a>
+It could be very useful to collect your configs in one place, usually people call them dotfiles.   
 
-## Git
-<a id="git"></a>
+## Dotfiles + git
+<a id="dotfiles-git"></a>
+Since [#git](/environment/git) was installed with [#pacstrap =>](/core/base-files#pacstrap).
+To learn the best way so far to manage your dotfiles repository as a [--bare](/environment/git#git-bare).
+See my article [the best way to manage dotfiles =>](/environment/dotfiles) 
 
-In order to use [git](https://git-scm.com/doc), you need to set at least name and email:
-```sh
-git config --global user.name "John Doe"
-git config --global user.email "johndoe@example.com"
-git config --global core.editor emacs
-```
-For user-specific configuration I'm using `~/.config/git/config`. 
-
-::: warning
-Emacs and vim are popular text editors used by developers. And highly recommended by author of this guide.   
-If you not familiar with emacs, you may need to search for specific instructions for how to set up your favorite editor with Git.
-:::
-You can read official [First-Time Git Setup](https://git-scm.com/book/en/v2/Getting-Started-Fist-Time-Git-Setup) guide.
-
-## AUR
-<a id="AUR"></a>
-You can read more about [Arch User Repository](https://wiki.archlinux.org/index.php/Arch_User_Repository).   
-Suggest to install [yay](https://github.com/Jguer/yay) .   
-::: warning
-With [AUR helpers comparison table](https://wiki.archlinux.org/index.php/AUR_helpers#Comparison_table) you can choose *AUR wrapper* by your taste.
-:::
-Clone with git and install with [makepkg](https://wiki.archlinux.org/index.php/Makepkg):
-```sh
-git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -si
-cd .. && rm -rf yay
-yay -Ps    #print system stats
-```
-::: tip
-Yay depends on [go](https://github.com/golang/go). If you have no plans to use it, feel free to clean it with yay:
-```sh
-yay -Yc    #this command will clean unneeded dependencies
-```
-:::
-
-
-
-## Dependencies
-<a id="dependencies"></a>
-Unsorted dependencies to install:
-```sh
-yay -S openssh htop dex screenfetch
-```
-::: warning
-If you're installing packages form AUR and you trust them, you can use `--noconfirm` flag to auto-install packages.   
-But you still may want to check build scripts sometimes ;).
-:::
 
 <!-- ### Table of Contents -->
 <!-- 1.  [Environment](#environment) -->

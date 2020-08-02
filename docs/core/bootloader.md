@@ -21,9 +21,7 @@ exit
 umount -R /mnt
 reboot
 ```
-Next steps could vary depending on your preferences. Because choosing environment is very individual.
-If the core installation has not huge variety of choices, unlike the [environmental step](/environment/)
 
-If you are not a big fan of Desktop environment and want to do everything custom.
-You might follow my steps, but keep in mind that you can improve them however you want.
-[Next step ->](/environment/)
+You might just follow my steps, but keep in mind that you can improve and change them however you want.
+Next steps could vary depending on your preferences. Because choosing environment is very individual.
+If the core installation does not contain huge variety of choices, [the next step will make you decide =>](/environment/)
