@@ -157,11 +157,10 @@ root@archiso ~ # lvcreate -L 16G vg1 -n lvswap
 root@archiso ~ # lvcreate -L 10G vg1 -n lvtmp
 root@archiso ~ # lvcreate -L 10G vg1 -n lvvar
 ```
-::: warning SWAP NB
-`SWAP` depends on your RAM and usually you're taking x1 or x1.5 of your RAM.
+::: tip NB
+`[SWAP]` partition size depend on your RAM and a good practice to reserve between 100% to 150% of your swap disk space as RAM.
 So if you have 16G of RAM, you should be fine with 16G of SWAP disc space.
-
-If you will take less RAM, there is still a good chance of successful hibernating.
+Even if you will take less RAM, there is still a good chance of successful hibernating.
 :::
 
 ::: tip
