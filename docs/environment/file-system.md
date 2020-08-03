@@ -1,6 +1,5 @@
-
 ---
-metaTitle: Arch linux partitioning, windows file system ntfs, btrfs file system, zsh file system, how to choose a filesystem, how to choose between file systems, vfat file system, xfs file system.
+metaTitle: Arch linux partitioning, windows file system ntfs, btrfs file system, zsh file system, how to choose a filesystem, how to choose between file systems, vfat file system, xfs file system, superblock crush ext4, e2fsck ext4.
 ---
 
 ::: warning
@@ -32,6 +31,34 @@ So once Oracle will change [CDDL](https://en.wikipedia.org/wiki/Common_Developme
 Is not that much better than EXT4 while working with relatively small sizes, so why bother?
 
 ### [ext4](https://wiki.archlinux.org/index.php/Ext4)
-The most mature among all previous file systems, used by the most of Linux distros and users. It's fast and robust; never crushed or corrupted data on my memory.
-That's why I'm staying with `EXT4` and the main features I want to take advantage of is [snapshots](#System-snapshots), dynamic resizing and [more](https://wiki.archlinux.org/index.php/LVM#Advantages).
+The most mature among all previous file systems, used by the most of Linux distros and users. It's fast and robust;
+::: tip coolstorybro
+I had a crush of my `/home` directory(Summer 2020), I think it happened when I played with the Windows installer, and that disk wasn't part of my LVM and I believe worked flawlessly for almost 3 years. Now I realize that I should put it on LVM a long time ago. Nevertheless I have nothing critical there, except some of my Overwatch games that recorded xD.
+This was a good lesson for me. So be careful with Windows installer and always do your backup on files you don't want to loose.
+P.S. I'm still using `ext4`.
+
+If you want to fix it here is some of a tips and general recommendations.
+There are some tooling for ext4, lets take advantage of it:
+Like to start investigating with `fsck`.
+```sh
+sudo fsck.ext4 -v /dev/sdX
+```
+Then if it's corrupted superblock problem, check out the list of available superblocks.
+```sh
+sudo mke2fs -n /dev/sdX
+```
+Now you need to use `e2fsck` which is a very useful tool actually, check `man`
+And we are interest in the -b flag, which will..
+```sh
+sudo e2fsck -b block_from_mke2fs_output /dev/sdX
+```
+Try several times different non-corrupted blocks.
+Reboot and try to mount again, if you still see the error, well, I hope you have a backup somewhere.
+If not, you might try to copy the disk with `dd`.
+```sh
+cat /dev/sdX >/dev/sdY
+```
+:::
+
+Eventually the main features are [snapshots](#System-snapshots), dynamic resizing and [more](https://wiki.archlinux.org/index.php/LVM#Advantages).
 If you're working with large pools over 100TB, you might need [RAID](https://wiki.archlinux.org/index.php/RAID). Xfs could be handy in this case.
