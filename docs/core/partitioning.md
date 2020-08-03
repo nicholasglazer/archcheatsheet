@@ -94,7 +94,7 @@ EFI
 Note that EFI partition shouldn't be a part of LVM. But you still have ability to use [GRUB LVM](https://wiki.archlinux.org/index.php/GRUB#LVM)
 :::
 
-### Dual-boot EFI limited space issue
+### [Dual-boot only] EFI limited space issue
 <a id="dual-boot-space"></a>
 I'll take extra steps to move everything from 100M EFI partition created by Windows, to the newly created EFI partition with sufficient space that fit my needs.
 ```sh
@@ -157,12 +157,6 @@ root@archiso ~ # lvcreate -L 16G vg1 -n lvswap
 root@archiso ~ # lvcreate -L 10G vg1 -n lvtmp
 root@archiso ~ # lvcreate -L 10G vg1 -n lvvar
 ```
-::: tip NB
-`[SWAP]` partition size depend on your RAM and a good practice to reserve between 100% to 150% of your swap disk space as RAM.
-So if you have 16G of RAM, you should be fine with 16G of SWAP disc space.
-Even if you will take less RAM, there is still a good chance of successful hibernating.
-:::
-
 ::: tip
 If you want full size to be populated: `lvcreate -l 100%FREE yourVGname -n yourEpicVolumeName`.
 But you need to left some free space for snapshots.
@@ -175,6 +169,11 @@ There are handy commands with which you can see more info:
 `pvdisplay`, `vgdisplay`, `lvdisplay`
 :::
 
+::: tip NB
+`[SWAP]` partition size depend on your RAM and a good practice to reserve between 100% to 150% of your swap disk space as RAM.
+So if you have 16G of RAM, you should be fine with 16G of SWAP disc space.
+Even if you will take less RAM, there is still a good chance of successful hibernating.
+:::
 ## Format and mount LV
 <a id="format-mount"></a>
 ::: tip

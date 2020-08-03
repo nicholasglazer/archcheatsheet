@@ -58,6 +58,8 @@ If not, you might try to copy the disk with `dd`. I would prefer to use `cat`, t
 ```sh
 cat /dev/sdX >/dev/sdY
 ```
+Where `X` is a broken one you want to copy data. And Y is an empty ext4 partition that will contain all this amount.
+So I suggest to make the same size if possible and use LVM.
 :::
 
 Eventually the main features are [snapshots](#System-snapshots), dynamic resizing and [more](https://wiki.archlinux.org/index.php/LVM#Advantages).
