@@ -150,12 +150,17 @@ Since you know how to create a user, you need to know how to delete one as well.
 userdel -f your_username_name
 ```
 ::: tip
-If you decided to kill the user other then with `-f` flag, you might want to kill the processes anyway.
-And make sure you're not using this directory right now. Type `pwd` to check
-```sh
+Should be obvious but make sure you're not using user directory or not logged in as user that you aims to delete.
+
+Type `pwd` to check directory. And `whoami` to see your current user.
+
+If you not decided to kill the user with `-f` force flag, you might want to kill the processes user may run.
+```
+pwd && whoami
 killall -u your_user_name
 ```
 :::
+Also `su` reads users from `/etc/login.defs`, you might want to check.
 
 
 
