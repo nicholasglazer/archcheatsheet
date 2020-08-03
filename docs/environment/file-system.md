@@ -1,5 +1,5 @@
 ---
-metaTitle: Arch linux partitioning, windows file system ntfs, btrfs file system, zsh file system, how to choose a filesystem, how to choose between file systems, vfat file system, xfs file system, superblock crush ext4, e2fsck ext4.
+metaTitle: Arch linux partitioning, windows file system ntfs, btrfs file system, zsh file system, how to choose a filesystem, how to choose between file systems, vfat file system, xfs file system, superblock crush ext4, e2fsck ext4, superblocks and accounting information.
 ---
 
 ::: warning

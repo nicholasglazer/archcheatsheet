@@ -141,6 +141,22 @@ And set password for a new user:
 ```sh
 passwd username
 ```
+since you know how to create user, you need to know how to delete is as well.
+`-f` stands for 'force', will delete you user with all the processes
+`-r` remove home directory and main spool
+```sh
+userdel -f your_username_name
+```
+::: tip
+If you decided to kill the user other then with `-f` flag, you might want to kill the processes anyway.
+And make sure you're not using this directory right now. Type `pwd` to check
+```sh
+killall -u your_user_name
+```
+:::
+
+
+
 
 ## Sudoers
 <a id="sudoers"></a>
