@@ -158,7 +158,7 @@ root@archiso ~ # lvcreate -L 10G vg1 -n lvtmp
 root@archiso ~ # lvcreate -L 10G vg1 -n lvvar
 ```
 ::: tip
-If you want full size to be populated: `lvcreate -l 100%FREE yourVGname -n yourEpicVolumeName`.
+If you want full size to be populated: `lvcreate -l 100%FREE your_vg_name -n your_volume_name`.
 But you need to left some free space for snapshots.
 
 Remember that you can start from small sizes and expand them later.

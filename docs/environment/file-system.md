@@ -32,6 +32,10 @@ Is not that much better than EXT4 while working with relatively small sizes, so 
 
 ### [ext4](https://wiki.archlinux.org/index.php/Ext4)
 The most mature among all previous file systems, used by the most of Linux distros and users. It's fast and robust;
+
+Eventually the main features are [snapshots](#System-snapshots), dynamic resizing and [more](https://wiki.archlinux.org/index.php/LVM#Advantages).
+If you're working with large pools over 100TB, you might need [RAID](https://wiki.archlinux.org/index.php/RAID). Xfs could be handy in this case.
+
 ::: tip coolstorybro
 I had a crush of my `/home` directory(Summer 2020), I think it happened when I played with the Windows installer, and that disk wasn't part of my LVM and I believe worked flawlessly for almost 3 years. Now I realize that I should put it on LVM a long time ago. Nevertheless I have nothing critical there, except some of my Overwatch games that recorded xD.
 This was a good lesson for me. So be careful with Windows installer and always do your backup on files you don't want to loose.
@@ -54,13 +58,10 @@ sudo e2fsck -b block_from_mke2fs_output /dev/sdX
 ```
 Try several times different non-corrupted blocks.
 Reboot and try to mount again, if you still see the error, well, I hope you have a backup somewhere.
-If not, you might try to copy the disk with `dd`. I would prefer to use `cat`, this should be faster and safer.
+If not, you might try your luck and copy the disk with `dd` or I would rather prefer to use `cat`, this should be more faster solution.
 ```sh
 cat /dev/sdX >/dev/sdY
 ```
 Where `X` is a broken one you want to copy data. And Y is an empty ext4 partition that will contain all this amount.
 So I suggest to make the same size if possible and use LVM.
 :::
-
-Eventually the main features are [snapshots](#System-snapshots), dynamic resizing and [more](https://wiki.archlinux.org/index.php/LVM#Advantages).
-If you're working with large pools over 100TB, you might need [RAID](https://wiki.archlinux.org/index.php/RAID). Xfs could be handy in this case.
