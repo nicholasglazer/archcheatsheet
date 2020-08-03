@@ -128,6 +128,7 @@ pacman -Sy
 
 ## User and password
 <a id="user-and-password"></a>
+### Create
 - **Root password:**
 ```sh
 passwd
@@ -141,7 +142,8 @@ And set password for a new user:
 ```sh
 passwd username
 ```
-since you know how to create user, you need to know how to delete is as well.
+### Delete
+Since you know how to create a user, you need to know how to delete one as well.
 `-f` stands for 'force', will delete you user with all the processes
 `-r` remove home directory and main spool
 ```sh
