@@ -58,7 +58,7 @@ sudo e2fsck -b block_from_mke2fs_output /dev/sdX
 ```
 Try several times different non-corrupted blocks.
 Reboot and try to mount again, if you still see the error, well, I hope you have a backup somewhere.
-If not, you might try your luck and copy the disk with `dd` or I would rather prefer to use `cat`, this should be more faster solution.
+If not, you might try your luck and copy the disk with `dd` or I would rather prefer to use `cat`, this should be more faster solutio n.
 ```sh
 cat /dev/sdX >/dev/sdY
 ```

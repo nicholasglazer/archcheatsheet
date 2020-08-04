@@ -47,9 +47,18 @@ You shouldn't see any mount points now, unless you mounted partitions to them; m
 
 # Create the partitions
 <a id="create-partition"></a>
-::: tip
-If you're following [Windows dual-boot](/core/windows-dual-boot) way, means your system has been populated with Windows partitions, which means that **EFI System** has been created, but the size of this partition is only `100M`; It's not enough for my needs. The recommended size for the EFI System is about 250-500M.
-I might have more then 3 Linux distros for tests, so I'm choosing `500M`, but if the dual boot is the case even 100M is ok. But be aware that it will be 90%+ full.
+::: warning dual-booting
+If you're followed [Windows dual-boot](/core/windows-dual-boot) way, means your system has been populated with Windows partitions,
+which means that **EFI System** has been created, but the size of this partition is only `100M`; It's not enough for my needs and I'll explain my point.
+
+And if the dual boot is your case, even 100M is possible be ok. But you should be aware that it will be `95%+` of the partition size.
+Usually the recommended size for the EFI System is about 250-500M.
+::: tip Disk Usage `du`
+Take advantage of standard UNIX program called `du` which stands for Disk Usage.
+or
+`-m` which will shrink the display output from 1024K to 1M which is equal to `--block-size=1M`.
+`-h` or use human readable format instead of `-m`.
+`-s` flag might become useful if you want to `--summarize` items
 :::
 ---
 
@@ -96,21 +105,9 @@ Note that EFI partition shouldn't be a part of LVM. But you still have ability t
 
 ### [Dual-boot only] EFI limited space issue
 <a id="dual-boot-space"></a>
-I'll take extra steps to move everything from 100M EFI partition created by Windows, to the newly created EFI partition with sufficient space that fit my needs.
-```sh
-root@archiso ~ # mkdir /mnt/boot /mnt/bootwin
-root@archiso ~ # mkfs.fat -F32 /dev/sda5      # create new 500M EFI
-root@archiso ~ # mount /dev/sda1 /mnt/bootwin # mount default windows 100M EFI
-root@archiso ~ # mount /dev/sda5 /mnt/boot    # mount new 500M EFI
-root@archiso ~ # cp /mnt/bootwin/* /mnt/boot  # copy from 100M EFI to 500M EFI
-root@archiso ~ # unmount /dev/sda1            # unmount 100M EFI
-root@archiso ~ # cgdisk /dev/sda              # wipe 100M EFI
-```
-Last but not least, wipe the `sda1`(100M) disk with gdisk or cgdisk, because we need only one EFI partition.
-::: warning
-If you've been warned that "Non-GPT or damaged disk detected. This program will attempt to convert to GPT form or repair damage to GPT data structures, but may not succeed.
-Use gdisk or another disk repair tool if you have a damaged GPT disk.", usually it is a common case, you may skip it.
-:::
+Take few extra steps to move everything from 100M EFI partition created by Windows, to the newly created EFI partition with sufficient space.
+Because one day you'll out of memory in EFI partition.
+See [EFI resizing](/environment/efi#dual-boot-efi-resizing)
 
 # Linux Volume Manager
 <a id="LVM"></a>

@@ -4,6 +4,21 @@ metaTitle: Archlinux install guide environment configure Git, configure AUR | Ar
 
 # Preliminaries
 <a id="preliminaries"></a>
+```sh
+    "You take the red pill, you stay in Wonderland, and I show you how deep the rabbit hole goes."
+                                                                                         ―Morpheus
+```
+
+Now I have two pills for you.
+Use blue pill and you will forget everything I said and continue to live happy with your desktop environments, with choices they've made.
+Or maybe you are a brave soul which desire to learn new things and make choices according to your preferences.
+The state in which I see Linux is [the anarchy state] on the first place, because, you see it's a philosophical idea, that you need to take responsibility for every custom component in your system.
+And the thing why I love distributions like Arch Linux, are because you become responsible for all your interaction starting from the bare shell.
+ This way you can learn much more then just clicking mouse on windows installer, which I hate, it's not flexible at all, it thinks that I'm stupid and can't properly configure hardware interaction configurations,
+
+As an example, think of Microsoft installation process -[the EFI resizing after the dual-boot](/environment/efi-resizing) is even present here.
+
+
 ::: tip
 Wise idea will be to take a look at [Arch general recommendations](https://wiki.archlinux.org/index.php/General_recommendations).
 :::
@@ -22,9 +37,10 @@ It could be very useful to collect your configs in one place, usually people cal
 
 ## Dotfiles + git
 <a id="dotfiles-git"></a>
+
 Since [#git](/environment/git) was installed with [#pacstrap =>](/core/base-files#pacstrap).
 To learn the best way so far to manage your dotfiles repository as a [--bare](/environment/git#git-bare).
-See my article [the best way to manage dotfiles =>](/environment/dotfiles) 
+See my article [the best way to manage dotfiles =>](/environment/dotfiles)
 
 
 <!-- ### Table of Contents -->
