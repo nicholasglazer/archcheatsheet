@@ -4,8 +4,8 @@ metaTitle: Networking configuration archlinux, wpa_supplicant is no longer, wpa_
 # Networking
 <a id="networking"></a>
 
-There is a variety managers you could pick.
-Figure out what do you want cli or gui, nevertheless the majority of them has gui or pseudo-gui wrapper.
+There is a variety of managers you can pick from.
+Figure out what type of the interface yo prefer more cli or gui, nevertheless the majority of them has gui or pseudo-gui wrapper.
 
 ::: warning check
 If you enabled services before or installed any Desktop Environment,
@@ -18,11 +18,12 @@ systemctl disable service_name.service  # and disable active networkmanager.serv
 
 ## Network Managers
 <a id="network-managers"></a>
-Nevertheless there are other options for internet connection, you can check the full list [here](https://wiki.archlinux.org/index.php/Network_configuration#Network_managers).   
 If you want something with GUI you could use [#NetworkManager](#network-manager), I believe it's providing by the most of distros right now, I tried it for a quite long time, but nah...xD
-You might want to check [#systemd-networkd](/environment/systemd#systemd-networkd)
-Consider also [#connman](#connman) - It was my choice for years. It's stable and robust cli manager with fast connection speed and no serious issues on my memory.   
-Now I'm using simple [#iwd](/environment/iwd)
+You might want to see as it delivered with the system [#systemd-networkd](/environment/systemd#systemd-networkd)
+Consider also [#connman](#connman) - Used it for years, great tool. It's stable and robust cli manager with fast connection speed and no serious issues on my memory.   
+
+I'm using [iwd](/environment/iwd)
+And if you followed [installation steps](/core/base-files), you should already have iwd installed using pacstrap.
 
 ## wpa_supplicant
 Intel aims to replace [supplicant(in computer science)](https://en.wikipedia.org/wiki/Supplicant_(computer)) particularly wpa_supplicant with iwd,
@@ -44,7 +45,7 @@ Don't forget to change user:
 su yourusername
 ```
 :::
-
+Nevertheless there are other options for internet connection, you can see the full list [on arch wiki](https://wiki.archlinux.org/index.php/Network_configuration#Network_managers).   
 
 ## Connection issues
 If you encounter problems, check if your network interface is enabled with `ip link`

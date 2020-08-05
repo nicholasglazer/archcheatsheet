@@ -1,5 +1,5 @@
 ---
-metaTitle: Vim, vim guide
+metaTitle: Vim, vim guide, change caps lock to escape vim, change caps to esc, vimrc.
 ---
 
 # Vim editor
