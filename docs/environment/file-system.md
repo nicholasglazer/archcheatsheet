@@ -37,7 +37,7 @@ Eventually the main features are [snapshots](#System-snapshots), dynamic resizin
 If you're working with large pools over 100TB, you might need [RAID](https://wiki.archlinux.org/index.php/RAID). Xfs could be handy in this case.
 
 ::: tip coolstorybro
-I had a crush of my `/home` directory(Summer 2020), I think it happened when I played with the Windows installer, and that disk wasn't part of my LVM and I believe worked flawlessly for almost 3 years. Now I realize that I should put it on LVM a long time ago. Nevertheless I have nothing critical there, except some of my Overwatch games that recorded xD.
+So talking about ext4, I had got a crush of my `/home` directory(August 2020), I think it happened when I played with the Windows installer, and that disk wasn't part of my LVM and I believe worked flawlessly for almost 3 years. Now I realize that I should put it on LVM a long time ago. Nevertheless I have nothing critical there, except some of my Overwatch games that recorded xD.
 This was a good lesson for me. So be careful with Windows installer and always do your backup on files you don't want to loose.
 P.S. I'm still using `ext4`.
 
@@ -51,7 +51,7 @@ Then if it's corrupted superblock problem, check out the list of available super
 ```sh
 sudo mke2fs -n /dev/sdX
 ```
-Now you need to use `e2fsck` which is a very useful tool actually, check `man`
+Now you need to use `e2fsck` which is a very useful tool actually, check with `man`
 And we are interest in the -b flag, which will..
 ```sh
 sudo e2fsck -b block_from_mke2fs_output /dev/sdX

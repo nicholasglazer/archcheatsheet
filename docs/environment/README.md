@@ -11,37 +11,21 @@ metaTitle: Archlinux install guide environment configure Git, configure AUR | Ar
 
 Now I have two pills for you.
 Use blue pill and you will forget everything I said and continue to live happy with your desktop environments, with choices they've made.
-Or maybe you are a brave soul which desire to learn new things and make choices according to your preferences.
-The state in which I see Linux is [the anarchy state] on the first place, because, you see it's a philosophical idea, that you need to take responsibility for every custom component in your system.
-And the thing why I love distributions like Arch Linux, are because you become responsible for all your interaction starting from the bare shell.
- This way you can learn much more then just clicking mouse on windows installer, which I hate, it's not flexible at all, it thinks that I'm stupid and can't properly configure hardware interaction configurations,
+Or maybe you are a brave soul which desire to learn new things and make choices according to your own preferences.
+The state in which I see Linux is [the anarchy state] - it's a philosophical idea, that you need to take responsibility for every custom component in your system.
+But this is a way for people who like to learn new things, and want to know the tools and be more effective.
 
-As an example, think of Microsoft installation process -[the EFI resizing after the dual-boot](/environment/efi-resizing) is even present here.
+I love distributions like Arch Linux, because they are giving you an opportunity to decide almost in every part, so you become responsible for all your interaction starting from the bare shell.
+And in the end, when you become aware of the process, you will find yourself in the situation when things just working in the right way, the way you configure it.
+This way you can learn much more then just interacting with windows installer by clicking mouse. I hate this installer tbh, it's not flexible at all, it is thinking of me that I'm kinda stupid user and can't properly configure hardware configurations. Makes me really sad, when I'm making a new system with dual boot, but in the end I need to add extra steps, because this is the windows who's creating EFI partition on the first place while installation. So I will need to expend it later, which basically creating new EFI, copying everything from the old one to the new one, mount/unmount and destroying unneeded EFI in the end.
+See an article about EFI dual boot -[the EFI resizing after the dual-boot](/environment/efi#efi-resizing).
 
 
-::: tip
-Wise idea will be to take a look at [Arch general recommendations](https://wiki.archlinux.org/index.php/General_recommendations).
-:::
 
 If you are not a big fan of heavy desktop environment like me and want everything to be done in a custom way, to have full control over your system!
 Follow my steps with the dotfiles and [no desktop environment way](/environment/no-desktop-environment)
 
 ---
-## Establish internet connection
-<a id="esteblish_internet_connection"></a>
-Since [#iwd](/environment/iwd) was installed with [#pacstrap =>](/core/base-files#pacstrap).
-In order to use it we must enable the service, find the device and connect to the wi-fi network. [See iwd =>](/environment/iwd)
-
-<a id="dotfiles"></a>
-It could be very useful to collect your configs in one place, usually people call them dotfiles.   
-
-## Dotfiles + git
-<a id="dotfiles-git"></a>
-
-Since [#git](/environment/git) was installed with [#pacstrap =>](/core/base-files#pacstrap).
-To learn the best way so far to manage your dotfiles repository as a [--bare](/environment/git#git-bare).
-See my article [the best way to manage dotfiles =>](/environment/dotfiles)
-
 
 <!-- ### Table of Contents -->
 <!-- 1.  [Environment](#environment) -->
