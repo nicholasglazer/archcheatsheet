@@ -39,7 +39,7 @@ But I love the power that xmonad gave me, maybe next time around I'll try someth
 [See xorg page =>](/environment/xorg)
 
 ## The blue pill
-<a id="choose-de"></a>
+<a id="blue-pill"></a>
 You can now be fine without much customizations at the beginning if you choose DE, because DEs provides you with everything you need to JUST TO BEGIN usage.
 And if you are new Linux user, you might want to try them first before diving into the infinite customization process. Although I recommend to go custom ;)
 DE are friendly with users and they'll give you much more confidence at the beginning of the Linux journey.
@@ -57,13 +57,19 @@ sudo systemctl enable sddm.service # enable KDE login manager
 reboot
 ```
 This is pretty much it to run the system for people with DE.
-You still can take advantage of any program listed here including tiling [WM](window-manager).
+You still can take advantage of any program listed here including tiling [WM](/environment/window-manager).
 
 ## The red pill
+<a id="blue-pill"></a>
+### Install packages
+<a id="install-packages"></a>
+```sh
+pacman -Syu alsa-utils pulseaudio pulseaudio-alsa pamixer xorg xorg-xinit xterm xclip xmonad xmonad-contib xmobar picom rxvt-unicode fish tree rofi ranger dunst feh ttf-font-awesome ttf-hack mpd mpc mpv chromium firefox-developer-edition zathura zathura-djvu zathura-pdf-mupdf zathura-cb scrot byzanz ffmpeg telegram-desktop rtorrent-vi-color --noconfirm
+```
 `alsa-utils pulseaudio pulseaudio-alsa` audio drivers
 `pamixer` cli mixer for pulseaudio
 `xorg xorg-init xterm xclip` [xorg and friends](/environment/xorg)
-`emacs` Should be done at pacstrap step IMO ;)
+`emacs27-git` + see [emacs + doom config](/dotfiles/doom) 
 `picom` Used it when it was compton, it has bugs, but in general is ok to use.
 Composite manager become handy when you need to make shadows or transparency. [see on github](https://github.com/yshui/picom)
 `xmonad xmonad-contrib xmobar` - [Xmonad](/environment/xmonad)
@@ -74,7 +80,9 @@ Composite manager become handy when you need to make shadows or transparency. [s
 `ranger` - file manager that [I used to so much](/environment/ranger).
 `dunst` - notification manager that is ok, but I'll definitely look for alternatives.
 `feh` - [feh](/environment/feh) is simple but yet powerful background-image solution.
-`ttf-font-awesome ttf-ibm-plex` - this font is necessary to show icons in my [xmobar](/xmonad#xmobar) config. And ibm provides serif, sans-serif, condensed sans-serif and monospace with true italics.
+`ttf-font-awesome`- this font is necessary to show icons in my [xmobar](/xmonad#xmobar) config.
+`ttf-hack` - excelent coding font, using for termite, urxvt. You may also consider `ttf-inconsolata`, `ttf-source-code-pro`
+`ttf-ibm-plex` - And ibm provides serif, sans-serif, condensed sans-serif and monospace with true italics.
 `mpd` - powerful music player daemon, you will need a client for it.
 `mpc` - command line interface for `mpd`
 `mpv` - powerfull player where you can create your own scripts.
@@ -86,19 +94,53 @@ Composite manager become handy when you need to make shadows or transparency. [s
 `telegram-desktop` - GUI massaging with family and friends.
 `transmission-cli` - cli torrent tracker.
 `chromium firefox-developer-edition` - browsers
-`nodejs npm yarn` - JS runtime <3
 
+
+### AUR wrapper
+<a id="aur-wrapper"></a>
+`nvm` - version manager for the JS runtime <3 [see more](/JS#nvm)
+`npm yarn` - web(node, deno?) package managers.
+
+```sh
+yay -S nvm npm yarn --noconfirm
+```
+#### Install AUR wrapper
+<a id="install-aur-packages"></a>
+To install AUR packages and casually I'm using [yay](https://github.com/Jguer/yay).
+
+::: warning
+Don't use `yaourt` - seems like bunch of people still using it in 2020.
+
+`--noconfirm` - Using this flag potentially is unsafe, so you might want to check out build scripts from time to time.
+Some of the AUR packages might possibly be a threat, so if you use flag to auto-install packages, this will prevent you from observing what you actually installing. Use with caution!
+:::
+
+Clone with git and install with [makepkg](https://wiki.archlinux.org/index.php/Makepkg):
+```sh
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+cd .. && rm -rf yay
+yay -Ps               # print stats
+```
+::: tip
+Yay is written on [#Go =>](/environment/go) language and installation is depends on [go](https://github.com/golang/go).
+But only installation, if you have no plans to use go later, feel free to clean this dependency with yay:
+```sh
+yay -Yc    #this command will clean unneeded dependencies
+```
+:::
+
+#### Run
 ::: tip NB
-`ghc, python` and many other great software will be installed with the latest versions.
+`ghc, python` and other great software with the latest versions.
 Check their versions:
 ```
 ghc --version
 python --version
 ```
-```sh
-pacman -Syu alsa-utils pulseaudio pulseaudio-alsa pamixer xorg xorg-xinit xterm xclip xmonad xmonad-contib xmobar picom rxvt-unicode fish tree rofi ranger dunst feh ttf-font-awesome mpd mpc mpv chromium firefox-developer-edition zathura zathura-djvu zathura-pdf-mupdf zathura-cb scrot byzanz ffmpeg telegram-desktop rtorrent-vi-color nodejs npm yarn
-```
 
+If you cloned my config, you'll be able to run xmonad after instalaltion will finish. 
 ::: tip
 In order to run xmonad, we need to compile xmonad first.
 ::: warning

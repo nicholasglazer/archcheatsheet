@@ -2,6 +2,47 @@
 metaTitle: Xmonad xmobar theme archlinux window manager | ArchCheatSheet
 ---
 
+|                                                  Key Binding | Action                                                               |
+|-------------------------------------------------------------:|:---------------------------------------------------------------------|
+|                  <kbd>Mod</kbd>+<kbd>Ctrl</kbd>+<kbd>l</kbd> | Lock screen                                                          |
+|            <kbd>Mod</kbd>+<kbd>Shift</kbd>+<kbd>Return</kbd> | Launch a termite (terminal)                                          |
+|                             <kbd>Mod</kbd>+<kbd>Return</kbd> | Launch a urxvtt  (terminal)                                          |
+|                                  <kbd>Mod</kbd>+<kbd>p</kbd> | Start dmenu.  Once it comes up, type the name of a program and enter |
+|                 <kbd>Mod</kbd>+<kbd>Shift</kbd>+<kbd>c</kbd> | Close focused window                                                 |
+
+|                              <kbd></kbd>+<kbd>Space</kbd> | Change workspace layout                                              |
+|             <kbd>Mod</kbd>+<kbd>Shift</kbd>+<kbd>Space</kbd> | Change back to default workspace layout                              |
+|                                  <kbd>Mod</kbd>+<kbd>n</kbd> | Resize viewed windows to the correct size                            |
+|                                <kbd>Mod</kbd>+<kbd>Tab</kbd> | Focus next window                                                    |
+|                                  <kbd>Mod</kbd>+<kbd>j</kbd> | Focus next window                                                    |
+|                                  <kbd>Mod</kbd>+<kbd>k</kbd> | Focus previous window                                                |
+|                                  <kbd>Mod</kbd>+<kbd>m</kbd> | Focus master window                                                  |
+|                             <kbd>Mod</kbd>+<kbd>Return</kbd> | Swap focused window with master window                               |
+|                 <kbd>Mod</kbd>+<kbd>Shift</kbd>+<kbd>j</kbd> | Swap focused window with next window                                 |
+|                 <kbd>Mod</kbd>+<kbd>Shift</kbd>+<kbd>k</kbd> | Swap focused window with previous window                             |
+|                                  <kbd>Mod</kbd>+<kbd>h</kbd> | Shrink master window area                                            |
+|                                  <kbd>Mod</kbd>+<kbd>l</kbd> | Expand master window area                                            |
+|                                  <kbd>Mod</kbd>+<kbd>t</kbd> | Push floating window back into tiling                                |
+|                                  <kbd>Mod</kbd>+<kbd>,</kbd> | Increment number of windows in master window area                    |
+|                                  <kbd>Mod</kbd>+<kbd>.</kbd> | Decrement number of windows in master window area                    |
+|                                  <kbd>Mod</kbd>+<kbd>q</kbd> | Restart xmonad. This reloads xmonad configuration, does not logout   |
+|                 <kbd>Mod</kbd>+<kbd>Shift</kbd>+<kbd>q</kbd> | Quit xmonad and logout                                               |
+|                              <kbd>Mod</kbd>+<kbd>[1-9]</kbd> | Switch to workspace 1-9, depending on which number was pressed       |
+|             <kbd>Mod</kbd>+<kbd>Shift</kbd>+<kbd>[1-9]</kbd> | Send focused window to workspace 1-9                                 |
+|                                  <kbd>Mod</kbd>+<kbd>w</kbd> | Focus left-most monitor (Xinerama screen 1)                          |
+|                                  <kbd>Mod</kbd>+<kbd>e</kbd> | Focus center-most monitor (Xinerama screen 2)                        |
+|                                  <kbd>Mod</kbd>+<kbd>r</kbd> | Focus right-most monitor (Xinerama screen 3)                         |
+|                 <kbd>Mod</kbd>+<kbd>Shift</kbd>+<kbd>w</kbd> | Send focused window to workspace on left-most monitor                |
+|                 <kbd>Mod</kbd>+<kbd>Shift</kbd>+<kbd>e</kbd> | Send focused window to workspace on center-most monitor              |
+|                 <kbd>Mod</kbd>+<kbd>Shift</kbd>+<kbd>r</kbd> | Send focused window to workspace on right-most monitor               |
+|                    <kbd>Mod</kbd>+<kbd>Left Mouse Drag</kbd> | Drag focused window out of tiling                                    |
+|                   <kbd>Mod</kbd>+<kbd>Right Mouse Drag</kbd> | Resize focused window, bring out of tiling if needed                 |
+|                   <kbd>Mod</kbd>+<kbd>Right Mouse Drag</kbd> | Resize focused window, bring out of tiling if needed                 |
+
+
+|                 <kbd>Mod</kbd>+<kbd>Shift</kbd>+<kbd>p</kbd> | Take screenshot in select mode. Click or click and drag to select    |
+| <kbd>Mod</kbd>+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>p</kbd> | Take fullscreen screenshot. Supports multiple monitors               |
+
 # Xmonad configuration
 <a id="xmonad-configuration"></a>
 Xmonad is written in [Haskell](https://wiki.archlinux.org/index.php/Haskell), minimalistic and powerfull window manager with a lot of hackable features, though its configuration could be tricky if it's your first experience with functional programming language.   
