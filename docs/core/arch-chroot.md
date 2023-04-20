@@ -136,7 +136,7 @@ passwd
 - **User password:**    
 You should add at least one user. Replace `username` with preferred one:
 ```sh
-useradd -m -g users -G wheel,storage,power -s /bin/bash username
+useradd -m -G wheel,audio,video,storage,power -s /bin/bash username
 ```
 And set password for a new user:
 ```sh
@@ -174,7 +174,11 @@ Read about [visudo](https://wiki.archlinux.org/index.php/Sudo#Using_visudo) befo
 ```sh
 EDITOR=vim visudo
 ```
-Since you added user to the `wheel` group, user will gain full root privileges, you need to uncomment this line:
+Gain full root privileges to a single user.
+```sh
+username ALL=(ALL) ALL
+```
+Alternatively if you added user to the `wheel` group, any user under this group will gain full root privileges, you need to uncomment this line:
 ```sh
 %wheel ALL=(ALL) ALL
 ```
