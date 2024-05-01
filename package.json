@@ -1,5 +1,5 @@
 {
-  "name": "archcheatsheet.com",
+  "name": "archcheatsheetv1.nicholasglazer.com",
   "version": "0.0.1",
   "description": "Static Serverless PWA arch linux cheat sheet",
   "main": "index.js",
@@ -29,11 +29,11 @@
   },
   "homepage": "https://github.com/nicholasglazer/archcheatsheet.com#readme",
   "devDependencies": {
-    "@vuepress/plugin-back-to-top": "^1.4.0",
-    "@vuepress/plugin-google-analytics": "^1.4.0",
-    "@vuepress/plugin-medium-zoom": "^1.4.0",
-    "@vuepress/plugin-pwa": "^1.4.0",
-    "stylus": "^0.54.7",
-    "vuepress": "^1.4.0"
+    "@vuepress/plugin-back-to-top": "^1.9.10",
+    "@vuepress/plugin-google-analytics": "^1.9.10",
+    "@vuepress/plugin-medium-zoom": "^1.9.10",
+    "@vuepress/plugin-pwa": "^1.9.10",
+    "stylus": "^0.63.0",
+    "vuepress": "^1.9.10"
   }
 }
